@@ -1,0 +1,6 @@
+node_modules/ 
+*.log 
+config.js 
+client/dist/bundle.js 
+.env 
+package-lock.json
