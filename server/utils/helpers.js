@@ -32,20 +32,15 @@ let toneAnalyzer = new ToneAnalyzer({
   url: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
 });
 
-<<<<<<< HEAD
- let natLang = new NatLang({
-=======
+
 let natLang = new NatLang({
->>>>>>> Added new helpers
   username: natlangAPI.credentials.username,
   password: natlangAPI.credentials.password,
   version: '2016-05-19',
   url:  "https://gateway.watsonplatform.net/natural-language-understanding/api"
 });
 
-<<<<<<< HEAD
-=======
+
 module.exports.faceAnalyzer = faceAnalyzer;
->>>>>>> Added new helpers
 module.exports.toneAnalyzer = toneAnalyzer;
 module.exports.natLang = natLang;
