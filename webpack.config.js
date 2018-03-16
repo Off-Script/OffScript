@@ -1,9 +1,6 @@
-var webpack = require('webpack');
-var path = require('path');
-
 module.exports = {
   entry: [
-    './client/src/index.jsx'
+    './src/index.jsx'
   ],
   module: {
     rules: [
@@ -18,7 +15,11 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   output: {
-    path: path.resolve(__dirname, 'client/dist'),
+    path: __dirname + '/dist',
+    publicPath: '/dist',
     filename: 'bundle.js'
+  },
+  devServer: {
+    contentBase: './dist'
   }
 };
