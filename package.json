@@ -4,6 +4,7 @@
   "description": "A text rehearsal assistant that helps you memorize and stick to a script.",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,20 +12,27 @@
     "url": "git+https://github.com/annahinnyc/OffScript.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ryan Morrow, Yufan Wang and Annah Patterson",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/annahinnyc/OffScript/issues"
+    "url": "https://github.com/Off-Script/OffScript/issues"
   },
-  "homepage": "https://github.com/annahinnyc/OffScript#readme",
+  "homepage": "https://github.com/Off-Script/OffScript#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "morgan": "^1.9.0",
+    "nodemon": "^1.17.2",
     "pg": "^7.4.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-router": "^4.2.0"
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "webpack": "^4.1.1"
   }
 }
