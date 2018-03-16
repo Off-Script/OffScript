@@ -33,6 +33,7 @@
     "react-dom": "^16.2.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "watson-developer-cloud": "^3.2.1",
     "webpack": "^4.1.1"
   }
 }
