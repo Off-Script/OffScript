@@ -5,7 +5,7 @@ let natlangAPI = require('../../config/natlangAPI.js')
 let azureAPI = require('../../config/azureAPI.js')
 let axios = require('axios');
 
-function faceAnalyzer(image) {
+function faceAnalyzer(image, cb) {
   axios({
     method: 'post',
     headers: {
@@ -18,7 +18,7 @@ function faceAnalyzer(image) {
     }
   })
   .then(function(response) {
-    console.log(response.data[0].faceAttributes)
+    cb(response.data[0].faceAttributes)
   })
   .catch(function(response) {
     console.log(response.response)
