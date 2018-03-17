@@ -14,6 +14,7 @@ class Upload extends React.Component {
   }
 
   handleChange(e) {
+    console.log('e.target.val', e.target.value);
     this.setState({
       script: e.target.value
     });
@@ -21,7 +22,6 @@ class Upload extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
     axios.post('/api/script', {
       script: this.state.script
     })
