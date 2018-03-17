@@ -20,8 +20,9 @@ pool.connect((err, db, done) => {
 
 module.exports = {
   saveScript: (data, callback) => {
-    console.log('data', data);
-    // client.query('INSERT INTO script (script_name, script_author, id) VALUES ($1, $2)', [data.script_name, data.author_name], (err, table) => {
+    console.log('data', typeof data, data);
+    let text = data.script_text.toString();
+    // pool.query(`INSERT INTO script (script_name, author_name) VALUES (${data.script_text}, 'another author')`, (err, table) => {
     //   if (err) {
     //     console.log('error saving script to database', err);
     //     callback(err, null);
@@ -29,5 +30,14 @@ module.exports = {
     //     callback(null, table);
     //   }
     // });
+
+    pool.query('INSERT INTO script (script_name, author_name) VALUES ($1, $2)', [text, 'other author'], (err, table) => {
+      if (err) {
+        console.log('error saving script to database', err);
+        callback(err, null);
+      } else {
+        callback(null, table);
+      }
+    });
   }
 }

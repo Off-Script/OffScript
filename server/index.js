@@ -23,14 +23,9 @@ app.use((req, res, next) =>{
 });
 
 app.post('/api/script', (req, res) => {
-  console.log('api/script req', req);
-  let data = {
-    script_name: 'Betrayal',
-    author: 'Harold Pinter',
-    id: Math.floor(Math.random() * 20)
-  }
-  let jsonData = JSON.stringify(data);
-  db.saveScript(jsonData, (err, table) => {
+  console.log('api/script req', req.body);
+
+  db.saveScript(req.body, (err, table) => {
     if (err) { console.log('error querying database from pool.connect', err); }
     else {
       console.log('Connected to PostgreSQL', table);
