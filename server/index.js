@@ -61,7 +61,6 @@ app.post('/api/script', (req, res) => {
       );
     }
   });
-});
 
 // wild card routing all pages to the React Router
 app.get('/*', (req, res) => {
