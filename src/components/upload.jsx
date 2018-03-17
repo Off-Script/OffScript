@@ -12,6 +12,7 @@ class Upload extends React.Component {
   }
 
   handleChange(e) {
+    console.log('e.target.val', e.target.value);
     this.setState({
       script: e.target.value
     });
@@ -19,8 +20,29 @@ class Upload extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
     console.log(this.state.script);
+
+    let data = {
+      script_text: this.state.script
+    };
+
+    let request = new Request('http://localhost:3000/api/script', {
+      method: 'POST',
+      headers: new Headers({ 'Content-Type': 'application/json'}),
+      body: JSON.stringify(data)
+    });
+
+    // xmlhttprequest()
+    console.log('request', request);
+    fetch(request)
+      .then((response) => {
+        console.log('response', response);
+        response.json()
+          .then((data) => {
+            console.log('script posted to database:', data);
+          });
+      });
+
     this.setState({
       script: 'Enter Script Here'
     });
