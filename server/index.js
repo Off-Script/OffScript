@@ -3,6 +3,7 @@ const path = require('path')
 const bodyParser = require('body-parser'); 
 let pg = require('pg'); 
 let db = require('../database/index.js');
+let helpers = require('./utils/helpers.js')
 
 const app = express();
 
@@ -24,6 +25,19 @@ app.use((req, res, next) =>{
 
 app.post('/api/script', (req, res) => {
   console.log('api/script req', req.body);
+
+  helpers.toneAnalyzer.tone(
+  {
+    tone_input: req.body.script,
+    content_type: 'text/plain'
+  },
+  function(err, tone) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(JSON.stringify(tone, null, 2));
+    }
+  });
 
   db.saveScript(req.body, (err, table) => {
     if (err) { console.log('error querying database from pool.connect', err); }
