@@ -22,6 +22,17 @@ class Upload extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    axios.post('/api/script', {
+      script: this.state.script
+    })
+    .then((res) => {
+      console.log(res);
+      this.clear()
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
 
     axios.post('/api/script', {
       script: this.state.script
