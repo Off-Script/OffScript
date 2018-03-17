@@ -31,13 +31,12 @@ module.exports = {
     //   }
     // });
 
-    pool.query('INSERT INTO script (script_name, author_name) VALUES ($1, $2)', [text, 'other author'], (err, table) => {
-      if (err) {
-        console.log('error saving script to database', err);
-        callback(err, null);
-      } else {
-        callback(null, table);
-      }
-    });
+    pool.query('INSERT INTO script (script_name, author_name) VALUES ($1, $2)', [text, 'other author'])
+      .then((res) => {
+        callback(null, res);
+      })
+      .catch(err => {
+        console.error('Error executing query', err.stack);
+      });
   }
 }
