@@ -24,7 +24,6 @@ app.use((req, res, next) =>{
 });
 
 app.post('/api/script', (req, res) => {
-  console.log('api/script req', req.body);
 
   helpers.toneAnalyzer.tone(
   {
@@ -42,11 +41,26 @@ app.post('/api/script', (req, res) => {
           console.log('Saved script text to PostgreSQL', JSON.stringify(res));
         }
       });
-
-      res.send(JSON.stringify(tone, null, 2));
+      res.writeHead(200);
+      res.write(JSON.stringify(tone, null, 2));
+      helpers.natLang.analyze(
+        {
+          html: req.body.script,
+          features: {
+            keywords: {sentiment: true, limit: 10}
+          }
+        },
+        function(err, response) {
+          if (err) {
+            console.log('error:', err);
+          } else {
+            res.write(JSON.stringify(response, null, 2));
+            res.end();
+          }
+        }
+      );
     }
   });
-
 });
 
 // wild card routing all pages to the React Router
