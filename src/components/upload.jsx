@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 class Upload extends React.Component {
@@ -9,6 +10,7 @@ class Upload extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.clear = this.clear.bind(this);
   }
 
   handleChange(e) {
@@ -20,7 +22,19 @@ class Upload extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    console.log(this.state.script);
+    axios.post('/api/script', {
+      script: this.state.script
+    })
+    .then((res) => {
+      console.log(res);
+      this.clear()
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  clear() {
     this.setState({
       script: 'Enter Script Here'
     });
