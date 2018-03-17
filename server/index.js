@@ -37,9 +37,7 @@ app.post('/api/script', (req, res) => {
       req.body.tone = JSON.stringify(tone);
       db.saveScript(req.body, (err, res) => {
         if (err) { console.log('error querying database from pool.connect', err); }
-        else {
-          console.log('Saved script text to PostgreSQL', JSON.stringify(res));
-        }
+        else { console.log('Saved script text to PostgreSQL', JSON.stringify(res)); }
       });
       res.writeHead(200);
       res.write(JSON.stringify(tone, null, 2));
@@ -61,6 +59,7 @@ app.post('/api/script', (req, res) => {
       );
     }
   });
+});
 
 // wild card routing all pages to the React Router
 app.get('/*', (req, res) => {
