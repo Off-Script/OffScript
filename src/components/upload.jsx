@@ -44,7 +44,7 @@ class Upload extends React.Component {
     return (
       <div>
         Script:<br/>
-        <textarea rows="5" cols="50" value={this.state.script} onChange={this.handleChange}></textarea><br/>
+        <textarea rows="5" cols="40" value={this.state.script} onChange={this.handleChange}></textarea><br/>
         <button className="upload-script" onClick={this.handleSubmit}>Submit</button>
       </div>
     )
