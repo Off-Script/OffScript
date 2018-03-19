@@ -28,7 +28,7 @@ class App extends React.Component {
         <Route path='/speech' component={ Speech } />
         <Route path='/landing' component={ Landing } />
         <Route path='/results' render={() => <Results script={this.state.script} />} />
-        <Route path='/analytics' component={ Analytics } />
+        <Route path="/analytics" component={ Analytics } />
       </div>
     )
   }

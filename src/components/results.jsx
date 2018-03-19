@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Results  = (props) => (
   <div>
@@ -12,6 +12,9 @@ const Results  = (props) => (
       <h3>Speech Analysis</h3>
       {// insert graph component here
       }
+      <Link to="/analytics">
+        <button className="show-analytics">More info</button>
+      </Link>
     </div>
   </div>
 )
