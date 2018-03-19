@@ -1,12 +1,14 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Upload from './upload.jsx';
+import Upload from './Upload.jsx';
+import Speech from './Speech.jsx'
 
 class App extends React.Component {
   render () {
     return (
       <div>
-        <Route path='/' component={ Upload } />
+        <Route exact path='/' component={ Upload } />
+        <Route path='/speech' component={ Speech } />
       </div>
     )
   }
