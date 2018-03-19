@@ -18,10 +18,13 @@ describe('server API call helpers', function() {
             console.log(err);
           } else {
             response = true;
-            expect(response).to.equal(true)
+            checkresponse();
           }
         }
       );
+      function checkresponse() {
+        expect(response).to.equal(true)
+      }
     })
     it('Should return an analysis with appropriate data', function() {
       var response = false;
@@ -41,8 +44,58 @@ describe('server API call helpers', function() {
       );
     })
   })
-});
 
+  describe('Watson Natural Language API', function() {
+    it('Should should make an authenticated request to the service', function() {
+      var response = false;
+      helpers.natLang.analyze(
+        {
+          html: 'i am very happy because the world is a pleasant and exciting experience every day of my life.',
+          features: {
+            keywords: {sentiment: true, limit: 10}
+          }
+        },
+        function(err, data) {
+          if (err) {
+            console.log(err);
+          } else {
+            response = true;
+            expect(response).to.equal(true)
+          }
+        }
+      );
+    })
+    it('Should return an analysis with keyword data', function() {
+      helpers.toneAnalyzer.tone(
+        {
+          tone_input: 'i am very happy because the world is a pleasant and exciting experience every day of my life.',
+          content_type: 'text/plain'
+        },
+        function(err, data) {
+          if (err) {
+            console.log(err);
+          } else {
+            expect(data.keywords).to.exist;
+          }
+        }
+      );
+    })
+  })
+
+  describe('Azure Facial Analysis API', function() {
+    it('Should should make an authenticated request to the service', function() {
+      var response = false;
+      helpers.faceAnalyzer('https://pbs.twimg.com/profile_images/950848403100942337/WfCsrOjz_400x400.jpg', function(data) {
+          expect(data).to.exist;
+        });
+    })
+    it('Should return an analysis with accurate emotion data', function() {
+      helpers.faceAnalyzer('https://pbs.twimg.com/profile_images/950848403100942337/WfCsrOjz_400x400.jpg', function(data) {
+          expect(data.emotion.sadness).isAbove(.5);
+      })
+    })
+  })
+});
 describe('server requests', function() {
   describe('get request', function() {
     var server;
