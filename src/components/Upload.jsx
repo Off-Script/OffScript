@@ -44,7 +44,7 @@ class Upload extends React.Component {
     return (
       <div>
         Script:<br/>
-        <textarea rows="5" cols="40" value={this.state.script} onChange={this.handleChange}></textarea><br/>
+        <textarea autofocus rows="5" cols="40" value={this.state.script} onChange={this.handleChange}></textarea><br/>
         <Link to='/speech'>
         <button className="upload-script" onClick={this.handleSubmit}>Submit</button>
         </Link>
