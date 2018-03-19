@@ -22,7 +22,7 @@ pool.connect((err, db, done) => {
 
 module.exports = {
   saveScript: (data, callback) => {
-    console.log('typeof data is:', typeof data, 'data is:', data);
+    console.log('typeof posted data is:', typeof data, 'data is:', data);
     let jsonData = JSON.stringify(data);
 
     pool.query('INSERT INTO script (script_text) VALUES ($1) RETURNING *', [jsonData], (err, result) => {
@@ -32,6 +32,18 @@ module.exports = {
       } else {
         console.log('script saved to database');
         callback(null, result.rows);
+      }
+    });
+  },
+  findScript: (data, callback) => {
+    let jsonData = JSON.stringify(data);
+    pool.query(`SELECT * FROM script WHERE script_text LIKE "%${jsonData}%"`, (err, result) => {
+      if (err) {
+        console.log('error saving script to database');
+        callback(err, null);
+      } else {
+        console.log('script saved to database');
+        callback(null, result);
       }
     });
   }
