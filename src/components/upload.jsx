@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 
 class Upload extends React.Component {
   constructor(props) {
@@ -26,8 +26,8 @@ class Upload extends React.Component {
       script: this.state.script
     })
     .then((res) => {
-      console.log(res);
-      this.clear()
+      this.props.setScript(this.state.script);
+      this.clear();
     })
     .catch((err) => {
       console.log(err);
@@ -45,7 +45,9 @@ class Upload extends React.Component {
       <div>
         Script:<br/>
         <textarea rows="5" cols="40" value={this.state.script} onChange={this.handleChange}></textarea><br/>
+        <Link to='/speech'>
         <button className="upload-script" onClick={this.handleSubmit}>Submit</button>
+        </Link>
       </div>
     )
   }
