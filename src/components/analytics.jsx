@@ -1,4 +1,5 @@
 import React from 'react';
+import Chart from './Chart.jsx';
 
 class Analytics extends React.Component {
   constructor(props) {
@@ -18,8 +19,8 @@ class Analytics extends React.Component {
         </div>
         <div className="container">
           <h2 className="analytics-title">Detailed Analysis</h2>
-          <img src="http://i1-scripts.softpedia-static.com/screenshots/Chart-js_1.png"/>
         </div>
+        <Chart />
       </div>
     )
   }

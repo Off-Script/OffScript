@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Landing from './landing.jsx';
-import Upload from './upload.jsx';
-import Speech from "./speech.jsx";
-import Results from "./results.jsx";
-import Analytics from './analytics.jsx';
+import Landing from './Landing.jsx';
+import Upload from './Upload.jsx';
+import Speech from './Speech.jsx';
+import Results from './Results.jsx';
+import Analytics from './Analytics.jsx';
 
 class App extends React.Component {
   constructor(props) {
