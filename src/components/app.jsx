@@ -4,6 +4,7 @@ import Landing from './Landing.jsx';
 import Upload from './upload.jsx';
 import Speech from "./speech.jsx";
 import Results from "./results.jsx";
+import Analytics from './analytics.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class App extends React.Component {
         <Route path='/speech' component={ Speech } />
         <Route path='/landing' component={ Landing } />
         <Route path='/results' render={() => <Results script={this.state.script} />} />
+        <Route path='/analytics' component={ Analytics } />
       </div>
     )
   }
