@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Landing from './Landing.jsx';
+import Landing from './landing.jsx';
 import Upload from './upload.jsx';
 import Speech from "./speech.jsx";
 import Results from "./results.jsx";
