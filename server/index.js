@@ -39,7 +39,7 @@ app.post('/api/script', (req, res) => {
         if (err) { console.log('error querying database from pool.connect', err); }
         else { console.log('Saved script text to PostgreSQL', JSON.stringify(res)); }
       });
-      res.writeHead(200);
+      res.writeHead(201);
       res.write(JSON.stringify(tone, null, 2));
       helpers.natLang.analyze(
         {
@@ -63,9 +63,9 @@ app.post('/api/script', (req, res) => {
 
 // wild card routing all pages to the React Router
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
+  res.status(302).sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-app.listen(PORT, function() {
+module.exports = app.listen(PORT, function() {
   console.log(`listening on port ${PORT}`);
 });
