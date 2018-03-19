@@ -14,24 +14,24 @@ class Upload extends React.Component {
   }
 
   handleChange(e) {
-    console.log('e.target.val', e.target.value);
     this.setState({
       script: e.target.value
     });
   }
 
   handleSubmit(e) {
-    e.preventDefault();
-    axios.post('/api/script', {
-      script: this.state.script
-    })
-    .then((res) => {
-      this.props.setScript(this.state.script);
+    // e.preventDefault();
+    // axios.post('/api/script', {
+    //   script: this.state.script
+    // })
+    // .then((res) => {
+      this.props.setscript(this.state.script);
+      this.props.history.push('/speech');
       this.clear();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // })
   }
 
   clear() {

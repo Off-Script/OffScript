@@ -1,11 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-const Results  = (props) => (
-  <div>
-    <h2>Record speech here</h2>
-    <Link to="/results">Get Results</Link>
-  </div>
-)
+class Speech extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-module.exports = Results;
+  handleSubmit(e) {
+    this.props.history.push('/results');
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.handleSubmit}>Results</button>
+      </div>
+    )
+
+  }
+}
+
+module.exports = Speech;
