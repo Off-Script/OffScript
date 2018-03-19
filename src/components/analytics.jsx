@@ -12,7 +12,7 @@ class Analytics extends React.Component {
     return (
       <div>
         <div className="navbar">
-          <a href="/analytics">
+          <a href="/">
           <button>One more time</button>
           </a>
         </div>
