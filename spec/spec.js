@@ -1,7 +1,6 @@
 var expect = require('chai').expect;
-var request = require('request');
+var request = require('supertest');
 
-var app = require('../server/index.js')
 var helpers = require('../server/utils/helpers.js')
 var db = require('../database/index.js')
 
@@ -36,10 +35,53 @@ describe('server API call helpers', function() {
             console.log(err);
           } else {
             response = tone
-            expect(response.document_tone.tone_categories[0].tones[3].score).isAbove(.5)
+            expect(response.document_tone.tone_categories[0].tones[3].score).above(.5)
           }
         }
       );
+    })
+  })
+});
+
+describe('server requests', function() {
+  describe('get request', function() {
+    var server;
+    beforeEach(function() {
+      server = require('../server/index.js');
+    })
+    afterEach(function() {
+      server.close();
+    })
+    it('Should return a response to /', function(done) {
+      request(server)
+        .get('/')
+        .expect(200, done);
+    })
+    it('Should return a 302 to nonexistent endpoint', function(done) {
+      request(server)
+        .get('/moxie')
+        .expect(302, done);
+    })
+  })
+
+  describe('post request', function() {
+    var server;
+    beforeEach(function() {
+      server = require('../server/index.js');
+    })
+    afterEach(function() {
+      server.close();
+    })
+    it('Should return a 201 to /api/script', function(done) {
+      request(server)
+        .post('/api/script')
+        .send({script: 'This is a test script'})
+        .expect(201, done);
+    })
+    it('Should return a 404 to nonexistent endpoint', function(done) {
+      request(server)
+        .post('/moxie')
+        .expect(404, done);
     })
   })
 });
