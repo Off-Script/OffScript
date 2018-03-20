@@ -23,7 +23,7 @@ class App extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className="container">
         <Route exact path='/' render={() => <Upload setscript={this.setScript} />} />
         <Route path='/speech' component={ Speech } />
         <Route path='/landing' component={ Landing } />
