@@ -25,7 +25,7 @@ module.exports = {
     console.log('typeof posted data is:', typeof data, 'data is:', data);
     let jsonData = JSON.stringify(data);
 
-    pool.query('INSERT INTO script (script_text) VALUES ($1) RETURNING *', [jsonData], (err, result) => {
+    pool.query('INSERT INTO script (script_text, script_tones) VALUES ($1, $2) RETURNING *', [data.script, data.tone], (err, result) => {
       if (err) {
         console.log('error saving script to database');
         callback(err, null);
