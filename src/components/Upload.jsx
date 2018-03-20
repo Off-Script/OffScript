@@ -26,7 +26,6 @@ class Upload extends React.Component {
     // })
     // .then((res) => {
       this.props.setscript(this.state.script);
-      this.props.history.push('/speech');
       this.clear();
     // })
     // .catch((err) => {
@@ -44,7 +43,7 @@ class Upload extends React.Component {
     return (
       <div>
         Script:<br/>
-        <textarea rows="5" cols="40" value={this.state.script} onChange={this.handleChange}></textarea><br/>
+        <textarea autofocus rows="5" cols="40" value={this.state.script} onChange={this.handleChange}></textarea><br/>
         <Link to='/speech'>
         <button className="upload-script" onClick={this.handleSubmit}>Submit</button>
         </Link>
