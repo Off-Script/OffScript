@@ -16,8 +16,7 @@ function scriptComparison(script1, script2) {
     }
     j++;
   }
-  console.log(transcript.join(' '))
-  console.log($.parseHTML(transcript.join(' ')))
+
   return transcript.join(' ');
 }
 

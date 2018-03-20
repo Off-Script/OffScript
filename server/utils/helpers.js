@@ -24,13 +24,53 @@ function faceAnalyzer(image, cb) {
     console.log(response.response)
   })
 }
+function languageAnalysis(params) {
+  return new Promise(function(resolve, reject) {
+    let res = {};
 
-let toneAnalyzer = new ToneAnalyzer({
-  username: toneAPI.credentials.username,
-  password: toneAPI.credentials.password,
-  version: '2016-05-19',
-  url: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
-});
+    let url = params.url || 'https://gateway.watsonplatform.net/natural-language-understanding/api';
+    let use_unauthenticated = params.use_unauthenticated || false;
+
+    const language_analyzer = new NatLang({
+      'username': natlangAPI.credentials.username,
+      'password': natlangAPI.credentials.password,
+      'version_date': '2016-05-19',
+      'url': url,
+      'use_unauthenticated': use_unauthenticated
+    });
+
+    language_analyzer.analyze({'text': params.textToAnalyze, 'features': params.features}, function(err, res) {
+      if(err)
+        reject(err);
+      else
+        resolve(res);
+    });
+  });
+}
+
+function toneAnalysis(params) {
+  return new Promise(function (resolve, reject) {
+    let res = {};
+
+    let url = params.url || 'https://gateway.watsonplatform.net/tone-analyzer/api' ;
+    let use_unauthenticated =  params.use_unauthenticated || false ;
+
+    const tone_analyzer = new ToneAnalyzer({
+      'username': toneAPI.credentials.username,
+      'password':  toneAPI.credentials.password,
+      'version_date': '2016-05-20',
+      'url' : url,
+      'use_unauthenticated': use_unauthenticated
+    });
+
+    tone_analyzer.tone({'text': params.textToAnalyze}, function(err, res) {
+      if (err)
+        reject(err);
+      else
+        resolve(res);
+    });
+  });
+}
 
 
 let natLang = new NatLang({
@@ -42,5 +82,5 @@ let natLang = new NatLang({
 
 
 module.exports.faceAnalyzer = faceAnalyzer;
-module.exports.toneAnalyzer = toneAnalyzer;
-module.exports.natLang = natLang;
+module.exports.toneAnalysis = toneAnalysis;
+module.exports.languageAnalysis = languageAnalysis;
