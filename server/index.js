@@ -35,10 +35,10 @@ app.post('/api/script', (req, res) => {
       console.log(err);
     } else {
       req.body.tone = JSON.stringify(tone);
-      db.saveScript(req.body, (err, res) => {
-        if (err) { console.log('error querying database from pool.connect', err); }
-        else { console.log('Saved script text to PostgreSQL', JSON.stringify(res)); }
-      });
+      // db.saveScript(req.body, (err, res) => {
+      //   if (err) { console.log('error querying database from pool.connect', err); }
+      //   else { console.log('Saved script text to PostgreSQL', JSON.stringify(res)); }
+      // });
       res.writeHead(201);
       res.write(JSON.stringify(tone, null, 2));
       helpers.natLang.analyze(
