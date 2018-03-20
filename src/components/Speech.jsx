@@ -16,7 +16,7 @@ class Speech extends React.Component {
 
   handleSubmit(e) {
     this.onEnd();
-    this.props.history.push('/');
+    this.props.settranscript(this.state.transcript)
   }
 
   onEnd() {

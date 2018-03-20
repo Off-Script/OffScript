@@ -26,7 +26,6 @@ class Upload extends React.Component {
     // })
     // .then((res) => {
       this.props.setscript(this.state.script);
-      this.props.history.push('/speech');
       this.clear();
     // })
     // .catch((err) => {
