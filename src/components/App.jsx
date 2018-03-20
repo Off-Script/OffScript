@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, withRouter } from 'react-router-dom';
-import Header from "./Header.jsx";
+import Header from './Header.jsx';
 import Landing from './Landing.jsx';
 import Upload from './Upload.jsx';
-import Speech from "./Speech.jsx";
-import Results from "./Results.jsx";
+import Speech from './Speech.jsx';
+import Results from './Results.jsx';
 import Analytics from './Analytics.jsx';
-import Footer from "./Footer.jsx"
+import Footer from './Footer.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -37,10 +37,10 @@ class App extends React.Component {
     return (
       <div className="container">
         <Header />
-        <Route exact path='/' render={() => <Upload setscript={this.setScript} />} />
-        <Route path='/speech' render={() => <Speech settranscript={this.setTranscript} />} />
-        <Route path='/landing' component={ Landing } />
-        <Route path='/results' render={() => <Results script={this.state.script} transcript={this.state.transcript} />} />
+        <Route exact path="/" render={() => <Upload setscript={this.setScript} />} />
+        <Route path="/speech" render={() => <Speech settranscript={this.setTranscript} />} />
+        <Route path="/landing" component={ Landing } />
+        <Route path="/results" render={() => <Results script={this.state.script} transcript={this.state.transcript} />} />
         <Route path="/analytics" component={ Analytics } />
         <Footer />
       </div>
