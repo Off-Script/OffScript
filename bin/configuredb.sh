@@ -4,9 +4,9 @@ database="scripts"
 
 echo "Configuring database: $database"
 
-dropdb -U node_user scripts
-createdb -U node_user scripts
+DROPDB -U postgres scripts
+CREATEDB -U postgres scripts
 
-psql -U node_user scripts < ./bin/schema.sql
+psql -U postgres scripts < ./bin/schema.sql
 
 echo "$database configured"
