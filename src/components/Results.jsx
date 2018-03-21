@@ -58,7 +58,7 @@ class Results extends React.Component {
             scriptdata={this.state.scriptData}
             transdata={this.state.transData}
           />
-          <Link to="/">
+          <Link to="/upload">
             <button className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">graphic_eq</i>Detailed Analysis</button>
           </Link>
         </div>
