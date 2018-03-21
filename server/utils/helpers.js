@@ -1,9 +1,9 @@
 let ToneAnalyzer = require("watson-developer-cloud/tone-analyzer/v3")
-let toneAPI = require ("../../config/toneAPI.js")
 let NatLang = require('watson-developer-cloud/natural-language-understanding/v1.js');
+let axios = require('axios');
+let toneAPI = require ("../../config/toneAPI.js")
 let natlangAPI = require('../../config/natlangAPI.js')
 let azureAPI = require('../../config/azureAPI.js')
-let axios = require('axios');
 
 function faceAnalyzer(image, cb) {
   axios({
@@ -25,22 +25,55 @@ function faceAnalyzer(image, cb) {
   })
 }
 
-let toneAnalyzer = new ToneAnalyzer({
-  username: toneAPI.credentials.username,
-  password: toneAPI.credentials.password,
-  version: '2016-05-19',
-  url: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
-});
+function languageAnalysis(params) {
+  return new Promise(function(resolve, reject) {
+    let res = {};
 
+    let url = params.url || 'https://gateway.watsonplatform.net/natural-language-understanding/api';
+    let use_unauthenticated = params.use_unauthenticated || false;
 
-let natLang = new NatLang({
-  username: natlangAPI.credentials.username,
-  password: natlangAPI.credentials.password,
-  version: '2016-05-19',
-  url:  "https://gateway.watsonplatform.net/natural-language-understanding/api"
-});
+    const language_analyzer = new NatLang({
+      'username': natlangAPI.credentials.username,
+      'password': natlangAPI.credentials.password,
+      'version': '2016-05-19',
+      'url': url,
+      'use_unauthenticated': use_unauthenticated
+    });
+
+    language_analyzer.analyze({'text': params.textToAnalyze, 'features': params.features, 'language': 'en'}, function(err, res) {
+      if(err)
+        reject(err);
+      else
+        resolve(res);
+    });
+  });
+}
+
+function toneAnalysis(params) {
+  return new Promise(function (resolve, reject) {
+    let res = {};
+
+    let url = params.url || 'https://gateway.watsonplatform.net/tone-analyzer/api' ;
+    let use_unauthenticated =  params.use_unauthenticated || false ;
+
+    const tone_analyzer = new ToneAnalyzer({
+      'username': toneAPI.credentials.username,
+      'password':  toneAPI.credentials.password,
+      'version': '2016-05-20',
+      'url' : url,
+      'use_unauthenticated': use_unauthenticated
+    });
+
+    tone_analyzer.tone({'text': params.textToAnalyze, 'language':'en'}, function(err, res) {
+      if (err)
+        reject(err);
+      else
+        resolve(res);
+    });
+  });
+}
 
 
 module.exports.faceAnalyzer = faceAnalyzer;
-module.exports.toneAnalyzer = toneAnalyzer;
-module.exports.natLang = natLang;
+module.exports.toneAnalysis = toneAnalysis;
+module.exports.languageAnalysis = languageAnalysis;

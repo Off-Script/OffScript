@@ -23,42 +23,29 @@ app.use((req, res, next) =>{
   next();
 });
 
+// Sends script and transcript to Watson, then to db + client
 app.post('/api/script', (req, res) => {
-
-  helpers.toneAnalyzer.tone(
-  {
-    tone_input: req.body.script,
-    content_type: 'text/plain'
-  },
-  function(err, tone) {
-    if (err) {
-      console.log(err);
-    } else {
-      req.body.tone = JSON.stringify(tone);
-      // db.saveScript(req.body, (err, res) => {
-      //   if (err) { console.log('error querying database from pool.connect', err); }
-      //   else { console.log('Saved script text to PostgreSQL', JSON.stringify(res)); }
-      // });
-      res.writeHead(201);
-      res.write(JSON.stringify(tone, null, 2));
-      helpers.natLang.analyze(
-        {
-          html: req.body.script,
-          features: {
-            keywords: {sentiment: true, limit: 10}
-          }
-        },
-        function(err, response) {
-          if (err) {
-            console.log('error:', err);
-          } else {
-            res.write(JSON.stringify(response, null, 2));
-            res.end();
-          }
-        }
-      );
-    }
-  });
+  Promise.all([
+    helpers.toneAnalysis({'textToAnalyze': req.body.script}),
+    helpers.toneAnalysis({'textToAnalyze': req.body.transcript}),
+    helpers.languageAnalysis({
+      'textToAnalyze': req.body.script,
+      'features': {keywords: {sentiment: true, limit: 10}}
+    }),
+    helpers.languageAnalysis({
+      'textToAnalyze': req.body.transcript,
+      'features': {keywords: {sentiment: true, limit: 10}}
+    })
+  ])
+  .then((results) => {
+    res.status(200);
+    results.forEach((result) => res.write(JSON.stringify(result)))
+    res.end();
+  })
+  .catch((error) => {
+    console.log(error)
+    res.end(error.error)
+  })
 });
 
 // wild card routing all pages to the React Router

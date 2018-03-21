@@ -18,13 +18,10 @@ describe('server API call helpers', function() {
             console.log(err);
           } else {
             response = true;
-            checkresponse();
+            expect(response).to.equal(true)
           }
         }
       );
-      function checkresponse() {
-        expect(response).to.equal(true)
-      }
     })
     it('Should return an analysis with appropriate data', function() {
       var response = false;
