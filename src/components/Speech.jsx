@@ -8,7 +8,8 @@ class Speech extends React.Component {
     this.state = {
       start: false,
       stop: false,
-      transcript: 'test transcript test transcript test transcript test transcript test transcript test transcript test transcript'
+      transcript: '',
+      results: {}
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onEnd = this.onEnd.bind(this);
@@ -23,7 +24,9 @@ class Speech extends React.Component {
       transcript: this.state.transcript
     })
     .then((res) => {
-      this.props.settranscript(this.state.transcript)
+      console.log('handling submit');
+      this.props.settranscript(this.state.transcript);
+      this.props.setresults(res.data);
     })
     .catch((err) => {
        console.log(err);
@@ -47,6 +50,19 @@ class Speech extends React.Component {
   }
 
   render() {
+    let Loader = null;
+
+    if (this.state.start) {
+      Loader =
+        <div className="progress">
+          <div className="indeterminate"></div>
+        </div>
+    } else {
+      Loader =
+        <div className="progress">
+          <div className="determinate"></div>
+        </div>
+    }
     return (
       <div className="container">
         <a
@@ -75,12 +91,13 @@ class Speech extends React.Component {
         <a
           className="btn waves-effect cyan accent-4 hoverable"
           onClick={this.handleSubmit}>Submit
-          <i class="material-icons right">send</i>
+          <i className="material-icons right">send</i>
         </a>
         <div className="card medium grey lighten-4">
           <div className="card-content">
             <h5>Transcript</h5>
           </div>
+          {Loader}
           <p className="flow-text transcript-text">{this.state.transcript}</p>
         </div>
       </div>
