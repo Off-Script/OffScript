@@ -1,12 +1,12 @@
 const pg = require('pg');
 
-let connectionString = process.env.DATABASE_URL || 'postgres://localhost';
+let connectionString = process.env.DATABASE_URL || 'localhost';
 
 // check pooling resource for PostgreSQL connections we have open
 let pool = new pg.Pool({
   user: 'postgres',
   database: 'scripts',
-  host: 'localhost',
+  host: connectionString,
   port: 5432,
   max: 10,
   idleTimeoutMillis: 1000,
@@ -26,6 +26,20 @@ module.exports = {
     let jsonData = JSON.stringify(data);
 
     pool.query('INSERT INTO script (script_text, script_tones) VALUES ($1, $2) RETURNING *', [data.script, data.tone], (err, result) => {
+      if (err) {
+        console.log('error saving script to database');
+        callback(err, null);
+      } else {
+        console.log('script saved to database');
+        callback(null, result.rows);
+      }
+    });
+  },
+  saveTranscript: (data, callback) => {
+    console.log('typeof posted data is:', typeof data, 'data is:', data);
+    let jsonData = JSON.stringify(data);
+
+    pool.query('INSERT INTO transcript (transcript_text, transcript_tones) VALUES ($1, $2) RETURNING *', [data.script, data.tone], (err, result) => {
       if (err) {
         console.log('error saving script to database');
         callback(err, null);
