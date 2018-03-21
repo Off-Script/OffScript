@@ -11,7 +11,7 @@ class Chart extends React.Component {
 
   render() {
     var data = {
-      labels: ['Happy', 'Sad', 'Angry', 'Passionate', 'Excited', 'Distressed', 'Confused'],
+      labels: ['Openness', 'Conscientiousness', 'Extraversion', 'Agreeableness', 'Emotional Range'],
       datasets: [
         {
           label: 'Script',
@@ -21,7 +21,7 @@ class Chart extends React.Component {
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
           pointHoverBorderColor: 'rgba(179,181,198,1)',
-          data: [65, 59, 90, 81, 56, 55, 40]
+          data: [0.602404, 0.159871, 0.244165, 0.990255, 0.124632]
         },
         {
           label: 'Transcript',
@@ -31,7 +31,7 @@ class Chart extends React.Component {
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
           pointHoverBorderColor: 'rgba(255,99,132,1)',
-          data: [28, 48, 40, 19, 96, 27, 100]
+          data: [0.474518, 0.381992, 0.5652, 0.567031, 0.497355]
         }
       ]
     };

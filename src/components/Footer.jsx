@@ -1,11 +1,10 @@
 import React from 'react';
 
 const Footer = (props) => (
-  <footer>
-    <div className="row">
-      <div className="col s9"><h4>Offscript Team</h4></div>
-      <div className="col s3">Follow Us</div>
-    </div>
+  <footer className="page-footer transparent z-depth-4">
+      <div className="container blue-grey-text darken-3-text">
+      © {new Date().getFullYear()} OffScript. Powered by IBM Watson.
+      </div>
   </footer>
 )
 

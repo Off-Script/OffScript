@@ -13,14 +13,29 @@ class Analytics extends React.Component {
     return (
       <div>
         <div className="navbar">
-          <a href="/">
-          <button>One more time</button>
-          </a>
+          <a href="/" class="waves-effect btn cyan accent-4 hoverable"><i class="material-icons left">refresh</i>One more time</a>
         </div>
         <div className="container">
-          <h2 className="analytics-title">Detailed Analysis</h2>
+          <h5 className="analytics-title">Detailed Analysis</h5>
         </div>
-        <Chart />
+        <div className="row">
+          <div className="col l6 m12">
+            <div className="card-panel">
+              <Chart />
+            </div>
+            <div className="card-panel">
+              <Chart />
+            </div>
+          </div>
+          <div className="col l6 m12">
+            <div className="card-panel">
+              <Chart />
+            </div>
+            <div className="card-panel">
+              <Chart />
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

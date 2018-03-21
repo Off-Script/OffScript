@@ -1,9 +1,41 @@
 body {
   text-align: center;
   font-size: 20px;
+  min-height: 100%;
+  font-weight: 300;
 }
 
-span {
-  color: red;
-  font-size: 22px;
+.logo {
+  height: 1.8em;
+}
+
+.btn {
+  margin: 1em;
+}
+
+.about-card {
+  margin: 2em;
+}
+
+.avatar {
+  max-height: 300px;
+  min-height: 100px;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 0 auto;
+}
+
+.landing-img {
+  width: 100%;
+}
+
+.landing-tagline {
+  text-shadow: 0 0 0.2em black;
 }
