@@ -38,9 +38,21 @@ class Speech extends React.Component {
 
   render() {
     return (
-      <div>
-        <button onClick={() => this.setState({ start: true })}>start</button>
-        <button onClick={() => this.setState({ stop: true })}>stop</button>
+      <div className="container">
+        <a
+          className="btn waves-effect cyan accent-4 hoverable"
+          onClick={() => {
+            Materialize.toast('Transcription Started', 3000);
+            this.setState({ start: true });
+          }}><i className="material-icons">keyboard_voice</i>
+        </a>
+        <a
+          className="btn waves-effect cyan accent-4 hoverable"
+          onClick={() => {
+            Materialize.toast('Transcription Stopped', 3000);
+            this.setState({ start: false });
+          }}><i className="material-icons">stop</i>
+        </a>
         {this.state.start && (
           <VoiceRecognition
             continuous={true}
@@ -50,8 +62,17 @@ class Speech extends React.Component {
             stop={this.state.stop}
           />
         )}
-        <button onClick={this.handleSubmit}>Results</button>
-        <p className="flow-text">{this.state.transcript}</p>
+        <a
+          className="btn waves-effect cyan accent-4 hoverable"
+          onClick={this.handleSubmit}>Submit
+          <i class="material-icons right">send</i>
+        </a>
+        <div className="card medium grey lighten-4">
+          <div className="card-content">
+            <h5>Transcript</h5>
+          </div>
+          <p className="flow-text transcript-text">{this.state.transcript}</p>
+        </div>
       </div>
     )
 
