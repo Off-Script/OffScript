@@ -1,6 +1,8 @@
 import React from 'react';
 import { Radar } from 'react-chartjs-2';
 
+
+
 class Chart extends React.Component {
   constructor(props) {
     super(props);
