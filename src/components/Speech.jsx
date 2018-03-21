@@ -1,5 +1,6 @@
 import React from 'react';
 import VoiceRecognition from '../lib/VoiceRecognition.js'
+import axios from 'axios';
 
 class Speech extends React.Component {
   constructor(props) {
@@ -7,7 +8,7 @@ class Speech extends React.Component {
     this.state = {
       start: false,
       stop: false,
-      transcript: ''
+      transcript: 'test transcript test transcript test transcript test transcript test transcript test transcript test transcript'
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onEnd = this.onEnd.bind(this);
@@ -16,7 +17,17 @@ class Speech extends React.Component {
 
   handleSubmit(e) {
     this.onEnd();
-    this.props.settranscript(this.state.transcript)
+    e.preventDefault();
+    axios.post('/api/script', {
+      script: this.props.script,
+      transcript: this.state.transcript
+    })
+    .then((res) => {
+      this.props.settranscript(this.state.transcript)
+    })
+    .catch((err) => {
+       console.log(err);
+     })
   }
 
   onEnd() {
@@ -33,7 +44,6 @@ class Speech extends React.Component {
     this.setState({
       transcript: current + result + '.'
     });
-    console.log(result);
   }
 
   render() {

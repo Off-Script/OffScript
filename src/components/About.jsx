@@ -34,7 +34,7 @@ class About extends React.Component {
                     <a href="https://github.com/rhmorrow" target="_blank"><img className="logo-link" src="media/github.png"/></a>
                     <a href="https://www.linkedin.com/in/rhmorrow" target="_blank"><img className="logo-link" src="media/linkedin.png"/></a>
                   </div>
-                  <p className="flow-text thin-text">Ryan's quote</p>
+                  <p className="flow-text thin-text">"We're actors! We're the OPPOSITE of people!" - Tom Stoppard</p>
                 </div>
               </div>
               <div id="annah" className="row">

@@ -23,6 +23,7 @@ app.use((req, res, next) =>{
   next();
 });
 
+// Sends script and transcript to Watson, then to db + client
 app.post('/api/script', (req, res) => {
   Promise.all([
     helpers.toneAnalysis({'textToAnalyze': req.body.script}),
@@ -32,15 +33,19 @@ app.post('/api/script', (req, res) => {
       'features': {keywords: {sentiment: true, limit: 10}}
     }),
     helpers.languageAnalysis({
-      'textToAnalyze': req.body.script,
+      'textToAnalyze': req.body.transcript,
       'features': {keywords: {sentiment: true, limit: 10}}
     })
   ])
   .then((results) => {
-    res.writeHead(200);
+    res.status(200);
     results.forEach((result) => res.write(JSON.stringify(result)))
+    res.end();
   })
-  .catch((error) => console.log(error))
+  .catch((error) => {
+    console.log(error)
+    res.end(error.error)
+  })
 });
 
 // wild card routing all pages to the React Router

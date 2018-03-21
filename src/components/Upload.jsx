@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { Link, Route } from 'react-router-dom';
 
 class Upload extends React.Component {
@@ -20,17 +19,8 @@ class Upload extends React.Component {
   }
 
   handleSubmit(e) {
-    // e.preventDefault();
-    // axios.post('/api/script', {
-    //   script: this.state.script
-    // })
-    // .then((res) => {
-      this.props.setscript(this.state.script);
-      this.clear();
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // })
+    this.props.setscript(this.state.script);
+    this.clear();
   }
 
   clear() {

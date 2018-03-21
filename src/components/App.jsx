@@ -41,7 +41,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={ Landing } />
             <Route path="/upload" render={() => <Upload setscript={this.setScript} />} />
-            <Route path="/speech" render={() => <Speech settranscript={this.setTranscript} />} />
+            <Route path="/speech" render={() => <Speech script={this.state.script} settranscript={this.setTranscript} />} />
             <Route path="/results" render={() => <Results script={this.state.script} transcript={this.state.transcript} />} />
             <Route path="/analytics" component={ Analytics } />
             <Redirect to="/"/>

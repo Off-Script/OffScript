@@ -6,6 +6,11 @@ body {
   background-color: #fefdfb;
 }
 
+span.interweave {
+  color: red;
+  font-size: 23px;
+}
+
 .thin-text {
   font-weight: 300;
   font-size: 0.9em;
