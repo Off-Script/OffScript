@@ -26,24 +26,21 @@ app.use((req, res, next) =>{
 // Sends script and transcript to Watson, then to db + client
 app.post('/api/script', (req, res) => {
   Promise.all([
-    helpers.toneAnalysis({'textToAnalyze': req.body.script}),
-    helpers.toneAnalysis({'textToAnalyze': req.body.transcript}),
+    helpers.toneAnalysis({textToAnalyze: req.body.script}),
+    helpers.toneAnalysis({textToAnalyze: req.body.transcript}),
     helpers.languageAnalysis({
-      'textToAnalyze': req.body.script,
-      'features': {keywords: {sentiment: true, limit: 10}}
+      textToAnalyze: req.body.script,
+      features: {keywords: {sentiment: true, limit: 10}}
     }),
     helpers.languageAnalysis({
-      'textToAnalyze': req.body.transcript,
-      'features': {keywords: {sentiment: true, limit: 10}}
+      textToAnalyze: req.body.transcript,
+      features: {keywords: {sentiment: true, limit: 10}}
     })
   ])
   .then((results) => {
-    res.status(200);
-    results.forEach((result) => res.write(JSON.stringify(result)))
-    res.end();
+    res.status(200).JSON(results);
   })
   .catch((error) => {
-    console.log(error)
     res.end(error.error)
   })
 });
