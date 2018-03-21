@@ -38,7 +38,7 @@ app.post('/api/script', (req, res) => {
     })
   ])
   .then((results) => {
-    res.status(200).JSON(results);
+    res.status(200).end(JSON.stringify(results));
   })
   .catch((error) => {
     res.end(error.error)
