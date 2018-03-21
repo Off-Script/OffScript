@@ -46,8 +46,18 @@ app.post('/api/script', (req, res) => {
     dbHelpers.parseData(data, (err, result) => {
       if (err) { console.log('error parsing data with dbHelpers', err); }
       else {
-        db.saveScript();
-        db.saveTranscript();
+        db.saveScript(result.scriptData, (err, result) => {
+          if (err) { console.log('error saving script to db', err); }
+          else {
+            console.log('script saved to database', result);
+          }
+        });
+        db.saveTranscript(result.transcriptData, (err, result) => {
+          if (err) { console.log('error saving transcript to db', err); }
+          else {
+            console.log('transcript saved to database', result);
+          }
+        });
       }
     });
     res.status(200).end(JSON.stringify(results));
