@@ -1,4 +1,5 @@
 import React from 'react';
+import About from './About.jsx';
 
 class Landing extends React.Component {
   constructor(props) {
@@ -11,15 +12,14 @@ class Landing extends React.Component {
   render() {
     return (
       <div>
-        <div className="navbar">
-          <a href="/">
-          <button>Get Started</button>
-          </a>
+        <div className="parallax-container valign-wrapper">
+          <div className="container">
+            <h3 className="landing-tagline valign white-text">Speak with confidence.</h3>
+            <a href="/upload" class="btn-large waves-effect cyan accent-4 hoverable">Get Started</a>
+          </div>
+          <div className="parallax"><img className="landing-img" src="media/landing.jpg"/></div>
         </div>
-        <div className="container">
-          <h2 className="landing-tagline">Speak with confidence.</h2>
-          <h3 className="landing-aboutus">About Us</h3>
-        </div>
+        <About />
       </div>
     )
   }
