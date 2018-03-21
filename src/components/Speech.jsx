@@ -8,7 +8,7 @@ class Speech extends React.Component {
     this.state = {
       start: false,
       stop: false,
-      transcript: 'test transcript test transcript test transcript test transcript test transcript test transcript test transcript'
+      transcript: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onEnd = this.onEnd.bind(this);

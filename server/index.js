@@ -3,6 +3,7 @@ const path = require('path')
 const bodyParser = require('body-parser'); 
 let pg = require('pg'); 
 let db = require('../database/index.js');
+let dbHelpers = require('./utils/dbHelpers.js');
 let helpers = require('./utils/helpers.js')
 
 const app = express();
@@ -38,6 +39,27 @@ app.post('/api/script', (req, res) => {
     })
   ])
   .then((results) => {
+    let data = {
+      text: req.body,
+      results
+    };
+    dbHelpers.parseData(data, (err, result) => {
+      if (err) { console.log('error parsing data with dbHelpers', err); }
+      else {
+        db.saveScript(result.scriptData, (err, result) => {
+          if (err) { console.log('error saving script to db', err); }
+          else {
+            console.log('script saved to database', result);
+          }
+        });
+        db.saveTranscript(result.transcriptData, (err, result) => {
+          if (err) { console.log('error saving transcript to db', err); }
+          else {
+            console.log('transcript saved to database', result);
+          }
+        });
+      }
+    });
     res.status(200).end(JSON.stringify(results));
   })
   .catch((error) => {
