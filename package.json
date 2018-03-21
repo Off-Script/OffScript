@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
+    "configure": "./bin/configuredb.sh",
     "start": "nodemon server/index.js",
     "test": "mocha --bail --reporter nyan spec/spec.js"
   },

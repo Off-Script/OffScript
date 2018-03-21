@@ -1,5 +1,0 @@
-psql
-
-CREATE DATABASE scripts;
-
-CREATE
