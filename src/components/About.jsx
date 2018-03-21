@@ -47,7 +47,7 @@ class About extends React.Component {
                     <a href="https://github.com/annahinnyc" target="_blank"><img className="logo-link" src="media/github.png"/></a>
                     <a href="https://www.linkedin.com/in/annahpatterson" target="_blank"><img className="logo-link" src="media/linkedin.png"/></a>
                   </div>
-                  <p className="flow-text thin-text">Annah's quote</p>
+                  <p className="flow-text thin-text">The most damaging phrase in any language is: 'It's always been done that way.' - Grace Hopper</p>
                 </div>
               </div>
               <div id="yufan" className="row">
