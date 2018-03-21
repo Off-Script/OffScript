@@ -6,7 +6,7 @@ class Upload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      script: 'Enter Script Here'
+      script: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,17 +35,20 @@ class Upload extends React.Component {
 
   clear() {
     this.setState({
-      script: 'Enter Script Here'
+      script: ''
     });
   }
 
   render() {
     return (
-      <div>
-        Script:<br/>
-        <textarea autofocus rows="5" cols="40" value={this.state.script} onChange={this.handleChange}></textarea><br/>
+      <div className="container">
+        <div class="input-field upload">
+          <i class="material-icons prefix">mode_edit</i>
+          <textarea autofocus id="icon_prefix2" class="materialize-textarea" value={this.state.script} onChange={this.handleChange}></textarea>
+          <label for="icon_prefix2">Script</label>
+        </div>
         <Link to="/speech">
-        <button className="upload-script" onClick={this.handleSubmit}>Submit</button>
+          <a class="waves-effect btn cyan accent-4 hoverable" onClick={this.handleSubmit}><i class="material-icons left">file_upload</i>Upload</a>
         </Link>
       </div>
     )

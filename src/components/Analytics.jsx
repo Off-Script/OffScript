@@ -12,9 +12,7 @@ class Analytics extends React.Component {
   render() {
     return (
       <div>
-        <div className="navbar">
-          <a href="/" class="waves-effect btn cyan accent-4 hoverable"><i class="material-icons left">refresh</i>One more time</a>
-        </div>
+        <a href="/upload" className="waves-effect btn cyan accent-4 hoverable"><i class="material-icons left">refresh</i>One more time</a>
         <div className="container">
           <h5 className="analytics-title">Detailed Analysis</h5>
         </div>

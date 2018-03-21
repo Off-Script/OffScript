@@ -4,7 +4,7 @@ import Interweave from 'interweave';
 import scriptComparison from '../lib/ScriptComparison.js'
 
 const Results  = (props) => (
-  <div>
+  <div className="container">
     <h2>Results</h2>
     <div className="row">
       <div className="col s6">
@@ -19,10 +19,8 @@ const Results  = (props) => (
       </div>
       <h3>Speech Analysis</h3>
         <p>insert graph here</p>
-      {// insert graph component here
-      }
       <Link to="/analytics">
-        <button className="show-analytics">More info</button>
+        <button className="waves-effect btn cyan accent-4 hoverable"><i class="material-icons left">graphic_eq</i>Detailed Analysis</button>
       </Link>
     </div>
   </div>

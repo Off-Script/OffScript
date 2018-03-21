@@ -2,7 +2,13 @@ body {
   text-align: center;
   font-size: 20px;
   min-height: 100%;
+  font-weight: 400;
+  background-color: #fefdfb;
+}
+
+.thin-text {
   font-weight: 300;
+  font-size: 0.9em;
 }
 
 .logo {
@@ -18,7 +24,7 @@ body {
 }
 
 .avatar {
-  max-height: 300px;
+  max-height: 200px;
   min-height: 100px;
 }
 
@@ -32,10 +38,36 @@ body {
   flex: 1 0 auto;
 }
 
-.landing-img {
-  width: 100%;
-}
-
 .landing-tagline {
   text-shadow: 0 0 0.2em black;
+}
+
+.parallax img {
+  max-height: 160%;
+}
+
+.logo-link {
+  max-height: 2em;
+}
+
+.input-field.upload {
+  margin-top: 2em;
+}
+
+.card.medium {
+  height: auto;
+}
+
+.card.medium .card-content {
+  height: auto;
+}
+
+.card.medium .card-action {
+  position: relative;
+}
+
+@media only screen and (max-width : 768px) {
+  .parallax img {
+    max-height: 130%;
+  }
 }

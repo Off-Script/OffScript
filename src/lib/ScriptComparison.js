@@ -1,5 +1,8 @@
 //removes punctuation and compares script and transcript with margin of error for missing or added words.
 function scriptComparison(script1, script2) {
+  if (!script1.length || !script2.length) {
+    return 'Script or Transcript is blank';
+  }
   let arr1 = script1.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toUpperCase().split(' ');
   let transcript = script2.split(' ')
   let arr2 = script2.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toUpperCase().split(' ');
