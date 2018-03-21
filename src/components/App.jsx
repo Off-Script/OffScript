@@ -13,10 +13,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       script: '',
-      transcript: ''
+      transcript: '',
+      results: {}
     }
     this.setScript = this.setScript.bind(this);
     this.setTranscript = this.setTranscript.bind(this);
+    this.setResults = this.setResults.bind(this);
   }
 
   setScript(script) {
@@ -30,6 +32,12 @@ class App extends React.Component {
     this.setState({
       transcript: transcript
     });
+  }
+
+  setResults(results) {
+    this.setState({
+      results: results
+    });
     this.props.history.push('/results')
   }
 
@@ -41,9 +49,9 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={ Landing } />
             <Route path="/upload" render={() => <Upload setscript={this.setScript} />} />
-            <Route path="/speech" render={() => <Speech script={this.state.script} settranscript={this.setTranscript} />} />
-            <Route path="/results" render={() => <Results script={this.state.script} transcript={this.state.transcript} />} />
-            <Route path="/analytics" component={ Analytics } />
+            <Route path="/speech" render={() => <Speech script={this.state.script} settranscript={this.setTranscript} setresults={this.setResults}/>} />
+            <Route path="/results" render={() => <Results script={this.state.script} transcript={this.state.transcript} results={this.state.results} />} />
+            <Route path="/analytics" render={() => <Analytics script={this.state.script} transcript={this.state.transcript} results={this.state.results}/>} />
             <Redirect to="/"/>
           </Switch>
         </div>

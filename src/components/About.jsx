@@ -60,7 +60,7 @@ class About extends React.Component {
                     <a href="https://github.com/yufanw" target="_blank"><img className="logo-link" src="media/github.png"/></a>
                     <a href="https://www.linkedin.com/in/yufan-wang-web" target="_blank"><img className="logo-link" src="media/linkedin.png"/></a>
                   </div>
-                  <p className="flow-text thin-text">Your time is limited, so don't waste it living someone else's life. - Steve Jobs</p>
+                  <p className="flow-text thin-text">"Your time is limited, so don't waste it living someone else's life." - Steve Jobs</p>
                 </div>
               </div>
             </div>
