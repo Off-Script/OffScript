@@ -7,7 +7,7 @@
     "build": "webpack --mode production",
     "build-dev": "webpack --mode development",
     "configure": "./bin/configuredb.sh",
-    "start": "nodemon server/index.js",
+    "start": "node server/index.js",
     "test": "mocha --bail --reporter nyan spec/spec.js"
   },
   "repository": {
