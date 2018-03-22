@@ -43,21 +43,27 @@ class Results extends React.Component {
         <h2>Results</h2>
         <div className="row">
           <div className="col s6">
-            <h3>Your Script</h3>
-            <p>{this.props.script}</p>
+            <div className="card-panel">
+              <h4>Your Script</h4>
+              <p>{this.props.script}</p>
+            </div>
           </div>
           <div className="col s6">
-            <h3>Your Transcript</h3>
-            <Interweave
-              tagName="p"
-              content={scriptComparison(this.props.script, this.props.transcript)} />
+            <div className="card-panel">
+              <h4>Your Transcript</h4>
+              <Interweave
+                tagName="p"
+                content={scriptComparison(this.props.script, this.props.transcript)} />
+            </div>
           </div>
-          <h3>Speech Analysis</h3>
-          <Chart
-            labels={this.state.labels}
-            scriptdata={this.state.scriptData}
-            transdata={this.state.transData}
-          />
+          <h4>Speech Analysis</h4>
+          <div>
+            <Chart
+              labels={this.state.labels}
+              scriptdata={this.state.scriptData}
+              transdata={this.state.transData}
+            />
+          </div>
           <Link to="/upload">
             <button className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">graphic_eq</i>Detailed Analysis</button>
           </Link>
