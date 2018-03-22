@@ -10,7 +10,7 @@ class About extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="about">
         <div className="container">
           <div className="card medium about-card">
             <div className="card-content">
@@ -34,7 +34,7 @@ class About extends React.Component {
                     <a href="https://github.com/rhmorrow" target="_blank"><img className="logo-link" src="media/github.png"/></a>
                     <a href="https://www.linkedin.com/in/rhmorrow" target="_blank"><img className="logo-link" src="media/linkedin.png"/></a>
                   </div>
-                  <p className="flow-text thin-text">"We're actors! We're the OPPOSITE of people!" - Tom Stoppard</p>
+                  <p className="flow-text thin-text">We're actors! We're the OPPOSITE of people! - Tom Stoppard</p>
                 </div>
               </div>
               <div id="annah" className="row">
@@ -60,7 +60,7 @@ class About extends React.Component {
                     <a href="https://github.com/yufanw" target="_blank"><img className="logo-link" src="media/github.png"/></a>
                     <a href="https://www.linkedin.com/in/yufan-wang-web" target="_blank"><img className="logo-link" src="media/linkedin.png"/></a>
                   </div>
-                  <p className="flow-text thin-text">"Your time is limited, so don't waste it living someone else's life." - Steve Jobs</p>
+                  <p className="flow-text thin-text">Your time is limited, so don't waste it living someone else's life. - Steve Jobs</p>
                 </div>
               </div>
             </div>

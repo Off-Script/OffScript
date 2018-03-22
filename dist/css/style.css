@@ -71,7 +71,16 @@ span.interweave {
   position: relative;
 }
 
-@media only screen and (max-width : 768px) {
+@media only screen and (max-width : 768px), (max-device-width: 421px) {
+  body {
+    font-size: 24px;
+    min-height: 50%;
+  }
+
+  .parallax-container {
+    height: 600px;
+  }
+
   .parallax img {
     max-height: 130%;
   }
