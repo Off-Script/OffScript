@@ -86,6 +86,6 @@ function toneAnalysis(params) {
 }
 
 
-module.exports.faceAnalyzer = faceAnalyzer;
+// module.exports.faceAnalyzer = faceAnalyzer;
 module.exports.toneAnalysis = toneAnalysis;
 module.exports.languageAnalysis = languageAnalysis;
