@@ -72,6 +72,6 @@ app.get('/*', (req, res) => {
   res.status(302).sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-app.listen(PORT, () => {
+module.exports = app.listen(PORT, function() {
   console.log(`listening on port ${PORT}`);
 });
