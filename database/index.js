@@ -2,9 +2,10 @@ const pg = require('pg');
 
 let connectionString = process.env.DATABASE_URL || 'localhost';
 
-// check pooling resource for PostgreSQL connections we have open
-let client = new pg.Pool({
+// create new database client
+let client = new pg.Client({
   user: 'postgres',
+  password: 'psql',
   database: 'offscript',
   host: connectionString,
   port: 5432,
