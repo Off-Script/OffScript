@@ -4,6 +4,7 @@
   "description": "A text rehearsal assistant that helps you memorize and stick to a script.",
   "main": "index.js",
   "scripts": {
+    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress",
     "build": "webpack --mode production",
     "build-dev": "webpack --mode development",
     "configure": "./bin/configuredb.sh",
