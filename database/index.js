@@ -1,12 +1,14 @@
 const pg = require('pg');
-
 let connectionString = process.env.DATABASE_URL || 'localhost';
 
+if (process.env.NODE_ENV !== 'production') {
+  const dbconfig = require('./config/dbconfig.js');
+}
 // create new database client
 let client = new pg.Client({
-  user: 'postgres',
-  password: 'psql',
-  database: 'offscript',
+  user: process.env.USER || dbconfig.USER,
+  password: process.env.PASSWORD || dbconfig.PASSWORD,
+  database: process.env.DATABASE || dbconfig.DATABASE,
   host: connectionString,
   port: 5432,
   max: 10,
