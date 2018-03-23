@@ -2,6 +2,9 @@ const pg = require('pg');
 const dbconfig = require('./config/dbconfig.js');
 let connectionString = process.env.DATABASE_URL || 'localhost';
 
+if (process.env.NODE_ENV !== 'production') {
+  const dbconfig = require('./config/dbconfig.js');
+}
 // create new database client
 let client = new pg.Client({
   user: process.env.USER || dbconfig.USER,
