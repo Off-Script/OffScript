@@ -2,18 +2,11 @@ const pg = require('pg');
 let connectionString = process.env.OFFSCRIPT_URL || 'localhost';
 
 if (process.env.NODE_ENV !== 'production') {
-  const dbconfig = require('./config/dbconfig.js');
+  const dbconfig = require('../config/dbconfig.js');
 }
 // create new database client
 let client = new pg.Client({
-  user: process.env.USER || dbconfig.USER,
-  password: process.env.PASSWORD || dbconfig.PASSWORD,
-  database: process.env.DATABASE || dbconfig.DATABASE,
-  host: connectionString,
-  port: 5432,
-  max: 10,
-  idleTimeoutMillis: 1000,
-  connectionTimeoutMillis: 1000,
+  connectionString: connectionString,
   ssl: true
 });
 
