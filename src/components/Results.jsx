@@ -45,7 +45,9 @@ class Results extends React.Component {
           <div className="col s6">
             <div className="card-panel">
               <h4>Your Script</h4>
-              <p>{this.props.script}</p>
+              <Interweave
+                tagName="p"
+                content={scriptComparison(this.props.script, this.props.transcript).markedScript} />
             </div>
           </div>
           <div className="col s6">
@@ -53,7 +55,7 @@ class Results extends React.Component {
               <h4>Your Transcript</h4>
               <Interweave
                 tagName="p"
-                content={scriptComparison(this.props.script, this.props.transcript)} />
+                content={scriptComparison(this.props.script, this.props.transcript).markedTranscript} />
             </div>
           </div>
           <h4>Speech Analysis</h4>

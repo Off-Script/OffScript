@@ -1,26 +1,34 @@
+var stringSimilarity = require('string-similarity');
+var diff = require('diff');
+
 //removes punctuation and compares script and transcript with margin of error for missing or added words.
 function scriptComparison(script1, script2) {
   if (!script1.length || !script2.length) {
     return 'Script or Transcript is blank';
   }
-  let arr1 = script1.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toUpperCase().split(' ');
-  let transcript = script2.split(' ')
-  let arr2 = script2.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").toUpperCase().split(' ');
-  let j = 0;
-  for(var i = 0; i < arr2.length; i++) {
-    if(arr1[j] !== arr2[i]) {
-      transcript[i] = "<span className='wrong'>" + transcript[i] + "</span>"
-      if(arr1[j+3] === arr2[i]) { j = j + 3};
-      if(arr1[j+2] === arr2[i]) { j = j + 2};
-      if(arr1[j+1] === arr2[i]) { j++ }
-      if(arr1[j] === arr2[i+1]) { j-- }
-      if(arr1[j] === arr2[j+2]) { j = j - 2};
+  let target = script1.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ")
+  let recording = script2.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ")
+  let differences = diff.diffWords(target, recording, {ignoreCase: true});
+  let markedScript = ''
+  let markedTranscript = ''
+  differences.forEach((difference) => {
+    if(!difference.added && !difference.removed) {
+      markedScript = markedScript.concat(difference.value);
+      markedTranscript = markedTranscript.concat(difference.value);
     }
-    j++;
+    if(difference.added) {
+      markedTranscript = markedTranscript.concat('<span className="wrong">'+ difference.value +'</span>')
+    }
+    if(difference.removed) {
+      markedScript = markedScript.concat('<span className="missing">' + difference.value + '</span>')
+    };
+  })
+
+  return {
+    similarity: stringSimilarity.compareTwoStrings(script1, script2),
+    markedScript,
+    markedTranscript
   }
-
-  return transcript.join(' ');
 }
-
 
 export default scriptComparison;
