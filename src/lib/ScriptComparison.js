@@ -17,10 +17,10 @@ function scriptComparison(script1, script2) {
       markedTranscript = markedTranscript.concat(difference.value);
     }
     if(difference.added) {
-      markedTranscript = markedTranscript.concat('<span className="wrong">'+ difference.value +'</span>')
+      markedTranscript = markedTranscript.concat('<span class="wrong">'+ difference.value +'</span>')
     }
     if(difference.removed) {
-      markedScript = markedScript.concat('<span className="missing">' + difference.value + '</span>')
+      markedScript = markedScript.concat('<span class="missing">' + difference.value + '</span>')
     };
   })
 
