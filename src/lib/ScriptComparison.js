@@ -10,9 +10,11 @@ function scriptComparison(script1, script2) {
   for(var i = 0; i < arr2.length; i++) {
     if(arr1[j] !== arr2[i]) {
       transcript[i] = "<span className='wrong'>" + transcript[i] + "</span>"
+      if(arr1[j+3] === arr2[i]) { j = j + 3};
       if(arr1[j+2] === arr2[i]) { j = j + 2};
       if(arr1[j+1] === arr2[i]) { j++ }
       if(arr1[j] === arr2[i+1]) { j-- }
+      if(arr1[j] === arr2[j+2]) { j = j - 2};
     }
     j++;
   }

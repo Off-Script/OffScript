@@ -13,7 +13,8 @@ let client = new pg.Client({
   port: 5432,
   max: 10,
   idleTimeoutMillis: 1000,
-  connectionTimeoutMillis: 1000
+  connectionTimeoutMillis: 1000,
+  ssl: true
 });
 
 client.connect((err, db, done) => {
