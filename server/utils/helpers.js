@@ -1,11 +1,12 @@
 let ToneAnalyzer = require('watson-developer-cloud/tone-analyzer/v3');
 let NatLang = require('watson-developer-cloud/natural-language-understanding/v1.js');
 let axios = require('axios');
+var toneAPI, natlangAPI, azureAPI;
 
 if (process.env.NODE_ENV !== 'production') {
-  let toneAPI = require ('../../config/toneAPI.js');
-  let natlangAPI = require('../../config/natlangAPI.js');
-  let azureAPI = require('../../config/azureAPI.js');
+  toneAPI = require ('../../config/toneAPI.js');
+  natlangAPI = require('../../config/natlangAPI.js');
+  azureAPI = require('../../config/azureAPI.js');
 }
 
 // function faceAnalyzer(image, cb) {

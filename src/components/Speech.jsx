@@ -24,7 +24,7 @@ class Speech extends React.Component {
       transcript: this.state.transcript
     })
     .then((res) => {
-      console.log('handling submit');
+      console.log('handling submit', res);
       this.props.settranscript(this.state.transcript);
       this.props.setresults(res.data);
     })

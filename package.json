@@ -9,6 +9,7 @@
     "build-dev": "webpack --mode development",
     "configure": "./bin/configuredb.sh",
     "start": "node server/index.js",
+    "server-dev": "NODE_ENV=dev nodemon server/index.js",
     "test": "mocha --bail --reporter nyan spec/spec.js"
   },
   "repository": {
