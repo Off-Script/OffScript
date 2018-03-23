@@ -1,5 +1,4 @@
 const pg = require('pg');
-const dbconfig = require('./config/dbconfig.js');
 let connectionString = process.env.DATABASE_URL || 'localhost';
 
 if (process.env.NODE_ENV !== 'production') {
