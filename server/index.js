@@ -39,6 +39,7 @@ app.post('/api/script', (req, res) => {
     })
   ])
   .then((results) => {
+    console.log('results', results);
     let data = {
       text: req.body,
       results
@@ -63,6 +64,7 @@ app.post('/api/script', (req, res) => {
     res.status(200).end(JSON.stringify(results));
   })
   .catch((error) => {
+    console.log(error, 'error');
     res.end(error.error)
   })
 });
