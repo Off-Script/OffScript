@@ -83,7 +83,7 @@ class LoginModal extends React.Component{
             </div>
             <div className="row input-field col s12">
               <div className="col s6">
-                <a className="modal-trigger grey-text darken-4-text" onClick={this.handleRegistration} >Register Now</a>
+                <a className="grey-text darken-4-text">Register Now</a>
               </div>
               <div className="col s6">
                  <a className="grey-text darken-4-text">Forgot Password?</a>
