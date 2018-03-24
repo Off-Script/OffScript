@@ -76,6 +76,14 @@ span.missing {
   position: relative;
 }
 
+#login {
+  text-align: right;
+}
+
+.modal {
+  margin-left: 40rem;
+}
+
 @media only screen and (max-width : 768px), (max-device-width: 421px) {
   body {
     font-size: 24px;
