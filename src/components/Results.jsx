@@ -12,7 +12,7 @@ class Results extends React.Component {
       transData: [],
       labels: []
     };
-
+    this.comparison = scriptComparison(this.props.script, this.props.transcript);
     this.makeChart = this.makeChart.bind(this);
   }
 
@@ -21,7 +21,6 @@ class Results extends React.Component {
   }
 
   makeChart() {
-    console.log('making chart');
     var labels = [];
     var scriptData = [];
     var transData = [];
@@ -45,7 +44,9 @@ class Results extends React.Component {
           <div className="col s6">
             <div className="card-panel">
               <h4>Your Script</h4>
-              <p>{this.props.script}</p>
+              <Interweave
+                tagName="p"
+                content={this.comparison.markedScript} />
             </div>
           </div>
           <div className="col s6">
@@ -53,16 +54,21 @@ class Results extends React.Component {
               <h4>Your Transcript</h4>
               <Interweave
                 tagName="p"
-                content={scriptComparison(this.props.script, this.props.transcript)} />
+                content={this.comparison.markedTranscript} />
             </div>
           </div>
-          <h4>Speech Analysis</h4>
-          <div>
-            <Chart
-              labels={this.state.labels}
-              scriptdata={this.state.scriptData}
-              transdata={this.state.transData}
-            />
+          <div className="row">
+            <h4>Speech Analysis</h4>
+            <div className="col s6"><h4>Your Accuracy Score</h4>
+              <h5>{Math.floor(this.comparison.similarity*100)} / 100</h5>
+            </div>
+            <div className="col s6"><h4>Text Analysis</h4>
+              <Chart
+                labels={this.state.labels}
+                scriptdata={this.state.scriptData}
+                transdata={this.state.transData}
+              />
+            </div>
           </div>
           <Link to="/upload">
             <button className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">graphic_eq</i>Detailed Analysis</button>
