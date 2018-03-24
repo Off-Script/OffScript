@@ -1,4 +1,6 @@
 const pg = require('pg');
+const bcrypt = require('bcrypt');
+const saltRounds = 5;
 var dbconfig;
 if (process.env.NODE_ENV !== 'production') {
   dbconfig = require('../config/dbconfig.js');
@@ -61,6 +63,57 @@ module.exports = {
         callback(err, null);
       } else {
         console.log('script saved to database');
+        callback(null, result);
+      }
+    });
+  },
+  saveUser: (data, callback) => {
+    let plainTextPassword = data.password;
+
+    //bcrypt password before saving to database
+    bcrypt.hash(plainTextPassword, saltRounds, (err, hash) => {
+      client.query('INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *', [data.username, hash], (err, result) => {
+        if (err) {
+          console.log('error saving user to database');
+          callback(err, null);
+        } else {
+          console.log('user saved to database');
+          callback(null, result.rows);
+        }
+      });
+    });
+  },
+  getUser: (data, callback) => {
+    let attemptedPassword = data.password;
+
+    client.query(`SELECT * FROM users WHERE username = "%${data.username}%"`, (err, result) => {
+      if (err) {
+        console.log('error getting user from database');
+        callback(err, null);
+      } else {
+        let message = { errors: { password: 'Incorrect submission, try again'} };
+
+        bcrypt.compare(attemptedPassword, result.password, (err, isMatch) => {
+          if (err) { callback(err, null); }
+          if (isMatch) {
+            return callback(null, result);
+          } else if (!isMatch) {
+            callback(message, null);
+          }
+        })
+        callback(null, result);
+      }
+    });
+
+  },
+  // Get user by id to feed Passport deserialize user in server
+  getUserById: (id, callback) => {
+    client.query(`SELECT * FROM users WHERE id = %${id}%`, (err, result) => {
+      if (err) {
+        console.log('error getting user by id from database');
+        callback(err, null);
+      } else {
+        console.log('user retrieve by id from database');
         callback(null, result);
       }
     });

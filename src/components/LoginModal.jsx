@@ -12,12 +12,13 @@ class LoginModal extends React.Component{
         user: {}
       }
       this.onChange = this.onChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleLogin = this.handleLogin.bind(this);
+      this.handleRegistration = this.handleRegistration.bind(this);
   }
 
 
-  handleSubmit(e) {
-    console.log('handling submit now', e);
+  handleLogin(e) {
+    console.log('handling login now', e);
     e.preventDefault();
     axios.post('/login', {
       username: this.state.username,
@@ -28,6 +29,21 @@ class LoginModal extends React.Component{
     })
     .catch((err) => {
        console.log('error handling login submit', err);
+     })
+  }
+
+  handleRegistration(e) {
+    console.log('handling registration now', e);
+    e.preventDefault();
+    axios.post('/signup', {
+      username: this.state.username,
+      password: this.state.password
+    })
+    .then((res) => {
+      console.log('handling registration submission', res);
+    })
+    .catch((err) => {
+       console.log('error handling registration submission', err);
      })
   }
 
@@ -67,7 +83,7 @@ class LoginModal extends React.Component{
             </div>
             <div className="row input-field col s12">
               <div className="col s6">
-                <a className="modal-trigger grey-text darken-4-text">Register Now</a>
+                <a className="modal-trigger grey-text darken-4-text" onClick={this.handleRegistration} >Register Now</a>
               </div>
               <div className="col s6">
                  <a className="grey-text darken-4-text">Forgot Password?</a>
@@ -75,7 +91,7 @@ class LoginModal extends React.Component{
             </div>
           </div>
           <div className="modal-footer transparent">
-            <a className="btn waves-effect black" onClick={this.handleSubmit}>Submit</a>
+            <a className="btn waves-effect black" onClick={this.handleLogin}>Login</a>
           </div>
         </div>
       </div>
