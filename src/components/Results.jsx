@@ -17,7 +17,9 @@ class Results extends React.Component {
   }
 
   componentWillMount() {
-    this.makeChart();
+    if (this.props.results[0]) {
+      this.makeChart();
+    }
   }
 
   makeChart() {
@@ -39,7 +41,7 @@ class Results extends React.Component {
   render() {
     return (
       <div className="container">
-        <h2>Results</h2>
+        <h3>Results</h3>
         <div className="row">
           <div className="col s6">
             <div className="card-panel">
@@ -57,19 +59,21 @@ class Results extends React.Component {
                 content={this.comparison.markedTranscript} />
             </div>
           </div>
-          <div className="row">
+        </div>
+        <div className="row">
             <h4>Speech Analysis</h4>
-            <div className="col s6"><h4>Your Accuracy Score</h4>
-              <h5>{Math.floor(this.comparison.similarity*100)} / 100</h5>
+            <div className="col s6"><h5>Your Accuracy Score</h5>
+              <h6>{Math.floor(this.comparison.similarity*100)} / 100</h6>
             </div>
-            <div className="col s6"><h4>Text Analysis</h4>
+            <div className="col s6"><h5>Text Analysis</h5>
               <Chart
                 labels={this.state.labels}
                 scriptdata={this.state.scriptData}
                 transdata={this.state.transData}
               />
             </div>
-          </div>
+        </div>
+        <div>
           <Link to="/upload">
             <button className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">graphic_eq</i>Detailed Analysis</button>
           </Link>
