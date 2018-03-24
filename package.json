@@ -25,6 +25,7 @@
   "homepage": "https://github.com/Off-Script/OffScript#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "chart.js": "^2.7.2",
     "cookie-parser": "^1.4.3",

@@ -46,11 +46,53 @@ passport.use(new LocalStrategy((username, password, done) => {
   }
 }));
 
+// Validates new user signup and saves user to database
+app.post('/signup', (req, res) => {
+  auth.validateSignupForm(req.body, (result) => {
+    if (result.success) {
+      console.log(result);
+      db.saveUser(req.body, (err, result) => {
+        if (err) {
+          console.log('error saving user data to db:', err);
+          res.status(500).send({ error: 'User already exists' });
+        }
+        else {
+          console.log('saved user data to the db:', result);
+          db.getUser(req.body, (err, result) => {
+            if (err) { res.send(err); }
+            else {
+              console.log('result db.getUser', result);
+
+              // creates persisting session with Passport
+              const user_id = result.id;
+              req.login(user_id, (err) => {
+                console.log('logged in...redirecting...');
+                // res.redirect('/');
+                res.send(result);
+              });
+            }
+          });
+        }
+      });
+    } else if (result) {
+      console.log(result);
+      res.status(500).send(result);
+    }
+  });
+});
+
 // Validates user and logs user into session
 app.post('/login', (req, res) => {
   auth.validateLoginForm(req.body, (result) => {
     if (result.success) {
+      const credentials = req.body;
       console.log('user validated, okay to get profile');
+      db.getUser(req.body, (err, result) => {
+        if (err) { res.status(500).send(err); }
+        else {
+          res.send(result);
+        }
+      });
     } else {
       res.send(result);
     }
@@ -106,13 +148,6 @@ app.post('/api/script', (req, res) => {
     console.log(error, 'error');
     res.end(error.error)
   })
-});
-
-app.post('/postlogin', (req, res) => {
-  const credentials = req.body;
-  const handleVerify = (verifyResult) => {
-
-  }
 });
 
 // Creates Passport session for user by serialized ID
