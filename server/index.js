@@ -1,18 +1,26 @@
 const express = require('express');
-const path = require('path')
+const path = require('path');
 const bodyParser = require('body-parser'); 
+const cookieParser = require('cookie-parser');
+const auth = require('./utils/auth');
 let pg = require('pg'); 
 let db = require('../database/index.js');
 let dbHelpers = require('./utils/dbHelpers.js');
-let helpers = require('./utils/helpers.js')
+let helpers = require('./utils/helpers.js');
 
 const app = express();
 
 let PORT = process.env.PORT || 3000;
 
-// body parser
+// Authentication packages
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+// Parses JSON, urls and cookies
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true }));
+app.use(cookieParser());
 
 // Serves static files to client
 app.use(express.static(path.join(__dirname, '../dist')));
@@ -22,6 +30,37 @@ app.use((req, res, next) =>{
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
+});
+
+// Passport init
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Creates new user session using Passport Local Strategy
+passport.use(new LocalStrategy((username, password, done) => {
+  if (err) { console.log('error in passport local strategy get user', err); }
+  else if (!user) {
+    return done(null, false, { message: 'Unknown user' });
+  } else {
+    return done(null, user);
+  }
+}));
+
+// Validates user and logs user into session
+app.post('/login', (req, res) => {
+  auth.validateLoginForm(req.body, (result) => {
+    if (result.success) {
+      console.log('user validated, okay to get profile');
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+// Destroys session and logs user out
+app.get('/logout', (req, res) => {
+  req.logOut();
+  res.clearCookie('connect.sid', {path:'/'}).send('cleared');
 });
 
 // Sends script and transcript to Watson, then to db + client
@@ -66,6 +105,25 @@ app.post('/api/script', (req, res) => {
   .catch((error) => {
     console.log(error, 'error');
     res.end(error.error)
+  })
+});
+
+app.post('/postlogin', (req, res) => {
+  const credentials = req.body;
+  const handleVerify = (verifyResult) => {
+
+  }
+});
+
+// Creates Passport session for user by serialized ID
+passport.serializeUser((user_id, done) => {
+  done(null, user_id);
+});
+
+// Deserializes the user ID for passport to deliver to the session
+passport.deserializeUser((user_id, done) => {
+  User.getUserById(user_id, (err, user) => {
+    done(err, user);
   })
 });
 
