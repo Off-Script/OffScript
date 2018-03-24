@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, withRouter, Redirect, Switch } from 'react-router-dom';
-import LoginModal from './LoginModal.jsx';
 import Header from './Header.jsx';
 import Landing from './Landing.jsx';
 import Upload from './Upload.jsx';
@@ -45,7 +44,6 @@ class App extends React.Component {
   render () {
     return (
       <div className="app">
-        <LoginModal />
         <Header />
         <div className="main">
           <Switch>
