@@ -32,7 +32,7 @@ class Upload extends React.Component {
     fileReader.onload = (fileToLoad) => {
       let textFromFileLoaded = fileToLoad.target.result;
       this.setState({
-      script: textFromFileLoaded
+        script: textFromFileLoaded
       });
     };
     fileReader.readAsText(fileToLoad, "UTF-8");
@@ -47,14 +47,23 @@ class Upload extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="input-field upload">
-          <i className="material-icons prefix">mode_edit</i>
-          <textarea autoFocus id="icon_prefix2" className="materialize-textarea" data-length="1000" value={this.state.script} onChange={this.handleChange}></textarea>
-          <label for="icon_prefix2">Script</label>
+        <div className="card upload-card">
+          <div className="card-tabs">
+            <ul className="tabs tabs-fixed-width">
+              <li className="tab cyan accent-4"><a className="white-text" href="#type">Type a script</a></li>
+              <li className="tab cyan accent-4"><a className="white-text" href="#upload">Upload a script</a></li>
+            </ul>
+          </div>
+          <div id="type" className="input-field upload">
+            <i className="material-icons prefix">mode_edit</i>
+            <textarea autoFocus id="icon_prefix2" className="materialize-textarea" data-length="1000" value={this.state.script} onChange={this.handleChange}></textarea>
+            <label for="icon_prefix2">Script</label>
+            <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.handleSubmit}><i className="material-icons left">file_upload</i>Upload</button>
+          </div>
+          <div id="upload" className="upload">
+            <FileUpload onChange={this.readFile.bind(this)}/>
+          </div>
         </div>
-        <br/>
-        <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.handleSubmit}><i className="material-icons left">file_upload</i>Upload</button>
-        <FileUpload onChange={this.readFile.bind(this)}/>
       </div>
     )
   }

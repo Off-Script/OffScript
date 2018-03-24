@@ -6,6 +6,10 @@ body {
   background-color: #fefdfb;
 }
 
+h1,h2,h3,h4,h5,h6 {
+  font-family: "Poppins", sans-serif;
+}
+
 span.wrong {
   color: red;
   font-size: 23px;
@@ -74,6 +78,17 @@ span.missing {
 
 .card.medium .card-action {
   position: relative;
+}
+
+.upload-card {
+  margin: 5em;
+  box-shadow: none;
+  background-color: inherit;
+}
+
+.upload {
+  margin-top: 5em;
+  max-width: 95%;
 }
 
 #login {

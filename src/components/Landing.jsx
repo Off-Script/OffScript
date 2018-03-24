@@ -12,7 +12,7 @@ class Landing extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="landing">
         <div className="parallax-container valign-wrapper">
           <div className="container">
             <h3 className="landing-tagline valign white-text">Speak with confidence.</h3>
