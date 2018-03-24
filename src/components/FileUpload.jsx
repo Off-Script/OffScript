@@ -9,13 +9,13 @@ class FileUpload extends React.Component {
     return (
       <div className="container">
         <form action="#">
-          <div class="file-field input-field">
-            <div class="btn">
+          <div className="file-field input-field">
+            <div className="waves-effect btn cyan accent-4 hoverable">
               <span>File</span>
               <input type="file" id="fileToLoad" onChange={this.props.onChange} />
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" placeholder="Upload a text file" />
+            <div className="file-path-wrapper">
+              <input className="file-path validate" type="text" placeholder="Upload a text file" />
             </div>
           </div>
         </form>

@@ -81,7 +81,8 @@ span.missing {
 }
 
 .modal {
-  margin-left: 40rem;
+  padding: 1em;
+  background-color: rgba(250, 250, 250, 0.90);
 }
 
 @media only screen and (max-width : 768px), (max-device-width: 421px) {

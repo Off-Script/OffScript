@@ -6,7 +6,7 @@
   "scripts": {
     "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress",
     "build": "webpack --mode production",
-    "build-dev": "webpack --mode development",
+    "build-dev": "webpack --mode development -w",
     "configure": "./bin/configuredb.sh",
     "start": "node server/index.js",
     "server-dev": "NODE_ENV=dev nodemon server/index.js",
