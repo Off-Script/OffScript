@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Interweave from 'interweave';
 import scriptComparison from '../lib/ScriptComparison.js'
 import Chart from './Chart.jsx';
+import Editor from "./Editor.jsx";
 
 class Results extends React.Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class Results extends React.Component {
               <Interweave
                 tagName="p"
                 content={this.comparison.markedScript} />
+              <Editor comparison={this.comparison} />
             </div>
           </div>
           <div className="col s6">
@@ -71,6 +73,7 @@ class Results extends React.Component {
                 score={this.state.scoreData}
                 charttype={"pie"}
               />
+
             </div>
             <div className="col s6"><h5>Text Analysis</h5>
               <Chart

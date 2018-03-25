@@ -25,7 +25,8 @@ function scriptComparison(script1, script2) {
   })
 
   return {
-    similarity: stringSimilarity.compareTwoStrings(script1, script2),
+    similarity: Math.floor(stringSimilarity.compareTwoStrings(script1, script2) * 100),
+    differences,
     markedScript,
     markedTranscript
   }
