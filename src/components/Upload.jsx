@@ -49,9 +49,9 @@ class Upload extends React.Component {
       <div className="container">
         <div className="card upload-card">
           <div className="card-tabs">
-            <ul className="tabs tabs-fixed-width">
-              <li className="tab cyan accent-4"><a className="white-text" href="#type">Type a script</a></li>
-              <li className="tab cyan accent-4"><a className="white-text" href="#upload">Upload a script</a></li>
+            <ul className="tabs tabs-fixed-width grey lighten-3">
+              <li className="tab"><a className="cyan-text" href="#type">Type a script</a></li>
+              <li className="tab"><a className="cyan-text" href="#upload">Upload a script</a></li>
             </ul>
           </div>
           <div id="type" className="input-field upload">

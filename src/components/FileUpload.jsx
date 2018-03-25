@@ -8,6 +8,7 @@ class FileUpload extends React.Component {
   render() {
     return (
       <div className="container">
+        <h6>Upload a script file in .txt format</h6>
         <form action="#">
           <div className="file-field input-field">
             <div className="waves-effect btn cyan accent-4 hoverable">

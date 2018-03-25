@@ -12,15 +12,15 @@ class About extends React.Component {
     return (
       <div className="about">
         <div className="container">
-          <div className="card medium about-card">
+          <div className="card medium about-card grey lighten-4">
             <div className="card-content">
               <h5>About Us</h5>
             </div>
             <div className="card-tabs">
-              <ul className="tabs">
-                <li className="tab"><a href="#ryan">Ryan Morrow</a></li>
-                <li className="tab"><a className="active" href="#annah">Annah Patterson</a></li>
-                <li className="tab"><a href="#yufan">Yufan Wang</a></li>
+              <ul className="tabs grey lighten-3">
+                <li className="tab"><a href="#ryan" className="cyan-text">Ryan Morrow</a></li>
+                <li className="tab"><a href="#annah" className="active cyan-text">Annah Patterson</a></li>
+                <li className="tab"><a href="#yufan" className="cyan-text">Yufan Wang</a></li>
               </ul>
             </div>
             <div className="card-content">
