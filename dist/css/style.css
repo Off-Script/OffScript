@@ -87,12 +87,19 @@ span.missing {
 }
 
 .upload {
-  margin-top: 5em;
+  margin-top: 2em;
   max-width: 95%;
 }
 
 #login {
   text-align: right;
+}
+
+.wrapper.info {
+  margin: 2em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1em;
 }
 
 .modal {
@@ -107,10 +114,19 @@ span.missing {
   }
 
   .parallax-container {
-    height: 600px;
+    height: 400px;
   }
 
   .parallax img {
     max-height: 130%;
+  }
+
+  .about-card {
+    margin: 1em;
+  }
+
+  .wrapper.info {
+    margin: 1em;
+    grid-template-columns: 1fr;
   }
 }
