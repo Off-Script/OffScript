@@ -190,6 +190,10 @@ app.post('/api/script', (req, res) => {
   })
 });
 
+app.post('/profile', (req, res) => {
+
+});
+
 // wild card routing all pages to the React Router
 app.get('/*', (req, res) => {
   res.status(302).sendFile(path.join(__dirname, '../dist/index.html'));
