@@ -82,7 +82,7 @@ class Results extends React.Component {
             </div>
         </div>
         <div>
-          <Link to="/upload">
+          <Link to="/analytics">
             <button className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">graphic_eq</i>Detailed Analysis</button>
           </Link>
         </div>
