@@ -1,6 +1,7 @@
 const pg = require('pg');
 const bcrypt = require('bcrypt');
 const saltRounds = 5;
+const session = require('express-session');
 var dbconfig;
 if (process.env.NODE_ENV !== 'production') {
   dbconfig = require('../config/dbconfig.js');
@@ -85,23 +86,23 @@ module.exports = {
   },
   getUser: (data, callback) => {
     let attemptedPassword = data.password;
-
-    client.query(`SELECT * FROM users WHERE username = "%${data.username}%"`, (err, result) => {
+    let username = data.username;
+    console.log('its here!', attemptedPassword, username);
+    client.query(`SELECT * FROM users WHERE username = '${username}'`, (err, result) => {
       if (err) {
         console.log('error getting user from database');
         callback(err, null);
       } else {
         let message = { errors: { password: 'Incorrect submission, try again'} };
-
-        bcrypt.compare(attemptedPassword, result.password, (err, isMatch) => {
+        let password = result.rows[0].password;
+        bcrypt.compare(attemptedPassword, password, (err, isMatch) => {
           if (err) { callback(err, null); }
           if (isMatch) {
-            return callback(null, result);
+            callback(null, result.rows[0]);
           } else if (!isMatch) {
             callback(message, null);
           }
         })
-        callback(null, result);
       }
     });
 
