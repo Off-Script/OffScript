@@ -69,7 +69,7 @@ class LoginModal extends React.Component{
   render() {
     const redirectToProfile = this.state.redirectToProfile;
     if (redirectToProfile) {
-      return(<Redirect to={{ pathname: '/upload', state: this.state.username }}/>)
+      return(<Redirect to={{ pathname: '/profile', state: this.state.username }}/>)
     }
     const display = {
       display: 'block'

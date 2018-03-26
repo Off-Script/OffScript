@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, withRouter, Redirect, Switch } from 'react-router-dom';
 import Header from './Header.jsx';
 import Landing from './Landing.jsx';
+import ProfileWithRouter from './Profile.jsx';
 import Upload from './Upload.jsx';
 import Speech from './Speech.jsx';
 import Results from './Results.jsx';
@@ -49,6 +50,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={ Landing } />
             <Route path="/upload" render={() => <Upload setscript={this.setScript} />} />
+            <Route path='/profile' component={ ProfileWithRouter } />
             <Route path="/speech" render={() => <Speech script={this.state.script} settranscript={this.setTranscript} setresults={this.setResults}/>} />
             <Route path="/results" render={() => <Results script={this.state.script} transcript={this.state.transcript} results={this.state.results} />} />
             <Route path="/analytics" render={() => <Analytics script={this.state.script} transcript={this.state.transcript} results={this.state.results}/>} />
