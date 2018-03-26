@@ -9,7 +9,8 @@ class Speech extends React.Component {
       start: false,
       stop: false,
       transcript: '',
-      results: {}
+      results: {},
+      loading: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onEnd = this.onEnd.bind(this);
@@ -19,6 +20,9 @@ class Speech extends React.Component {
   handleSubmit(e) {
     this.onEnd();
     e.preventDefault();
+    this.setState({
+      loading: true
+    });
     axios.post('/api/script', {
       script: this.props.script,
       transcript: this.state.transcript
@@ -50,6 +54,23 @@ class Speech extends React.Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return (
+        <div className="big-loader">
+          <div className="preloader-wrapper big active">
+            <div className="spinner-layer spinner-blue">
+              <div className="circle-clipper left">
+                <div className="circle"></div>
+              </div><div className="gap-patch">
+                <div className="circle"></div>
+              </div><div className="circle-clipper right">
+                <div className="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
     let Loader = null;
 
     if (this.state.start) {
