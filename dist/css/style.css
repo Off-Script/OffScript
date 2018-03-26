@@ -64,6 +64,10 @@ span.missing {
   max-height: 2em;
 }
 
+.logo-link:hover {
+  opacity: 0.5;
+}
+
 .input-field.upload {
   margin-top: 2em;
 }
@@ -84,6 +88,12 @@ span.missing {
   margin: 5em;
   box-shadow: none;
   background-color: inherit;
+  min-height: 203px;
+}
+
+.info-card {
+  height: 300px;
+  padding-top: 2.1em;
 }
 
 .upload {
@@ -109,12 +119,12 @@ span.missing {
 
 @media only screen and (max-width : 768px), (max-device-width: 421px) {
   body {
-    font-size: 24px;
+    font-size: 26px;
     min-height: 50%;
   }
 
   .parallax-container {
-    height: 400px;
+    height: 700px;
   }
 
   .parallax img {
@@ -123,6 +133,19 @@ span.missing {
 
   .about-card {
     margin: 1em;
+  }
+
+  .about-content {
+    overflow-y: hidden;
+  }
+
+  .info-card {
+    height: 400px;
+    padding-top: 4em;
+  }
+
+  .about-quote {
+    display: none;
   }
 
   .wrapper.info {
