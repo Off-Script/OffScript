@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Interweave from 'interweave';
+// import Interweave from 'interweave';
 import scriptComparison from '../lib/ScriptComparison.js'
 import Chart from './Chart.jsx';
 import Editor from "./Editor.jsx";
@@ -11,11 +11,18 @@ class Results extends React.Component {
     this.state = {
       scriptData: [],
       transData: [],
+<<<<<<< HEAD
       scoreData: [],
       radarlabels: []
     };
     this.comparison = scriptComparison(this.props.script, this.props.transcript);
     this.makeCharts = this.makeCharts.bind(this);
+=======
+      labels: [],
+      comparison: scriptComparison(this.props.script, this.props.transcript)
+    };
+    this.makeChart = this.makeChart.bind(this);
+>>>>>>> Debug editor modal
   }
 
   componentWillMount() {
@@ -51,18 +58,18 @@ class Results extends React.Component {
           <div className="col s6">
             <div className="card-panel">
               <h4>Your Script</h4>
-              <Interweave
+              {/* <Interweave
                 tagName="p"
-                content={this.comparison.markedScript} />
-              <Editor comparison={this.comparison} />
+                content={this.state.comparison.markedScript} /> */}
+              <Editor />
             </div>
           </div>
           <div className="col s6">
             <div className="card-panel">
               <h4>Your Transcript</h4>
-              <Interweave
+              {/* <Interweave
                 tagName="p"
-                content={this.comparison.markedTranscript} />
+                content={this.state.comparison.markedTranscript} /> */}
             </div>
           </div>
         </div>
@@ -73,7 +80,8 @@ class Results extends React.Component {
                 score={this.state.scoreData}
                 charttype={"pie"}
               />
-
+            <div className="col s6"><h4>Your Accuracy Score</h4>
+              <h5>{this.state.comparison.similarity} / 100</h5>
             </div>
             <div className="col s6"><h5>Text Analysis</h5>
               <Chart
