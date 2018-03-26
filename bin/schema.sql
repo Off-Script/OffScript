@@ -5,7 +5,7 @@ CREATE TABLE scripts (
   script_text text NOT NULL,
   script_tones jsonb NOT NULL,
   script_usage jsonb NOT NULL,
-  transcript_id int
+  transcript_id int,
 );
 
 CREATE TABLE transcripts (
@@ -18,7 +18,7 @@ CREATE TABLE transcripts (
 
 CREATE TABLE users (
   id serial primary key NOT NULL,
-  username varchar(50),
+  username varchar(50) UNIQUE,
   password varchar(150),
   script_ids int references scripts,
   transcript_ids int references transcripts

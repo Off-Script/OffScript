@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const bodyParser = require('body-parser'); 
 const cookieParser = require('cookie-parser');
 const auth = require('./utils/auth');
@@ -17,20 +18,21 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
+// Express session
+app.use(session({
+  secret: 'moxie cat',
+  resave: false,
+  saveUninitialized: false
+}));
+
 // Parses JSON, urls and cookies
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true }));
 app.use(cookieParser());
+app.use(cors());
 
 // Serves static files to client
 app.use(express.static(path.join(__dirname, '../dist')));
-
-// cors
-app.use((req, res, next) =>{
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 // Passport init
 app.use(passport.initialize());
@@ -38,13 +40,38 @@ app.use(passport.session());
 
 // Creates new user session using Passport Local Strategy
 passport.use(new LocalStrategy((username, password, done) => {
-  if (err) { console.log('error in passport local strategy get user', err); }
-  else if (!user) {
-    return done(null, false, { message: 'Unknown user' });
-  } else {
+  let userCredentials = {
+    username,
+    password
+  };
+  console.log('local strategy invoked', userCredentials);
+  db.getUser(userCredentials, (err, user) => {
+    if (err) {
+      console.log('error in passport local strategy get user', err);
+    } else if (!user) {
+      return done(null, false, { message: 'Unknown user' });
+    }
+    console.log('retrieved user from database for passport.use', user);
     return done(null, user);
-  }
+  });
 }));
+
+// Creates Passport session for user by serialized ID
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+// Deserializes the user ID for passport to deliver to the session
+passport.deserializeUser((user, done) => {
+  console.log('deserialize user', user);
+  db.getUser(user, (err, user) => {
+    done(err, user);
+  })
+});
+
+app.use((req, res, next) => {
+  next();
+});
 
 // Validates new user signup and saves user to database
 app.post('/signup', (req, res) => {
@@ -66,8 +93,7 @@ app.post('/signup', (req, res) => {
               // creates persisting session with Passport
               const user_id = result.id;
               req.login(user_id, (err) => {
-                console.log('logged in...redirecting...');
-                // res.redirect('/');
+                req.session.user = result;
                 res.send(result);
               });
             }
@@ -83,26 +109,40 @@ app.post('/signup', (req, res) => {
 
 // Validates user and logs user into session
 app.post('/login', (req, res) => {
+  console.log('inside server login');
   auth.validateLoginForm(req.body, (result) => {
     if (result.success) {
       const credentials = req.body;
-      console.log('user validated, okay to get profile');
-      db.getUser(req.body, (err, result) => {
-        if (err) { res.status(500).send(err); }
-        else {
-          res.send(result);
+      console.log('credentials validated, retrieving profile', credentials);
+      db.getUser(credentials, (err, user) => {
+        if (err) {
+          console.log('error in passport local strategy get user', err);
+        } else if (!user) {
+          return done(null, false, { message: 'Unknown user' });
         }
+        console.log('logged in user:', user);
+
+        // creates persisting session with Passport
+        const user_id = user.id;
+        req.login(user_id, (err) => {
+          req.session.user = user;
+          res.send(user);
+        });
       });
+
     } else {
-      res.send(result);
+      res.status(400).send(result);
     }
   });
 });
 
 // Destroys session and logs user out
 app.get('/logout', (req, res) => {
-  req.logOut();
-  res.clearCookie('connect.sid', {path:'/'}).send('cleared');
+  req.session.destroy(() => {
+    res.clearCookie('connect.sid', {path:'/'}).send('cleared');
+    req.logOut();
+    res.redirect('/');
+  });
 });
 
 // Sends script and transcript to Watson, then to db + client
@@ -147,18 +187,6 @@ app.post('/api/script', (req, res) => {
   .catch((error) => {
     console.log(error, 'error');
     res.end(error.error)
-  })
-});
-
-// Creates Passport session for user by serialized ID
-passport.serializeUser((user_id, done) => {
-  done(null, user_id);
-});
-
-// Deserializes the user ID for passport to deliver to the session
-passport.deserializeUser((user_id, done) => {
-  User.getUserById(user_id, (err, user) => {
-    done(err, user);
   })
 });
 

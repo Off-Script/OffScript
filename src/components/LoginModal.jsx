@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link, Redirect } from 'react-router-dom';
 
 class LoginModal extends React.Component{
   constructor(props) {
@@ -18,7 +19,7 @@ class LoginModal extends React.Component{
 
 
   handleLogin(e) {
-    console.log('handling login now', e);
+    console.log('handling login now');
     e.preventDefault();
     axios.post('/login', {
       username: this.state.username,
@@ -26,6 +27,9 @@ class LoginModal extends React.Component{
     })
     .then((res) => {
       console.log('handling login submit', res);
+      this.setState({
+        redirectToProfile: true
+      });
     })
     .catch((err) => {
        console.log('error handling login submit', err);
@@ -33,7 +37,7 @@ class LoginModal extends React.Component{
   }
 
   handleRegistration(e) {
-    console.log('handling registration now', e);
+    console.log('handling registration now');
     e.preventDefault();
     axios.post('/signup', {
       username: this.state.username,
@@ -41,9 +45,16 @@ class LoginModal extends React.Component{
     })
     .then((res) => {
       console.log('handling registration submission', res);
+      this.setState({
+        redirectToProfile: true
+      });
     })
     .catch((err) => {
        console.log('error handling registration submission', err);
+       this.setState({
+        username: '',
+        password: ''
+      });
      })
   }
 
@@ -56,6 +67,10 @@ class LoginModal extends React.Component{
   }
 
   render() {
+    const redirectToProfile = this.state.redirectToProfile;
+    if (redirectToProfile) {
+      return(<Redirect to={{ pathname: '/upload', state: this.state.username }}/>)
+    }
     const display = {
       display: 'block'
     };
@@ -78,15 +93,15 @@ class LoginModal extends React.Component{
               <label htmlFor="password">Password</label>
             </div>
             <div className="center input-field col s6">
-              <input type="checkbox" id="check-box" defaultChecked="checked" />
+              <input type="checkbox" id="check-box" defaultChecked="unchecked" />
               <label htmlFor="check-box">Remember me</label>
             </div>
             <div className="row input-field col s12">
               <div className="col s6">
-                <a className="grey-text darken-4-text">Register Now</a>
+                <a className="black-text darken-4-text" onClick={this.handleRegistration}>Register Now</a>
               </div>
               <div className="col s6">
-                 <a className="grey-text darken-4-text">Forgot Password?</a>
+                 <a className="black-text darken-4-text">Forgot Password?</a>
               </div>
             </div>
           </div>
