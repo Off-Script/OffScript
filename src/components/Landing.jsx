@@ -28,23 +28,23 @@ class Landing extends React.Component {
         </div>
         <div className="container info">
           <div className="wrapper info">
-            <div className="card-panel hoverable grey lighten-3">
-              <i class="large material-icons">insert_drive_file</i>
+            <div className="card-panel info-card grey lighten-3">
+              <i className="large material-icons">insert_drive_file</i>
               <h5>Upload</h5>
               <div className="flow-text">Upload or type a script</div>
             </div>
-            <div className="card-panel hoverable grey lighten-3">
-              <i class="large material-icons">mic_none</i>
+            <div className="card-panel info-card grey lighten-3">
+              <i className="large material-icons">mic_none</i>
               <h5>Record</h5>
               <div className="flow-text">Transcribe your voice while reciting your script</div>
             </div>
-            <div className="card-panel hoverable grey lighten-3">
-              <i class="large material-icons">bubble_chart</i>
+            <div className="card-panel info-card grey lighten-3">
+              <i className="large material-icons">bubble_chart</i>
               <h5>Analytics</h5>
               <div className="flow-text">Visualize real data from IBM Watson</div>
             </div>
-            <div className="card-panel hoverable grey lighten-3">
-              <i class="large material-icons">record_voice_over</i>
+            <div className="card-panel info-card grey lighten-3">
+              <i className="large material-icons">record_voice_over</i>
               <h5>Practice</h5>
               <div className="flow-text">Practice again and again to perfect your craft</div>
             </div>

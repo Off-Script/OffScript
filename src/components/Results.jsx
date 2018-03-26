@@ -10,31 +10,35 @@ class Results extends React.Component {
     this.state = {
       scriptData: [],
       transData: [],
-      labels: []
+      scoreData: [],
+      radarlabels: []
     };
     this.comparison = scriptComparison(this.props.script, this.props.transcript);
-    this.makeChart = this.makeChart.bind(this);
+    this.makeCharts = this.makeCharts.bind(this);
   }
 
   componentWillMount() {
     if (this.props.results[0]) {
-      this.makeChart();
+      this.makeCharts();
     }
   }
 
-  makeChart() {
-    var labels = [];
+  makeCharts() {
+    var radarlabels = [];
     var scriptData = [];
     var transData = [];
+    var score = Math.floor(this.comparison.similarity*100)
+    var scoreData = [score, 100-score]
     for (let i = 0; i < 5; i++) {
-      labels.push(this.props.results[0].document_tone.tone_categories[2].tones[i].tone_name);
+      radarlabels.push(this.props.results[0].document_tone.tone_categories[2].tones[i].tone_name);
       scriptData.push(this.props.results[0].document_tone.tone_categories[2].tones[i].score);
       transData.push(this.props.results[1].document_tone.tone_categories[2].tones[i].score);
     }
     this.setState({
       scriptData: scriptData,
       transData: transData,
-      labels: labels
+      radarlabels: radarlabels,
+      scoreData: scoreData
     });
   }
 
@@ -62,14 +66,18 @@ class Results extends React.Component {
         </div>
         <div className="row">
             <h4>Speech Analysis</h4>
-            <div className="col s6"><h5>Your Accuracy Score</h5>
-              <h6>{Math.floor(this.comparison.similarity*100)} / 100</h6>
+            <div className="col s6"><h5>Your Accuracy Score %</h5>
+              <Chart
+                score={this.state.scoreData}
+                charttype={"pie"}
+              />
             </div>
             <div className="col s6"><h5>Text Analysis</h5>
               <Chart
-                labels={this.state.labels}
+                labels={this.state.radarlabels}
                 scriptdata={this.state.scriptData}
                 transdata={this.state.transData}
+                charttype={"radar"}
               />
             </div>
         </div>
