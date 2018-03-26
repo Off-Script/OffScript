@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import Interweave from 'interweave';
+import Interweave from 'interweave';
 import scriptComparison from '../lib/ScriptComparison.js'
 import Chart from './Chart.jsx';
 import Editor from "./Editor.jsx";
@@ -11,31 +11,24 @@ class Results extends React.Component {
     this.state = {
       scriptData: [],
       transData: [],
-<<<<<<< HEAD
-      scoreData: [],
-      radarlabels: []
-    };
-    this.comparison = scriptComparison(this.props.script, this.props.transcript);
-    this.makeCharts = this.makeCharts.bind(this);
-=======
       labels: [],
       comparison: scriptComparison(this.props.script, this.props.transcript)
     };
-    this.makeChart = this.makeChart.bind(this);
->>>>>>> Debug editor modal
+    this.makeCharts = this.makeCharts.bind(this);
   }
-
+  
   componentWillMount() {
     if (this.props.results[0]) {
       this.makeCharts();
     }
+    this.props.comparison(this.props.script, this.props.transcript);
   }
 
   makeCharts() {
     var radarlabels = [];
     var scriptData = [];
     var transData = [];
-    var score = Math.floor(this.comparison.similarity*100)
+    var score = Math.floor(this.state.comparison.similarity*100)
     var scoreData = [score, 100-score]
     for (let i = 0; i < 5; i++) {
       radarlabels.push(this.props.results[0].document_tone.tone_categories[2].tones[i].tone_name);
@@ -58,18 +51,18 @@ class Results extends React.Component {
           <div className="col s6">
             <div className="card-panel">
               <h4>Your Script</h4>
-              {/* <Interweave
+              <Interweave
                 tagName="p"
-                content={this.state.comparison.markedScript} /> */}
-              <Editor />
+                content={this.state.comparison.markedScript} />
+              <a className="waves-effect btn cyan accent-4 hoverable modal-trigger" href="#modal-editor"><i className="material-icons left">build</i>Edit Speech</a>
             </div>
           </div>
           <div className="col s6">
             <div className="card-panel">
               <h4>Your Transcript</h4>
-              {/* <Interweave
+              <Interweave
                 tagName="p"
-                content={this.state.comparison.markedTranscript} /> */}
+                content={this.state.comparison.markedTranscript} />
             </div>
           </div>
         </div>
@@ -98,6 +91,7 @@ class Results extends React.Component {
           </Link>
         </div>
       </div>
+    </div>
     )
   }
 }

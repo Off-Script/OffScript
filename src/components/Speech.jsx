@@ -19,13 +19,13 @@ class Speech extends React.Component {
   handleSubmit(e) {
     this.onEnd();
     e.preventDefault();
+    this.props.settranscript(this.state.transcript);
     axios.post('/api/script', {
       script: this.props.script,
       transcript: this.state.transcript
     })
     .then((res) => {
       console.log('handling submit', res);
-      this.props.settranscript(this.state.transcript);
       this.props.setresults(res.data);
     })
     .catch((err) => {
