@@ -42,6 +42,16 @@ span.missing {
   min-height: 100px;
 }
 
+#alert-error {
+  text-align: left;
+  background-color: darkred;
+  color: white;
+}
+
+#alert-error p {
+  margin-left: 15px;
+}
+
 .app {
   display: flex;
   min-height: 100vh;
@@ -115,6 +125,10 @@ span.missing {
 .modal {
   padding: 1em;
   background-color: rgba(250, 250, 250, 0.90);
+}
+
+.big-loader {
+  margin-top: 10%;
 }
 
 @media only screen and (max-width : 768px), (max-device-width: 421px) {
