@@ -19,7 +19,8 @@ class App extends React.Component {
       transcript: '',
       results: {},
       comparison: '',
-      parsedResults: {}
+      parsedResults: {},
+      isLoggedIn: false
     }
     this.setScript = this.setScript.bind(this);
     this.setTranscript = this.setTranscript.bind(this);
@@ -27,6 +28,12 @@ class App extends React.Component {
     this.scriptComparison = this.scriptComparison.bind(this);
     this.setData = this.setData.bind(this);
   }
+
+  // componentDidMount() {
+  //   AsyncStorage.getItem('loggedInStatus', (value) => {
+  //     this.setState({ loggedInStatus: value });
+  //   });
+  // }
 
   setScript(script) {
     this.setState({
@@ -61,9 +68,18 @@ class App extends React.Component {
     })
   }
   render () {
+    // if (this.props.location.state) {
+    //   this.setState({
+    //     isLoggedIn: true
+    //   });
+    // } else {
+    //   this.setState({
+    //     isLoggedIn: true
+    //   });
+    // }
     return (
       <div className="app">
-        <Header />
+        <Header userLoggedIn={this.props.location.state}/>
         <Editor setscript={this.setScript} comparison={this.state.comparison}/>
         <div className="main">
           <Switch>

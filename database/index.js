@@ -96,8 +96,7 @@ module.exports = {
         let message = { errors: { username: 'username not found, try again' } };
         callback(message, null);
       } else {
-        console.log('err in db', result);
-        let message = { errors: { password: 'Incorrect submission, try again'} };
+        let message = { errors: { password: 'Incorrect password submission, try again'} };
         let password = result.rows[0].password;
         bcrypt.compare(attemptedPassword, password, (err, isMatch) => {
           if (err) { callback(err, null); }

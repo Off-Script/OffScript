@@ -116,7 +116,7 @@ class LoginModal extends React.Component{
             </div>
             <div className="row input-field col s12">
               <div className="col s6">
-                <a className="black-text darken-4-text" onClick={this.handleRegistration}>Register Now</a>
+                <a className="left black-text darken-4-text" onClick={this.handleRegistration}>Register Now</a>
               </div>
               <div className="col s6">
                  <a className="black-text darken-4-text">Forgot Password?</a>
