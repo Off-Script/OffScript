@@ -56,19 +56,6 @@ passport.use(new LocalStrategy((username, password, done) => {
   });
 }));
 
-// Creates Passport session for user by serialized ID
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-// Deserializes the user ID for passport to deliver to the session
-passport.deserializeUser((user, done) => {
-  console.log('deserialize user', user);
-  db.getUser(user, (err, user) => {
-    done(err, user);
-  })
-});
-
 app.use((req, res, next) => {
   next();
 });
@@ -161,7 +148,17 @@ app.post('/api/script', (req, res) => {
     })
   ])
   .then((results) => {
-    console.log('results', results);
+    console.log('Watson results', results);
+    res.status(200).end(JSON.stringify(results));
+  })
+  .catch((error) => {
+    console.log(error, 'error');
+    res.end(error.error)
+  })
+});
+
+app.post('/profile', (req, res) => {
+
     let data = {
       text: req.body,
       results
@@ -183,16 +180,19 @@ app.post('/api/script', (req, res) => {
         });
       }
     });
-    res.status(200).end(JSON.stringify(results));
-  })
-  .catch((error) => {
-    console.log(error, 'error');
-    res.end(error.error)
-  })
 });
 
-app.post('/profile', (req, res) => {
+// Creates Passport session for user by serialized ID
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
 
+// Deserializes the user ID for passport to deliver to the session
+passport.deserializeUser((user, done) => {
+  console.log('deserialize user', user);
+  db.getUser(user, (err, user) => {
+    done(err, user);
+  })
 });
 
 // wild card routing all pages to the React Router

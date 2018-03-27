@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
 class Profile extends React.Component {
@@ -19,6 +19,7 @@ class Profile extends React.Component {
             </div>
 
             <div className="col s12 m4 l4">
+              <Link to="/upload" className="btn waves-effect black">Upload New Script</Link>
               <h6>my scripts</h6>
               <ul className="collapsible">
                 <li className="active">
