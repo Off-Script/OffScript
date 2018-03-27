@@ -131,6 +131,25 @@ span.missing {
   margin-top: 10%;
 }
 
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-panel.results {
+  height: 90%;
+}
+
+.analytics-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1em;
+}
+
+.card-panel.analytics {
+  min-width: 100%;
+}
+
 @media only screen and (max-width : 768px), (max-device-width: 421px) {
   body {
     font-size: 26px;
@@ -170,4 +189,9 @@ span.missing {
     margin: 1em;
     grid-template-columns: 1fr;
   }
+
+  .analytics-wrapper {
+    grid-template-columns: 1fr;
+  }
+
 }

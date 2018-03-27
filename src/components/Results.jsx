@@ -11,12 +11,11 @@ class Results extends React.Component {
     this.state = {
       scriptData: [],
       transData: [],
-      labels: [],
       comparison: scriptComparison(this.props.script, this.props.transcript)
     };
     this.makeCharts = this.makeCharts.bind(this);
   }
-  
+
   componentWillMount() {
     if (this.props.results[0]) {
       this.makeCharts();
@@ -25,60 +24,67 @@ class Results extends React.Component {
   }
 
   makeCharts() {
-    var radarlabels = [];
     var scriptData = [];
     var transData = [];
-    var score = Math.floor(this.state.comparison.similarity*100)
+    var scriptEmotion = [];
+    var transEmotion = [];
+    var score = Math.floor(this.state.comparison.similarity)
     var scoreData = [score, 100-score]
+    var data = {};
     for (let i = 0; i < 5; i++) {
-      radarlabels.push(this.props.results[0].document_tone.tone_categories[2].tones[i].tone_name);
       scriptData.push(this.props.results[0].document_tone.tone_categories[2].tones[i].score);
       transData.push(this.props.results[1].document_tone.tone_categories[2].tones[i].score);
+      scriptEmotion.push(this.props.results[0].document_tone.tone_categories[0].tones[i].score);
+      transEmotion.push(this.props.results[1].document_tone.tone_categories[0].tones[i].score);
     }
     this.setState({
       scriptData: scriptData,
       transData: transData,
-      radarlabels: radarlabels,
       scoreData: scoreData
     });
+    data = {
+      scriptData: scriptData,
+      transData: transData,
+      scoreData: scoreData,
+      scriptEmotion: scriptEmotion,
+      transEmotion: transEmotion
+    };
+    this.props.setdata(data);
   }
 
   render() {
     return (
       <div className="container">
         <h3>Results</h3>
-        <div className="row">
-          <div className="col s6">
-            <div className="card-panel">
-              <h4>Your Script</h4>
+        <div className="flex-container">
+          <div className="script-card">
+            <div className="card-panel results">
+              <h4>Script</h4>
               <Interweave
                 tagName="p"
                 content={this.state.comparison.markedScript} />
               <a className="waves-effect btn cyan accent-4 hoverable modal-trigger" href="#modal-editor"><i className="material-icons left">build</i>Edit Speech</a>
             </div>
           </div>
-          <div className="col s6">
-            <div className="card-panel">
-              <h4>Your Transcript</h4>
+          <div className="transcript-card">
+            <div className="card-panel results">
+              <h4>Transcript</h4>
               <Interweave
                 tagName="p"
                 content={this.state.comparison.markedTranscript} />
             </div>
           </div>
         </div>
+        <h4>Speech Analysis</h4>
         <div className="row">
-            <h4>Speech Analysis</h4>
             <div className="col s6"><h5>Your Accuracy Score %</h5>
               <Chart
-                score={this.state.scoreData}
-                charttype={"pie"}
+                data={this.state.scoreData}
+                charttype={"doughnut"}
               />
-            <div className="col s6"><h4>Your Accuracy Score</h4>
-              <h5>{this.state.comparison.similarity} / 100</h5>
             </div>
             <div className="col s6"><h5>Text Analysis</h5>
               <Chart
-                labels={this.state.radarlabels}
                 scriptdata={this.state.scriptData}
                 transdata={this.state.transData}
                 charttype={"radar"}
@@ -91,7 +97,6 @@ class Results extends React.Component {
           </Link>
         </div>
       </div>
-    </div>
     )
   }
 }

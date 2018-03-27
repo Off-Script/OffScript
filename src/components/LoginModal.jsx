@@ -102,12 +102,12 @@ class LoginModal extends React.Component{
           <div className="modal-content">
             <div className="input-field col s8">
               <i className="material-icons prefix black-text">account_circle</i>
-              <input id="username" type="text" className="validate black-text" name="username" value={this.state.username} onChange={this.onChange} errorText={this.state.errors.username}/>
+              <input id="username" type="text" className="validate black-text" name="username" value={this.state.username} onChange={this.onChange} errortext={this.state.errors.username}/>
               <label htmlFor="username">User Name</label>
             </div>
             <div className="input-field col s8">
               <i className="material-icons prefix black-text">vpn_key</i>
-              <input id="password" type="password" className="validate black-text" name="password" value={this.state.password} onChange={this.onChange} errorText={this.state.errors.password}/>
+              <input id="password" type="password" className="validate black-text" name="password" value={this.state.password} onChange={this.onChange} errortext={this.state.errors.password}/>
               <label htmlFor="password">Password</label>
             </div>
             <div className="center input-field col s6">

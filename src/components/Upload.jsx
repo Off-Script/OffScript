@@ -57,7 +57,7 @@ class Upload extends React.Component {
           <div id="type" className="input-field upload">
             <i className="material-icons prefix">mode_edit</i>
             <textarea autoFocus id="icon_prefix2" className="materialize-textarea" data-length="1000" value={this.state.script} onChange={this.handleChange}></textarea>
-            <label for="icon_prefix2">Script</label>
+            <label htmlFor="icon_prefix2">Script</label>
           </div>
           <div id="upload" className="upload">
             <FileUpload onChange={this.readFile.bind(this)}/>
