@@ -15,7 +15,7 @@ class Editor extends React.Component {
       this.reactQuillRef = null;
     }
 
-    ComponentDidUpdate(prevProps, prevState) { 
+    ComponentDidUpdate(prevProps, prevState) {
       if(this.props.comparison !== prevProps.comparison) {
         this.useScript();
       }
@@ -60,7 +60,7 @@ class Editor extends React.Component {
     }
 
     render()  {
-        return( 
+        return(
             <div>
                 <div id="modal-editor" className="modal">
                     <div className="modal-content">
@@ -69,8 +69,8 @@ class Editor extends React.Component {
                           ref={(el) => { this.reactQuillRef = el }}
                           theme="bubble"
                           value={this.state.text}/>
-                {this.state.script ? <button class="waves-effect btn cyan accent-4 hoverable" onClick={this.useTranscript}>Go OffScript</button> : <button class="waves-effect btn cyan accent-4 hoverable" onClick={this.useScript}>Back</button> }
-                <button onClick={this.submit} class="modal-action modal-close waves-effect btn cyan accent-4 hoverable">Submit</button>
+                {this.state.script ? <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.useTranscript}>Go OffScript</button> : <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.useScript}>Back</button> }
+                <button onClick={this.submit} className="modal-action modal-close waves-effect btn cyan accent-4 hoverable">Submit</button>
                     </div>
                 </div>
             </div>

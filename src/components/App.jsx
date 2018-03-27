@@ -17,12 +17,15 @@ class App extends React.Component {
     this.state = {
       script: '',
       transcript: '',
-      results: {}
+      results: {},
+      comparison: '',
+      parsedResults: {}
     }
     this.setScript = this.setScript.bind(this);
     this.setTranscript = this.setTranscript.bind(this);
     this.setResults = this.setResults.bind(this);
     this.scriptComparison = this.scriptComparison.bind(this);
+    this.setData = this.setData.bind(this);
   }
 
   setScript(script) {
@@ -36,6 +39,12 @@ class App extends React.Component {
   setTranscript(transcript) {
     this.setState({
       transcript: transcript
+    });
+  }
+
+  setData(data) {
+    this.setState({
+      parsedResults: data
     });
   }
 
@@ -62,8 +71,8 @@ class App extends React.Component {
             <Route path="/upload" render={() => <Upload setscript={this.setScript} />} />
             <Route path='/profile' component={ ProfileWithRouter } />
             <Route path="/speech" render={() => <Speech script={this.state.script} settranscript={this.setTranscript} setresults={this.setResults}/>} />
-            <Route path="/results" render={() => <Results script={this.state.script} comparison={this.scriptComparison} transcript={this.state.transcript} results={this.state.results} />} />
-            <Route path="/analytics" render={() => <Analytics script={this.state.script} transcript={this.state.transcript} results={this.state.results}/>} />
+            <Route path="/results" render={() => <Results script={this.state.script} transcript={this.state.transcript} results={this.state.results} comparison={this.scriptComparison} setdata={this.setData}/>} />
+            <Route path="/analytics" render={() => <Analytics script={this.state.script} transcript={this.state.transcript} results={this.state.parsedResults}/>} />
             <Redirect to="/"/>
           </Switch>
         </div>

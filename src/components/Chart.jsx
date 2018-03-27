@@ -17,7 +17,7 @@ class Chart extends React.Component {
 
     if (this.props.charttype === 'radar') {
       data = {
-        labels: this.props.labels,
+        labels: ['Openness', 'Conscientiousness', 'Extraversion', 'Agreeableness', 'Emotional Range'],
         datasets: [
           {
             label: 'Script',
@@ -48,11 +48,12 @@ class Chart extends React.Component {
                   }}
                   width={750}
                   height={360}/>
-    } else if (this.props.charttype === 'pie') {
+
+    } else if (this.props.charttype === 'doughnut') {
       data = {
         labels: ['correct', 'missed'],
         datasets: [{
-          data: this.props.score,
+          data: this.props.data,
           backgroundColor: [
             '#36A2EB',
             '#FF6384',
@@ -60,6 +61,28 @@ class Chart extends React.Component {
         }]
       };
       Chartview =   <Doughnut
+                  data={data}
+                  options={{
+                    maintainAspectRatio: false
+                  }}
+                  width={700}
+                  height={300}/>
+
+    } else if (this.props.charttype === 'pie') {
+      data = {
+        labels: ['Anger', 'Disgust', 'Fear', 'Joy', 'Sadness'],
+        datasets: [{
+          data: this.props.data,
+          backgroundColor: [
+          '#9c27b0',
+          '#2196f3',
+          '#ff5722',
+          '#ffeb3b',
+          '#4caf50'
+          ]
+        }]
+      }
+      Chartview =   <Pie
                   data={data}
                   options={{
                     maintainAspectRatio: false

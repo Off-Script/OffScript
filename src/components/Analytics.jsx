@@ -11,27 +11,38 @@ class Analytics extends React.Component {
 
   render() {
     return (
-      <div>
-        <a href="/upload" className="waves-effect btn cyan accent-4 hoverable"><i class="material-icons left">refresh</i>One more time</a>
-        <div className="container">
-          <h5 className="analytics-title">Detailed Analysis</h5>
-        </div>
-        <div className="row">
-          <div className="col l6 m12">
-            <div className="card-panel">
-              <Chart />
-            </div>
-            <div className="card-panel">
-              <Chart />
-            </div>
+      <div className="container">
+        <a href="/upload" className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">refresh</i>One more time</a>
+        <h4 className="analytics-title">Detailed Analysis</h4>
+        <div className="analytics-wrapper">
+          <div className="card-panel analytics">
+            <h5>Score</h5>
+            <Chart
+              data={this.props.results.scoreData}
+              charttype={"doughnut"}
+            />
           </div>
-          <div className="col l6 m12">
-            <div className="card-panel">
-              <Chart />
-            </div>
-            <div className="card-panel">
-              <Chart />
-            </div>
+          <div className="card-panel analytics">
+            <h5>Social Tones</h5>
+            <Chart
+              scriptdata={this.props.results.scriptData}
+              transdata={this.props.results.transData}
+              charttype={"radar"}
+            />
+          </div>
+          <div className="card-panel analytics">
+            <h5>Script Emotion Tones</h5>
+            <Chart
+              data={this.props.results.scriptEmotion}
+              charttype={"pie"}
+            />
+          </div>
+          <div className="card-panel analytics">
+            <h5>Transcript Emotion Tones</h5>
+            <Chart
+              data={this.props.results.transEmotion}
+              charttype={"pie"}
+            />
           </div>
         </div>
       </div>
