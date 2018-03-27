@@ -17,6 +17,7 @@ class Speech extends React.Component {
     this.handleShow = this.handleShow.bind(this);
     this.onEnd = this.onEnd.bind(this);
     this.onResult = this.onResult.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   handleSubmit(e) {
@@ -59,6 +60,12 @@ class Speech extends React.Component {
     var current = this.state.transcript;
     this.setState({
       transcript: current + result + '.'
+    });
+  }
+
+  reset() {
+    this.setState({
+      transcript: ''
     });
   }
 
@@ -160,6 +167,7 @@ class Speech extends React.Component {
             </div>
           </div>
         </div>
+        <a onClick={this.reset} className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">build</i>Start Over</a>
       </div>
     )
 
