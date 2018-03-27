@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Interweave from 'interweave';
 import scriptComparison from '../lib/ScriptComparison.js'
 import Chart from './Chart.jsx';
+import Editor from "./Editor.jsx";
 
 class Results extends React.Component {
   constructor(props) {
@@ -10,24 +11,24 @@ class Results extends React.Component {
     this.state = {
       scriptData: [],
       transData: [],
-      scoreData: [],
-      radarlabels: []
+      labels: [],
+      comparison: scriptComparison(this.props.script, this.props.transcript)
     };
-    this.comparison = scriptComparison(this.props.script, this.props.transcript);
     this.makeCharts = this.makeCharts.bind(this);
   }
-
+  
   componentWillMount() {
     if (this.props.results[0]) {
       this.makeCharts();
     }
+    this.props.comparison(this.props.script, this.props.transcript);
   }
 
   makeCharts() {
     var radarlabels = [];
     var scriptData = [];
     var transData = [];
-    var score = Math.floor(this.comparison.similarity*100)
+    var score = Math.floor(this.state.comparison.similarity*100)
     var scoreData = [score, 100-score]
     for (let i = 0; i < 5; i++) {
       radarlabels.push(this.props.results[0].document_tone.tone_categories[2].tones[i].tone_name);
@@ -52,7 +53,8 @@ class Results extends React.Component {
               <h4>Your Script</h4>
               <Interweave
                 tagName="p"
-                content={this.comparison.markedScript} />
+                content={this.state.comparison.markedScript} />
+              <a className="waves-effect btn cyan accent-4 hoverable modal-trigger" href="#modal-editor"><i className="material-icons left">build</i>Edit Speech</a>
             </div>
           </div>
           <div className="col s6">
@@ -60,7 +62,7 @@ class Results extends React.Component {
               <h4>Your Transcript</h4>
               <Interweave
                 tagName="p"
-                content={this.comparison.markedTranscript} />
+                content={this.state.comparison.markedTranscript} />
             </div>
           </div>
         </div>
@@ -71,6 +73,8 @@ class Results extends React.Component {
                 score={this.state.scoreData}
                 charttype={"pie"}
               />
+            <div className="col s6"><h4>Your Accuracy Score</h4>
+              <h5>{this.state.comparison.similarity} / 100</h5>
             </div>
             <div className="col s6"><h5>Text Analysis</h5>
               <Chart
@@ -87,6 +91,7 @@ class Results extends React.Component {
           </Link>
         </div>
       </div>
+    </div>
     )
   }
 }

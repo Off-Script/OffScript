@@ -1,4 +1,4 @@
 $(document).ready(function(){
-  $('.parallax').parallax();
-  $('.modal').modal();
+    $('.parallax').parallax();
+    $('.modal').modal();
 });

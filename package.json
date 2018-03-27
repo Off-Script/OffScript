@@ -43,6 +43,7 @@
     "react": "^16.2.0",
     "react-chartjs-2": "^2.7.0",
     "react-dom": "^16.2.0",
+    "react-quill": "^1.2.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "string-similarity": "^1.2.0",

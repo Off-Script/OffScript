@@ -20,6 +20,7 @@ class Speech extends React.Component {
   handleSubmit(e) {
     this.onEnd();
     e.preventDefault();
+    this.props.settranscript(this.state.transcript);
     this.setState({
       loading: true
     });
@@ -29,7 +30,6 @@ class Speech extends React.Component {
     })
     .then((res) => {
       console.log('handling submit', res);
-      this.props.settranscript(this.state.transcript);
       this.props.setresults(res.data);
     })
     .catch((err) => {
