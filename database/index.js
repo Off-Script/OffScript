@@ -93,6 +93,7 @@ module.exports = {
         console.log('error getting user from database');
         callback(err, null);
       } else {
+        console.log('err in db', err);
         let message = { errors: { password: 'Incorrect submission, try again'} };
         let password = result.rows[0].password;
         bcrypt.compare(attemptedPassword, password, (err, isMatch) => {
