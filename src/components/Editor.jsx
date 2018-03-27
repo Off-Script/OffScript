@@ -1,49 +1,62 @@
 import React from 'react';
-import Quill from 'quill';
+import ReactQuill from 'react-quill';
 
 class Editor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          script: true
+          editor: false,
+          script: true,
+          text: {}
         }
+      this.useScript = this.useScript.bind(this);
+      this.useTranscript = this.useTranscript.bind(this);
+      this.submit = this.submit.bind(this);
+      this.reactQuillRef = null;
     }
-    
-    componentDidUpdate() {
-        if(this.props.comparison) {
-          var options = {
-              debug: 'info',
-              theme: 'bubble',
-          }
-          let editor = new Quill('#editor', options);
-          this.props.comparison.differences.forEach((phrase) => {
-              if (!phrase.added && !phrase.removed) {
-                  editor.insertText(editor.getLength() - 1, phrase.value, { color: 'black', size: 'large' })
-              } else if (phrase.added) {
-                  editor.insertText(editor.getLength() - 1, phrase.value, { color: 'red', size: 'large' });
-              } else if (phrase.removed) {
-                  editor.insertText(editor.getLength() - 1, phrase.value, { color: 'teal', size: 'large' });
-              }
-          })
-        }
+
+    ComponentDidUpdate(prevProps, prevState) { 
+      if(this.props.comparison !== prevProps.comparison) {
+        this.useScript();
+      }
     }
 
     useTranscript() {
       this.setState({
         script: false
       })
-      if(this.props.transcript) {
-        editor.setContents({insert: this.props.transcript});
-      }
+      let delta = []
+      this.props.comparison.differences.forEach((phrase) => {
+        if(!phrase.removed && !phrase.added) { delta.push({insert: phrase.value, attributes: {size: "large"}})}
+        if (phrase.added) { delta.push({ insert: phrase.value, attributes: { size: "large", color: "#e01d00"}})}
+      })
+      this.setState({
+        text: delta
+      })
     }
 
     useScript() {
       this.setState({
         script: true
       })
-      if (this.props.script) {
-        editor.setContents({ insert: this.props.script });
-      }
+      let delta = []
+      this.props.comparison.differences.forEach((phrase) => {
+        if (!phrase.removed && !phrase.added) { delta.push({ insert: phrase.value , attributes: { size: "large"}}) }
+        if (phrase.removed) {
+          delta.push({
+            insert: phrase.value, attributes: { size: "large", color: "#60dfff" } }) }
+      })
+      this.setState({
+        text: delta
+      })
+    }
+
+    submit() {
+      this.setState({
+        script: true
+      })
+      let script = this.reactQuillRef.getEditor().getText();
+      this.props.setscript(script);
     }
 
     render()  {
@@ -52,9 +65,12 @@ class Editor extends React.Component {
                 <div id="modal-editor" className="modal">
                     <div className="modal-content">
                         <h4>Edit Your Script</h4>
-                        <div id="editor" />
-                        {this.state.script ? <button onClick={this.useTranscript}>Go OffScript</button> : <button onClick={this.useScript}>Back</button> }
-                        <button>Submit</button>
+                        <ReactQuill
+                          ref={(el) => { this.reactQuillRef = el }}
+                          theme="bubble"
+                          value={this.state.text}/>
+                {this.state.script ? <button class="waves-effect btn cyan accent-4 hoverable" onClick={this.useTranscript}>Go OffScript</button> : <button class="waves-effect btn cyan accent-4 hoverable" onClick={this.useScript}>Back</button> }
+                <button onClick={this.submit} class="modal-action modal-close waves-effect btn cyan accent-4 hoverable">Submit</button>
                     </div>
                 </div>
             </div>

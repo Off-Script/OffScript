@@ -26,7 +26,8 @@ class App extends React.Component {
 
   setScript(script) {
     this.setState({
-      script: script
+      script: script,
+      transcript: ''
     });
     this.props.history.push('/speech')
   }
@@ -53,7 +54,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <Header />
-        <Editor script={this.state.script} transcript ={this.state.transcript} comparison={this.state.comparison}/>
+        <Editor setscript={this.setScript} comparison={this.state.comparison}/>
         <div className="main">
           <Switch>
             <Route exact path="/" component={ Landing } />
