@@ -5,7 +5,6 @@ class Editor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          editor: false,
           script: true,
           text: {}
         }
@@ -15,8 +14,9 @@ class Editor extends React.Component {
       this.reactQuillRef = null;
     }
 
-    ComponentDidUpdate(prevProps, prevState) {
-      if(this.props.comparison !== prevProps.comparison) {
+
+    componentDidUpdate(prevProps) { 
+      if(this.props.comparison !== prevProps.comparsion && Object.keys(this.state.text).length === 0) {
         this.useScript();
       }
     }
