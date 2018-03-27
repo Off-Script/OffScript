@@ -31,17 +31,31 @@ class Analytics extends React.Component {
             />
           </div>
           <div className="card-panel analytics">
-            <h5>Script Emotion Tones</h5>
+            <h5>Script Emotional Tones</h5>
             <Chart
               data={this.props.results.scriptEmotion}
               charttype={"pie"}
             />
           </div>
           <div className="card-panel analytics">
-            <h5>Transcript Emotion Tones</h5>
+            <h5>Transcript Emotional Tones</h5>
             <Chart
               data={this.props.results.transEmotion}
               charttype={"pie"}
+            />
+          </div>
+          <div className="card-panel analytics">
+            <h5>Script Language Tones</h5>
+            <Chart
+              data={this.props.results.scriptLang}
+              charttype={"bar"}
+            />
+          </div>
+          <div className="card-panel analytics">
+            <h5>Transcript Language Tones</h5>
+            <Chart
+              data={this.props.results.transLang}
+              charttype={"bar"}
             />
           </div>
         </div>
