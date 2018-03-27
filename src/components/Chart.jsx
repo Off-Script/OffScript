@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radar, Pie, Doughnut } from 'react-chartjs-2';
+import { Radar, Pie, Doughnut, Bar } from 'react-chartjs-2';
 
 
 
@@ -81,11 +81,34 @@ class Chart extends React.Component {
           '#4caf50'
           ]
         }]
-      }
+      };
       Chartview =   <Pie
                   data={data}
                   options={{
                     maintainAspectRatio: false
+                  }}
+                  width={700}
+                  height={300}/>
+    } else if (this.props.charttype === 'bar') {
+       data = {
+        labels: ['Analytical', 'Confident', 'Tentative'],
+        datasets: [{
+          label: 'Language Tones',
+          data: this.props.data,
+          backgroundColor: [
+          '#ffebee',
+          '#e8eaf6',
+          '#f1f8e9'
+          ]
+        }]
+      };
+      Chartview =   <Bar
+                  data={data}
+                  options={{
+                    maintainAspectRatio: false,
+                    legend: {
+                      display: false
+                    }
                   }}
                   width={700}
                   height={300}/>

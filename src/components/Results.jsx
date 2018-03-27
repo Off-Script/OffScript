@@ -28,6 +28,8 @@ class Results extends React.Component {
     var transData = [];
     var scriptEmotion = [];
     var transEmotion = [];
+    var scriptLang = [];
+    var transLang = [];
     var score = Math.floor(this.state.comparison.similarity)
     var scoreData = [score, 100-score]
     var data = {};
@@ -36,6 +38,10 @@ class Results extends React.Component {
       transData.push(this.props.results[1].document_tone.tone_categories[2].tones[i].score);
       scriptEmotion.push(this.props.results[0].document_tone.tone_categories[0].tones[i].score);
       transEmotion.push(this.props.results[1].document_tone.tone_categories[0].tones[i].score);
+      if (i < 3) {
+        scriptLang.push(this.props.results[0].document_tone.tone_categories[1].tones[i].score);
+        transLang.push(this.props.results[1].document_tone.tone_categories[1].tones[i].score);
+      }
     }
     this.setState({
       scriptData: scriptData,
@@ -47,7 +53,9 @@ class Results extends React.Component {
       transData: transData,
       scoreData: scoreData,
       scriptEmotion: scriptEmotion,
-      transEmotion: transEmotion
+      transEmotion: transEmotion,
+      scriptLang: scriptLang,
+      transLang: transLang
     };
     this.props.setdata(data);
   }
