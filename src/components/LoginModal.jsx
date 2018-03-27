@@ -53,9 +53,12 @@ class LoginModal extends React.Component{
       });
     })
     .catch((err) => {
-       console.log('error handling registration submission', err);
+       console.log('error handling registration submission', err.response.data);
+       let message = err.response.data.error;
        this.setState({
-          errors: err.errors
+        errors: {
+          error: message
+        }
        });
      })
   }
@@ -76,6 +79,8 @@ class LoginModal extends React.Component{
       errorMessage = 'Password incorrect, try again';
     } else if (this.state.errors.username) {
       errorMessage = 'Username incorrect, try again';
+    } else {
+      errorMessage = this.state.errors.error
     }
     const redirectToProfile = this.state.redirectToProfile;
     if (redirectToProfile) {
