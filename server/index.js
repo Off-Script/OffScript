@@ -117,19 +117,20 @@ app.post('/login', (req, res) => {
       db.getUser(credentials, (err, user) => {
         if (err) {
           console.log('error in passport local strategy get user', err);
+          res.status(400).send(err);
         } else if (!user) {
           return done(null, false, { message: 'Unknown user' });
+        } else if (user) {
+          console.log('logged in user:', user);
+
+          // creates persisting session with Passport
+          const user_id = user.id;
+          req.login(user_id, (err) => {
+            req.session.user = user;
+            res.send(user);
+          });
         }
-        console.log('logged in user:', user);
-
-        // creates persisting session with Passport
-        const user_id = user.id;
-        req.login(user_id, (err) => {
-          req.session.user = user;
-          res.send(user);
-        });
       });
-
     } else {
       res.status(400).send(result);
     }
