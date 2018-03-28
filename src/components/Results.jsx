@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Interweave from 'interweave';
-import scriptComparison from '../lib/ScriptComparison.js'
+import scriptComparison from '../lib/ScriptComparison.js';
 import Chart from './Chart.jsx';
 import Editor from './Editor.jsx';
 import SaveScriptAnalysis from './SaveScriptAnalysis.jsx';
@@ -59,17 +59,48 @@ class Results extends React.Component {
       scriptLang: scriptLang,
       transLang: transLang
     };
-    this.setState({
-      data
-    });
     this.props.setdata(data);
   }
 
+  perfectScore() {
+    return(
+      <div className="card horizontal cyan">
+        <div className="card-stacked">
+          <div className="card-content">
+            <p className="white-text flow-text">Congraulations! You're OffScript!</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  greatScore() {
+    return(
+      <div className="card horizontal cyan">
+        <div className="card-stacked">
+          <div className="card-content">
+            <p className="white-text flow-text">Awesome work! You're sticking pretty close to the script. If there's any words we misheard, those might be spots where you should slow down and enunciate!</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  offScript() {
+    return(
+      <div className="card horizontal cyan">
+        <div className="card-stacked">
+          <div className="card-content">
+            <p className="white-text flow-text">Looks like you improvised a bit! If you want to memorize your current text, check out the problem areas above and give it another go. But if you like your new version better, try our editing feature and click "Go OffScript"! </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
   render() {
     return (
       <div className="container">
-        <h3>Results</h3>
-        <SaveScriptAnalysis script={this.props.script} transcript={this.props.transcript} data={this.state.data} comparison={this.state.comparison} />
+        <h3>Your Results</h3>
+        <SaveScriptAnalysis scriptData={this.state.scriptData} transData={this.state.transData} comparison={this.state.comparison} />
         <div className="flex-container">
           <div className="script-card">
             <div className="card-panel results">
@@ -88,6 +119,9 @@ class Results extends React.Component {
                 content={this.state.comparison.markedTranscript} />
             </div>
           </div>
+        </div>
+        <div className="row">
+         { this.state.comparison.similarity === 100 ? this.perfectScore() : this.state.comparison.similarity > 80 ? this.greatScore() : this.offScript() }
         </div>
         <h4>Speech Analysis</h4>
         <div className="row">
