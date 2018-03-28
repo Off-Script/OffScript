@@ -22,8 +22,12 @@ class Upload extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     // this.readFile();
-    this.props.setscript(this.state.script);
-    this.clear();
+    if (this.state.script.length > 50) {
+      this.props.setscript(this.state.script);
+      this.clear();
+    } else {
+      alert('For best results, script must be 50 characters or more');
+    }
   }
 
   readFile() {
