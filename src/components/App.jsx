@@ -8,7 +8,7 @@ import Speech from './Speech.jsx';
 import Results from './Results.jsx';
 import Analytics from './Analytics.jsx';
 import Footer from './Footer.jsx';
-// import Editor from "./Editor.jsx";
+import Editor from "./Editor.jsx";
 import ScriptComparison from '../lib/ScriptComparison.js'
 
 class App extends React.Component {
@@ -80,6 +80,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <Header userLoggedIn={this.props.location.state}/>
+        <Editor setscript={this.setScript} comparison={this.state.comparison}/>
         <div className="main">
           <Switch>
             <Route exact path="/" component={ Landing } />
