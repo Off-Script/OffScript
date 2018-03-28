@@ -26,18 +26,22 @@ class Results extends React.Component {
   makeCharts() {
     var scriptData = [];
     var transData = [];
+    var scriptEmotion = [];
     var transEmotion = [];
     var scriptLang = [];
     var transLang = [];
     var score = this.state.comparison.similarity;
+    var scoreData = [score, 100-score];
     var data = {};
-    scriptData.push(this.props.results[0].document_tone.tone_categories[2].tones[i].score);
-    transData.push(this.props.results[1].document_tone.tone_categories[2].tones[i].score);
-    scriptEmotion.push(this.props.results[0].document_tone.tone_categories[0].tones[i].score);
-    transEmotion.push(this.props.results[1].document_tone.tone_categories[0].tones[i].score);
-    if (i < 3) {
-      scriptLang.push(this.props.results[0].document_tone.tone_categories[1].tones[i].score);
-      transLang.push(this.props.results[1].document_tone.tone_categories[1].tones[i].score);
+    for (let i = 0; i < 5; i++) {
+      scriptData.push(this.props.results[0].document_tone.tone_categories[2].tones[i].score);
+      transData.push(this.props.results[1].document_tone.tone_categories[2].tones[i].score);
+      scriptEmotion.push(this.props.results[0].document_tone.tone_categories[0].tones[i].score);
+      transEmotion.push(this.props.results[1].document_tone.tone_categories[0].tones[i].score);
+      if (i < 3) {
+        scriptLang.push(this.props.results[0].document_tone.tone_categories[1].tones[i].score);
+        transLang.push(this.props.results[1].document_tone.tone_categories[1].tones[i].score);
+      }
     }
     this.setState({
       scriptData: scriptData,

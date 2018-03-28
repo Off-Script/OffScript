@@ -94,6 +94,10 @@ span.missing {
   position: relative;
 }
 
+.speech-card {
+  min-height: 107px;
+}
+
 .upload-card {
   margin: 5em;
   box-shadow: none;
@@ -138,7 +142,7 @@ span.missing {
 
 .card-panel.results {
   height: 90%;
-  width: 100%;
+  min-width: 100%;
   word-wrap: break-word;
   word-break: break-all;
 }
