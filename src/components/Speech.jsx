@@ -1,6 +1,6 @@
-import React from 'react';
-import VoiceRecognition from '../lib/VoiceRecognition.js'
-import axios from 'axios';
+import React from "react";
+import VoiceRecognition from "../lib/VoiceRecognition";
+import axios from "axios";
 
 class Speech extends React.Component {
   constructor(props) {
@@ -8,11 +8,11 @@ class Speech extends React.Component {
     this.state = {
       start: false,
       stop: false,
-      transcript: '',
+      transcript: "",
       results: {},
       loading: false,
       show: true
-    }
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.onEnd = this.onEnd.bind(this);
@@ -27,17 +27,17 @@ class Speech extends React.Component {
     this.setState({
       loading: true
     });
-    axios.post('/api/script', {
+    axios.post("/api/script", {
       script: this.props.script,
       transcript: this.state.transcript
     })
-    .then((res) => {
-      console.log('handling submit', res);
-      this.props.setresults(res.data);
-    })
-    .catch((err) => {
-       console.log(err);
-     })
+      .then((res) => {
+        console.log("handling submit", res);
+        this.props.setresults(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   handleShow(e) {
@@ -52,20 +52,20 @@ class Speech extends React.Component {
   }
 
   onError() {
-    console.log('error');
+    console.log("error");
   }
 
   onResult(transcript) {
     var result = transcript.finalTranscript;
     var current = this.state.transcript;
     this.setState({
-      transcript: current + result + '.'
+      transcript: current + result + "."
     });
   }
 
   reset() {
     this.setState({
-      transcript: ''
+      transcript: ""
     });
   }
 
@@ -87,35 +87,39 @@ class Speech extends React.Component {
             </div>
           </div>
         </div>
-      )
+      );
     }
 
     if (this.state.show) {
-      script =
+      script = (
         <div className="script">
           Script
           <div className="card-content">
             {this.props.script}
           </div>
         </div>
+      );
     } else {
-      script =
+      script = (
         <div className="script">
           Script Hidden
         </div>
+      );
     }
 
 
     if (this.state.start) {
-      Loader =
+      Loader = (
         <div className="progress">
           <div className="indeterminate"></div>
         </div>
+      );
     } else {
-      Loader =
+      Loader = (
         <div className="progress">
           <div className="determinate"></div>
         </div>
+      );
     }
     return (
       <div className="container">
@@ -133,14 +137,14 @@ class Speech extends React.Component {
             <a
               className="btn waves-effect cyan accent-4 hoverable"
               onClick={() => {
-                Materialize.toast('Transcription Started', 3000);
+                Materialize.toast("Transcription Started", 3000);
                 this.setState({ start: true });
               }}><i className="material-icons">keyboard_voice</i>
             </a>
             <a
               className="btn waves-effect cyan accent-4 hoverable"
               onClick={() => {
-                Materialize.toast('Transcription Stopped', 3000);
+                Materialize.toast("Transcription Stopped", 3000);
                 this.setState({ start: false });
               }}><i className="material-icons">stop</i>
             </a>
@@ -169,7 +173,7 @@ class Speech extends React.Component {
         </div>
         <a onClick={this.reset} className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">refresh</i>Start Over</a>
       </div>
-    )
+    );
 
   }
 }
