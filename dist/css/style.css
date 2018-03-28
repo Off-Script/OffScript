@@ -138,6 +138,9 @@ span.missing {
 
 .card-panel.results {
   height: 90%;
+  width: 100%;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .analytics-wrapper {
