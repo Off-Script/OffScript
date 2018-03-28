@@ -15,8 +15,8 @@ class Editor extends React.Component {
     }
 
 
-    componentDidUpdate(prevProps) { 
-      if(this.props.comparison !== prevProps.comparsion && Object.keys(this.state.text).length === 0) {
+    componentDidUpdate(prevProps) {
+      if(this.props.comparison && this.props.comparison !== prevProps.comparsion && Object.keys(this.state.text).length === 0) {
         this.useScript();
       }
     }

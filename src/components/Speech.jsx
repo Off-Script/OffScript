@@ -10,9 +10,11 @@ class Speech extends React.Component {
       stop: false,
       transcript: '',
       results: {},
-      loading: false
+      loading: false,
+      show: true
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleShow = this.handleShow.bind(this);
     this.onEnd = this.onEnd.bind(this);
     this.onResult = this.onResult.bind(this);
   }
@@ -37,6 +39,13 @@ class Speech extends React.Component {
      })
   }
 
+  handleShow(e) {
+    e.preventDefault();
+    this.setState({
+      show: !this.state.show
+    });
+  }
+
   onEnd() {
     this.setState({ start: false, stop: false });
   }
@@ -54,6 +63,8 @@ class Speech extends React.Component {
   }
 
   render() {
+    let Loader = null;
+    let script = null;
     if (this.state.loading) {
       return (
         <div className="big-loader">
@@ -71,7 +82,22 @@ class Speech extends React.Component {
         </div>
       )
     }
-    let Loader = null;
+
+    if (this.state.show) {
+      script =
+        <div className="script">
+          Script
+          <div className="card-content">
+            {this.props.script}
+          </div>
+        </div>
+    } else {
+      script =
+        <div className="script">
+          Script Hidden
+        </div>
+    }
+
 
     if (this.state.start) {
       Loader =
@@ -86,40 +112,53 @@ class Speech extends React.Component {
     }
     return (
       <div className="container">
-        <a
-          className="btn waves-effect cyan accent-4 hoverable"
-          onClick={() => {
-            Materialize.toast('Transcription Started', 3000);
-            this.setState({ start: true });
-          }}><i className="material-icons">keyboard_voice</i>
-        </a>
-        <a
-          className="btn waves-effect cyan accent-4 hoverable"
-          onClick={() => {
-            Materialize.toast('Transcription Stopped', 3000);
-            this.setState({ start: false });
-          }}><i className="material-icons">stop</i>
-        </a>
-        {this.state.start && (
-          <VoiceRecognition
-            continuous={true}
-            onResult={this.onResult}
-            onEnd={this.onEnd}
-            lang="en-us"
-            stop={this.state.stop}
-          />
-        )}
-        <a
-          className="btn waves-effect cyan accent-4 hoverable"
-          onClick={this.handleSubmit}>Submit
-          <i className="material-icons right">send</i>
-        </a>
-        <div className="card medium grey lighten-4">
-          <div className="card-content">
-            <h5>Transcript</h5>
+        <div className="row">
+          <div className="col s4">
+            <a
+              className="btn waves-effect cyan accent-4 hoverable"
+              onClick={this.handleShow}
+            >Show Script</a>
+            <div className="card grey lighten-4 speech-card">
+              {script}
+            </div>
           </div>
-          {Loader}
-          <p className="flow-text transcript-text">{this.state.transcript}</p>
+          <div className="col s8">
+            <a
+              className="btn waves-effect cyan accent-4 hoverable"
+              onClick={() => {
+                Materialize.toast('Transcription Started', 3000);
+                this.setState({ start: true });
+              }}><i className="material-icons">keyboard_voice</i>
+            </a>
+            <a
+              className="btn waves-effect cyan accent-4 hoverable"
+              onClick={() => {
+                Materialize.toast('Transcription Stopped', 3000);
+                this.setState({ start: false });
+              }}><i className="material-icons">stop</i>
+            </a>
+            {this.state.start && (
+              <VoiceRecognition
+                continuous={true}
+                onResult={this.onResult}
+                onEnd={this.onEnd}
+                lang="en-us"
+                stop={this.state.stop}
+              />
+            )}
+            <a
+              className="btn waves-effect cyan accent-4 hoverable"
+              onClick={this.handleSubmit}>Submit
+              <i className="material-icons right">send</i>
+            </a>
+            <div className="card medium grey lighten-4 speech-card">
+              <div className="card-content">
+                <h5>Transcript</h5>
+              </div>
+              {Loader}
+              <p className="flow-text transcript-text">{this.state.transcript}</p>
+            </div>
+          </div>
         </div>
       </div>
     )
