@@ -190,7 +190,7 @@ passport.serializeUser((user, done) => {
 // Deserializes the user ID for passport to deliver to the session
 passport.deserializeUser((user, done) => {
   console.log('deserialize user', user);
-  db.getUser(user, (err, user) => {
+  db.getUserById(user, (err, user) => {
     done(err, user);
   })
 });

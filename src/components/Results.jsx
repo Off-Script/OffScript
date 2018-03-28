@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Interweave from 'interweave';
 import scriptComparison from '../lib/ScriptComparison.js'
 import Chart from './Chart.jsx';
-import Editor from "./Editor.jsx";
+// import Editor from "./Editor.jsx";
 
 class Results extends React.Component {
   constructor(props) {

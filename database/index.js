@@ -112,7 +112,7 @@ module.exports = {
   },
   // Get user by id to feed Passport deserialize user in server
   getUserById: (id, callback) => {
-    client.query(`SELECT * FROM users WHERE id = %${id}%`, (err, result) => {
+    client.query(`SELECT * FROM users WHERE id = ${id}`, (err, result) => {
       if (err) {
         console.log('error getting user by id from database');
         callback(err, null);
