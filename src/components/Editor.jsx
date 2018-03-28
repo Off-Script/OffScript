@@ -16,7 +16,7 @@ class Editor extends React.Component {
 
 
     componentDidUpdate(prevProps) {
-      if(this.props.comparison && this.props.comparison !== prevProps.comparsion && Object.keys(this.state.text).length === 0) {
+      if(this.props.comparison.differences && this.props.comparison !== prevProps.comparsion && Object.keys(this.state.text).length === 0) {
         this.useScript();
       }
     }
@@ -26,10 +26,12 @@ class Editor extends React.Component {
         script: false
       })
       let delta = []
-      this.props.comparison.differences.forEach((phrase) => {
-        if(!phrase.removed && !phrase.added) { delta.push({insert: phrase.value, attributes: {size: "large"}})}
-        if (phrase.added) { delta.push({ insert: phrase.value, attributes: { size: "large", color: "#e01d00"}})}
-      })
+      if(this.props.comparison.differences) {
+        this.props.comparison.differences.forEach((phrase) => {
+          if(!phrase.removed && !phrase.added) { delta.push({insert: phrase.value, attributes: {size: "large"}})};
+          if (phrase.added) { delta.push({ insert: phrase.value, attributes: { size: "large", color: "#e01d00"}})}
+        })
+      }
       this.setState({
         text: delta
       })
@@ -40,12 +42,14 @@ class Editor extends React.Component {
         script: true
       })
       let delta = []
-      this.props.comparison.differences.forEach((phrase) => {
-        if (!phrase.removed && !phrase.added) { delta.push({ insert: phrase.value , attributes: { size: "large"}}) }
-        if (phrase.removed) {
-          delta.push({
-            insert: phrase.value, attributes: { size: "large", color: "#60dfff" } }) }
-      })
+      if(this.props.comparison.differences) {
+        this.props.comparison.differences.forEach((phrase) => {
+          if (!phrase.removed && !phrase.added) { delta.push({ insert: phrase.value , attributes: { size: "large"}}) }
+          if (phrase.removed) {
+            delta.push({
+              insert: phrase.value, attributes: { size: "large", color: "#60dfff" } }) }
+        })
+      }
       this.setState({
         text: delta
       })

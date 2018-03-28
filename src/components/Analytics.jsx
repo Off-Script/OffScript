@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import Chart from './Chart.jsx';
 
 class Analytics extends React.Component {
@@ -12,6 +13,9 @@ class Analytics extends React.Component {
   render() {
     return (
       <div className="container">
+          <Link to="/results">
+            <button className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">chevron_left</i>Back to Results</button>
+          </Link>
         <a href="/upload" className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">refresh</i>One more time</a>
         <h4 className="analytics-title">Detailed Analysis</h4>
         <div className="analytics-wrapper">
