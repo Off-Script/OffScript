@@ -3,7 +3,7 @@ body {
   font-size: 20px;
   min-height: 100%;
   font-weight: 400;
-  background-color: #fefdfb;
+  background-color: #fcfaf2;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -37,6 +37,10 @@ span.missing {
   max-height: 300px;
   min-height: 100px;
   border-radius: 5px;
+}
+
+.speech-header {
+  text-align: center;
 }
 
 .avatar {

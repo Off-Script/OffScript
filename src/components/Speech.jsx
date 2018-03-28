@@ -1,6 +1,6 @@
-import React from "react";
-import VoiceRecognition from "../lib/VoiceRecognition";
-import axios from "axios";
+import React from 'react';
+import VoiceRecognition from '../lib/VoiceRecognition.js';
+import axios from 'axios';
 
 class Speech extends React.Component {
   constructor(props) {
@@ -11,7 +11,8 @@ class Speech extends React.Component {
       transcript: "",
       results: {},
       loading: false,
-      show: true
+      show: true,
+      disable: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleShow = this.handleShow.bind(this);
@@ -91,20 +92,30 @@ class Speech extends React.Component {
     }
 
     if (this.state.show) {
-      script = (
-        <div className="script">
-          Script
+
+      script =
+        <div>
           <div className="card-content">
-            {this.props.script}
+            <h5>Script</h5>
+          </div>
+          <div className="progress">
+            <div className="determinate"></div>
+          </div>
+          <div>
+            <p className="flow-text">{this.props.script}</p>
           </div>
         </div>
       );
     } else {
-      script = (
-        <div className="script">
-          Script Hidden
+      script =
+      <div>
+        <div className="card-content">
+          <h5 className="grey-text">Script Hidden</h5>
         </div>
-      );
+          <div className="progress">
+            <div className="determinate"></div>
+          </div>
+      </div>
     }
 
 
@@ -124,6 +135,9 @@ class Speech extends React.Component {
     return (
       <div className="container">
         <div className="row">
+          <h1 className="cyan-text">Recording</h1>
+        </div>
+        <div className="row">
           <div className="col s4">
             <a
               className="btn waves-effect cyan accent-4 hoverable"
@@ -136,6 +150,7 @@ class Speech extends React.Component {
           <div className="col s8">
             <a
               className="btn waves-effect cyan accent-4 hoverable"
+              disabled={this.state.disable}
               onClick={() => {
                 Materialize.toast("Transcription Started", 3000);
                 this.setState({ start: true });
@@ -143,10 +158,14 @@ class Speech extends React.Component {
             </a>
             <a
               className="btn waves-effect cyan accent-4 hoverable"
+              disabled={this.state.disable}
               onClick={() => {
-                Materialize.toast("Transcription Stopped", 3000);
-                this.setState({ start: false });
-              }}><i className="material-icons">stop</i>
+                this.setState({ disable: true });
+                Materialize.toast('Loading Transcription . . .', 2000),
+                window.setTimeout(function() {
+                  this.setState({ start: false, disable: false }); }.bind(this), 2000);
+                }}>
+                <i className="material-icons">stop</i>
             </a>
             {this.state.start && (
               <VoiceRecognition
@@ -157,11 +176,7 @@ class Speech extends React.Component {
                 stop={this.state.stop}
               />
             )}
-            <a
-              className="btn waves-effect cyan accent-4 hoverable"
-              onClick={this.handleSubmit}>Submit
-              <i className="material-icons right">send</i>
-            </a>
+
             <div className="card medium grey lighten-4 speech-card">
               <div className="card-content">
                 <h5>Transcript</h5>
@@ -171,7 +186,18 @@ class Speech extends React.Component {
             </div>
           </div>
         </div>
-        <a onClick={this.reset} className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">refresh</i>Start Over</a>
+        <a 
+          className="waves-effect btn cyan accent-4 hoverable"
+          disabled={this.state.disable} 
+          onClick={this.reset} >
+          <i className="material-icons left">clear</i>Clear Transcript
+        </a>
+        <a
+          className="btn waves-effect cyan accent-4 hoverable"
+          disabled={this.state.disable}
+          onClick={this.handleSubmit} >
+         <i className="material-icons left">send</i> Submit Transcript
+        </a>
       </div>
     );
 
