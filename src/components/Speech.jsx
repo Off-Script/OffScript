@@ -167,7 +167,7 @@ class Speech extends React.Component {
             </div>
           </div>
         </div>
-        <a onClick={this.reset} className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">build</i>Start Over</a>
+        <a onClick={this.reset} className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">refresh</i>Start Over</a>
       </div>
     )
 
