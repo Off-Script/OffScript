@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import Interweave from 'interweave';
 import scriptComparison from '../lib/ScriptComparison.js'
 import Chart from './Chart.jsx';
-import Editor from "./Editor.jsx";
+import Editor from './Editor.jsx';
+import SaveScriptAnalysis from './SaveScriptAnalysis.jsx';
 
 class Results extends React.Component {
   constructor(props) {
@@ -64,6 +65,7 @@ class Results extends React.Component {
     return (
       <div className="container">
         <h3>Results</h3>
+        <SaveScriptAnalysis scriptData={this.state.scriptData} transData={this.state.transData} comparison={this.state.comparison} />
         <div className="flex-container">
           <div className="script-card">
             <div className="card-panel results">

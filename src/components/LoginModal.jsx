@@ -124,7 +124,7 @@ class LoginModal extends React.Component{
             </div>
           </div>
           <div className="modal-footer transparent">
-            <a className="btn waves-effect black" onClick={this.handleLogin}>Login</a>
+            <a className="btn waves-effect black modal-action modal-close" onClick={this.handleLogin}>Login</a>
           </div>
         </div>
       </div>
