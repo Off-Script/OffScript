@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link, Route } from 'react-router-dom';
-import FileUpload from './FileUpload.jsx';
+import React from "react";
+import { Link, Route } from "react-router-dom";
+import FileUpload from "./FileUpload.jsx";
 
 class Upload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      script: ''
-    }
+      script: ""
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.clear = this.clear.bind(this);
@@ -26,7 +26,7 @@ class Upload extends React.Component {
       this.props.setscript(this.state.script);
       this.clear();
     } else {
-      alert('For best results, script must be 50 characters or more');
+      alert("For best results, script must be 50 characters or more");
     }
   }
 
@@ -44,7 +44,7 @@ class Upload extends React.Component {
 
   clear() {
     this.setState({
-      script: ''
+      script: ""
     });
   }
 
@@ -69,7 +69,7 @@ class Upload extends React.Component {
         </div>
         <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.handleSubmit}><i className="material-icons left">file_upload</i>Upload</button>
       </div>
-    )
+    );
   }
 }
 
