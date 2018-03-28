@@ -1,7 +1,18 @@
 const validator = require('validator');  //A library of string validators and sanitizers.
 
+module.exports = {
+// checks if user is authenticated on routes
+isAuthenticated: (req,res,next) => {
+  if(req.user) {
+    return next();
+  } else
+    return res.status(401).json({
+      error: 'User not authenticated'
+    });
+  },
+
 // checking the the sign up form data
-function validateSignupForm(formData, callback) {
+validateSignupForm: (formData, callback) => {
   const errors = {};
   let isFormValid = true;
   let message = '';
@@ -26,10 +37,10 @@ function validateSignupForm(formData, callback) {
     errors
   };
   callback(result);
-}
+},
 
 // checking the the login form data
-function validateLoginForm(formData, callback) {
+validateLoginForm: (formData, callback) => {
   const errors = {};
   let isFormValid = true;
   let message = '';
@@ -52,10 +63,8 @@ function validateLoginForm(formData, callback) {
     success: isFormValid,
     message,
     errors
-  };
+  }
 
   callback(result);
+  }
 }
-
-module.exports.validateLoginForm = validateLoginForm;
-module.exports.validateSignupForm = validateSignupForm;

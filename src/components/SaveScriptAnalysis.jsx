@@ -10,15 +10,19 @@ class SaveScriptAnalysis extends React.Component {
   saveAnalysis(e) {
     console.log('invoking saveAnalysis function');
     e.preventDefault();
-    // axios.post('/postanalysis', {
-    //   data: 'check props for data'
-    // })
-    // .then((res) => {
-    //   console.log('analysis saved to db', res);
-    // })
-    // .catch((err) => {
-    //    console.log('error saving analysis to db', err);
-    //  })
+
+    axios.post('/postanalysis', {
+      script: this.props.script,
+      transcript: this.props.transcript,
+      data: this.props.data,
+      comparison: this.props.comparison
+    })
+    .then((res) => {
+      console.log('analysis saved to db', res);
+    })
+    .catch((err) => {
+       console.log('error saving analysis to db', err);
+     })
   }
 
   render() {

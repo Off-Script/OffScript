@@ -29,12 +29,6 @@ class App extends React.Component {
     this.setData = this.setData.bind(this);
   }
 
-  // componentDidMount() {
-  //   AsyncStorage.getItem('loggedInStatus', (value) => {
-  //     this.setState({ loggedInStatus: value });
-  //   });
-  // }
-
   setScript(script) {
     this.setState({
       script: script,
@@ -68,18 +62,9 @@ class App extends React.Component {
     })
   }
   render () {
-    // if (this.props.location.state) {
-    //   this.setState({
-    //     isLoggedIn: true
-    //   });
-    // } else {
-    //   this.setState({
-    //     isLoggedIn: true
-    //   });
-    // }
     return (
       <div className="app">
-        <Header userLoggedIn={this.props.location.state}/>
+        <Header userLoggedIn={this.props.location.state} isLoggedIn={this.state.isLoggedIn}/>
         <Editor setscript={this.setScript} comparison={this.state.comparison}/>
         <div className="main">
           <Switch>

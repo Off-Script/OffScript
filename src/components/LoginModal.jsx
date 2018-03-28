@@ -8,6 +8,7 @@ class LoginModal extends React.Component{
       errors: {},
       username: '',
       password: '',
+      isLoggedIn: false,
       redirectToProfile: false,
       user: {}
     }
@@ -27,13 +28,16 @@ class LoginModal extends React.Component{
     .then((res) => {
       console.log('handling login submit', res);
       this.setState({
-        redirectToProfile: true
+        isLoggedIn: true,
+        redirectToProfile: true,
+        user: res.data.user
       });
     })
     .catch((err) => {
        console.log('error handling login submit', err.response.data.errors);
       this.setState({
         errors: err.response.data.errors,
+        isLoggedIn: false,
         redirectToProfile: false
       });
      })
@@ -84,7 +88,7 @@ class LoginModal extends React.Component{
     }
     const redirectToProfile = this.state.redirectToProfile;
     if (redirectToProfile) {
-      return(<Redirect to={{ pathname: '/profile', state: this.state.username }}/>)
+      return(<Redirect to={{ pathname: '/profile', user: this.state.user }}/>)
     }
     const display = {
       display: 'block'
