@@ -105,7 +105,6 @@ class Speech extends React.Component {
             <p className="flow-text">{this.props.script}</p>
           </div>
         </div>
-      );
     } else {
       script =
       <div>
