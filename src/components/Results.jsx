@@ -12,7 +12,8 @@ class Results extends React.Component {
     this.state = {
       scriptData: [],
       transData: [],
-      comparison: scriptComparison(this.props.script, this.props.transcript)
+      comparison: scriptComparison(this.props.script, this.props.transcript),
+      data: {}
     };
     this.makeCharts = this.makeCharts.bind(this);
   }
@@ -58,6 +59,9 @@ class Results extends React.Component {
       scriptLang: scriptLang,
       transLang: transLang
     };
+    this.setState({
+      data
+    });
     this.props.setdata(data);
   }
 
@@ -65,7 +69,7 @@ class Results extends React.Component {
     return (
       <div className="container">
         <h3>Results</h3>
-        <SaveScriptAnalysis scriptData={this.state.scriptData} transData={this.state.transData} comparison={this.state.comparison} />
+        <SaveScriptAnalysis script={this.props.script} transcript={this.props.transcript} data={this.state.data} comparison={this.state.comparison} />
         <div className="flex-container">
           <div className="script-card">
             <div className="card-panel results">

@@ -56,9 +56,9 @@ passport.use(new LocalStrategy((username, password, done) => {
   });
 }));
 
-app.use((req, res, next) => {
-  next();
-});
+// app.use((req, res, next) => {
+//   next();
+// });
 
 // Validates new user signup and saves user to database
 app.post('/signup', (req, res) => {
@@ -95,32 +95,43 @@ app.post('/signup', (req, res) => {
 });
 
 // Validates user and logs user into session
-app.post('/login', (req, res) => {
+app.post('/login', (req, res, next) => {
   console.log('inside server login');
   auth.validateLoginForm(req.body, (result) => {
     if (result.success) {
-      const credentials = req.body;
-      console.log('credentials validated, retrieving profile', credentials);
-      db.getUser(credentials, (err, user) => {
-        if (err) {
-          console.log('error in passport local strategy get user', err);
-          res.status(400).send(err);
-        } else if (!user) {
-          return done(null, false, { message: 'Unknown user' });
-        } else if (user) {
-          console.log('logged in user:', user);
+      passport.authenticate('local', (err, user, info) => {
+        if (err) { return next(err); }
+        if (!user) { return res.status(401).json({err: info}); }
+        const credentials = req.body;
+        console.log('credentials validated, retrieving profile', credentials);
+        db.getUser(credentials, (err, user) => {
+          if (err) {
+            console.log('error in passport local strategy get user', err);
+            res.status(400).send(err);
+          } else if (!user) {
+            return done(null, false, { message: 'Unknown user' });
+          } else if (user) {
+            console.log('logged in user:', user);
 
-          // creates persisting session with Passport
-          const user_id = user.id;
-          req.login(user_id, (err) => {
-            req.session.user = user;
-            res.send(user);
-          });
-        }
-      });
+            // creates persisting session with Passport
+            const user_id = user.id;
+            req.logIn(user_id, (err) => {
+              if (err) { return res.status(500).json({ err: 'Could not login user'}); }
+              req.session.user = user;
+              res.status(200).json({status: 'Login successful!', user: user});
+            });
+          }
+        });
+      })(req, res, next);
     } else {
-      res.status(400).send(result);
+      res.status(500).json({err: result});
     }
+  });
+});
+
+app.get('/checkauth', auth.isAuthenticated, function(req, res){
+  res.status(200).json({
+      status: 'Login successful!'
   });
 });
 
@@ -131,6 +142,11 @@ app.get('/logout', (req, res) => {
     req.logOut();
     res.redirect('/');
   });
+});
+
+// Authenticates user upon redirect
+app.post('/profile', (req, res) => {
+  console.log('/profile page req.user:', req.user);
 });
 
 // Sends script and transcript to Watson, then to db + client
@@ -157,39 +173,43 @@ app.post('/api/script', (req, res) => {
   })
 });
 
-app.post('/profile', (req, res) => {
-
+app.post('/postanalysis', (req, res) => {
+    console.log('user:', req.user);
     let data = {
-      text: req.body,
-      results
+      script: req.body.script,
+      transcript: req.body.transcript,
+      data: req.body.data,
+      comparison: req.body.comparison
     };
     dbHelpers.parseData(data, (err, result) => {
       if (err) { console.log('error parsing data with dbHelpers', err); }
       else {
+        console.log('parsed data', result);
         db.saveScript(result.scriptData, (err, result) => {
           if (err) { console.log('error saving script to db', err); }
           else {
             console.log('script saved to database', result);
           }
         });
-        db.saveTranscript(result.transcriptData, (err, result) => {
-          if (err) { console.log('error saving transcript to db', err); }
-          else {
-            console.log('transcript saved to database', result);
-          }
-        });
+        // db.saveTranscript(result.transcriptData, (err, result) => {
+        //   if (err) { console.log('error saving transcript to db', err); }
+        //   else {
+        //     console.log('transcript saved to database', result);
+        //   }
+        // });
       }
     });
 });
 
 // Creates Passport session for user by serialized ID
 passport.serializeUser((user, done) => {
+  console.log('serializing user:', user);
   done(null, user);
 });
 
 // Deserializes the user ID for passport to deliver to the session
 passport.deserializeUser((user, done) => {
-  console.log('deserialize user', user);
+  console.log('deserializing user:', user);
   db.getUserById(user, (err, user) => {
     done(err, user);
   })

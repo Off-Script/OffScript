@@ -3,16 +3,20 @@ CREATE DATABASE offscript;
 CREATE TABLE scripts (
   id serial primary key NOT NULL,
   script_text text NOT NULL,
-  script_tones jsonb NOT NULL,
-  script_usage jsonb NOT NULL,
-  transcript_id int,
+  script_data jsonb NOT NULL,
+  script_emotion jsonb NOT NULL,
+  script_lang jsonb NOT NULL,
+  transcript_id int
 );
 
 CREATE TABLE transcripts (
   id serial primary key NOT NULL,
   transcript_text text NOT NULL,
-  transcript_tones jsonb NOT NULL,
-  transcript_usage jsonb NOT NULL,
+  transcript_data jsonb NOT NULL,
+  transcript_emotion jsonb NOT NULL,
+  transcript_lang jsonb NOT NULL,
+  score_data jsonb NOT NULL,
+  comparison jsonb NOT NULL,
   script_id int
 );
 

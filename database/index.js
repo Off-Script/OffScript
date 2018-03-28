@@ -87,7 +87,6 @@ module.exports = {
   getUser: (data, callback) => {
     let attemptedPassword = data.password;
     let username = data.username;
-    console.log('its here!', attemptedPassword, username);
     client.query(`SELECT * FROM users WHERE username = '${username}'`, (err, result) => {
       if (err) {
         console.log('error getting user from database');

@@ -10,13 +10,14 @@ class Header extends React.Component {
     }
   }
 
-  componentDidRender() {
-    console.log(this.props.userLoggedIn);
-    if (this.props.userLoggedIn) {
-      this.setState({
-        isLoggedIn: true
-      })
-    }
+  componentDidMount() {
+    console.log(this.state.userLoggedIn);
+    console.log('this.props.location.state', this.props);
+    // if (this.props.location.state) {
+    //   this.setState({
+    //     isLoggedIn: true
+    //   });
+    // }
   }
 
   render() {
