@@ -11,7 +11,7 @@ class Profile extends React.Component {
     return (
       <div>
         <div className="container about">
-          <h5>my account</h5>
+          <h5>dashboard</h5>
           <div className="row">
             <div className="col s12 m4 l4">
               <h6>last script uploaded</h6>
@@ -50,7 +50,7 @@ class Profile extends React.Component {
               <div className="card blue-grey darken-1">
                 <div className="card-content white-text">
                   <img src="media/speaker.png" width="64" height="64" />
-                  <p>{this.props.location.state}</p>
+                  <p>{this.props.location.user.username}</p>
                 </div>
                 <div className="card-action">
                   <a href="#">Contact Me</a>

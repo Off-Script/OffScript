@@ -6,22 +6,24 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false
+      isLoggedIn: false,
+      isLoggedOut: false
     }
   }
 
-  componentDidMount() {
-    console.log(this.state.userLoggedIn);
-    console.log('this.props.location.state', this.props);
-    // if (this.props.location.state) {
-    //   this.setState({
-    //     isLoggedIn: true
-    //   });
-    // }
+  componentDidUpdate() {
+    let loggedin = localStorage.getItem('loggedIn');
+    console.log('is it logged in?', loggedin);
+    if (loggedin) {
+      this.setState({
+        isLoggedIn: true
+      });
+    }
+    console.log('new state in Header', this.state.isLoggedIn);
   }
 
   render() {
-    const button = this.props.userLoggedIn ? (<li><MyAccountButton/></li>) : (<li><LoginModal /></li>);
+    const button = this.props.userLoggedIn ? (<li><MyAccountButton setUserInSession={this.props.setUser.bind(this)}/></li>) : (<li><LoginModal setUserInSession={this.props.setUser.bind(this)}/></li>);
     return (
       <nav className="transparent">
         <div className="nav-wrapper">
