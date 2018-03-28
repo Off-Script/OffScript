@@ -20,6 +20,7 @@ const LocalStrategy = require('passport-local').Strategy;
 
 // Express session
 app.use(session({
+  key: 'user_sid',
   secret: 'moxie cat',
   resave: false,
   saveUninitialized: false
@@ -56,12 +57,26 @@ passport.use(new LocalStrategy((username, password, done) => {
   });
 }));
 
-// app.use((req, res, next) => {
-//   next();
-// });
+
+// Check if user's cookie is still saved in browser and user is not set, then automatically logs the user out.
+app.use((req, res, next) => {
+  if (req.cookies.user_sid && !req.session.user) {
+      res.clearCookie('user_sid');
+  }
+  next();
+});
+
+// Checks for logged-in users
+let sessionChecker = (req, res, next) => {
+    if (req.session.user && req.cookies.user_sid) {
+        res.redirect('/profile');
+    } else {
+        next();
+    }
+};
 
 // Validates new user signup and saves user to database
-app.post('/signup', (req, res) => {
+app.post('/signup', sessionChecker, (req, res) => {
   auth.validateSignupForm(req.body, (result) => {
     if (result.success) {
       console.log(result);
@@ -95,7 +110,7 @@ app.post('/signup', (req, res) => {
 });
 
 // Validates user and logs user into session
-app.post('/login', (req, res, next) => {
+app.post('/login', sessionChecker, (req, res, next) => {
   console.log('inside server login');
   auth.validateLoginForm(req.body, (result) => {
     if (result.success) {
@@ -103,7 +118,7 @@ app.post('/login', (req, res, next) => {
         if (err) { return next(err); }
         if (!user) { return res.status(401).json({err: info}); }
         const credentials = req.body;
-        console.log('credentials validated, retrieving profile', credentials);
+        console.log('credentials validated, retrieving profile');
         db.getUser(credentials, (err, user) => {
           if (err) {
             console.log('error in passport local strategy get user', err);
@@ -115,9 +130,15 @@ app.post('/login', (req, res, next) => {
 
             // creates persisting session with Passport
             const user_id = user.id;
+            // req.session.regenerate(() => {
+            //   req.session.user = user;
+            //   res.cookie('loggedIn', 'true', { maxAge: 60 * 60 * 1000 });
+            // });
             req.logIn(user_id, (err) => {
               if (err) { return res.status(500).json({ err: 'Could not login user'}); }
               req.session.user = user;
+              res.cookie('loggedIn', 'true', { maxAge: 60 * 60 * 1000 });
+              console.log('req.session', req.session);
               res.status(200).json({status: 'Login successful!', user: user});
             });
           }
@@ -136,16 +157,17 @@ app.get('/checkauth', auth.isAuthenticated, function(req, res){
 });
 
 // Destroys session and logs user out
-app.get('/logout', (req, res) => {
+app.post('/logout', (req, res) => {
   req.session.destroy(() => {
-    res.clearCookie('connect.sid', {path:'/'}).send('cleared');
     req.logOut();
-    res.redirect('/');
+    res.clearCookie('connect.sid', {path:'/'});
+    res.clearCookie('user_sid', {path:'/'});
+    res.clearCookie('loggedIn', {path: '/'}).redirect('/');
   });
 });
 
 // Authenticates user upon redirect
-app.post('/profile', (req, res) => {
+app.post('/profile', sessionChecker, (req, res) => {
   console.log('/profile page req.user:', req.user);
 });
 
@@ -173,7 +195,7 @@ app.post('/api/script', (req, res) => {
   })
 });
 
-app.post('/postanalysis', (req, res) => {
+app.post('/postanalysis', sessionChecker, (req, res) => {
     console.log('user:', req.user);
     let data = {
       script: req.body.script,
@@ -216,7 +238,7 @@ passport.deserializeUser((user, done) => {
 });
 
 // wild card routing all pages to the React Router
-app.get('/*', (req, res) => {
+app.get('/*', sessionChecker, (req, res) => {
   res.status(302).sendFile(path.join(__dirname, '../dist/index.html'));
 });
 

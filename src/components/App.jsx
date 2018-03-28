@@ -20,7 +20,8 @@ class App extends React.Component {
       results: {},
       comparison: '',
       parsedResults: {},
-      isLoggedIn: false
+      isLoggedIn: false,
+      user: {}
     }
     this.setScript = this.setScript.bind(this);
     this.setTranscript = this.setTranscript.bind(this);
@@ -56,6 +57,21 @@ class App extends React.Component {
     this.props.history.push('/results')
   }
 
+  setUser(user) {
+    if (user) {
+    this.setState({
+      isLoggedIn: true,
+      user
+    });
+    } else if (!user) {
+      this.setState({
+        isLoggedIn: false,
+        user: {}
+      })
+    }
+    console.log('this.state', this.state);
+  }
+
   scriptComparison(one, two) {
     this.setState({
       comparison: ScriptComparison(one, two)
@@ -64,15 +80,15 @@ class App extends React.Component {
   render () {
     return (
       <div className="app">
-        <Header userLoggedIn={this.props.location.state} isLoggedIn={this.state.isLoggedIn}/>
+        <Header userLoggedIn={this.state.isLoggedIn} setUser={this.setUser.bind(this)}/>
         <Editor setscript={this.setScript} comparison={this.state.comparison}/>
         <div className="main">
           <Switch>
             <Route exact path="/" component={ Landing } />
-            <Route path="/upload" render={() => <Upload setscript={this.setScript} />} />
-            <Route path='/profile' component={ ProfileWithRouter } />
+            <Route path="/upload" userLoggedIn={this.state.isLoggedIn} render={() => <Upload setscript={this.setScript} />} />
+            <Route path='/profile' userLoggedIn={this.state.isLoggedIn} component={ ProfileWithRouter } />
             <Route path="/speech" render={() => <Speech script={this.state.script} settranscript={this.setTranscript} setresults={this.setResults}/>} />
-            <Route path="/results" render={() => <Results script={this.state.script} transcript={this.state.transcript} results={this.state.results} comparison={this.scriptComparison} setdata={this.setData}/>} />
+            <Route path="/results" userLoggedIn={this.state.isLoggedIn} render={() => <Results script={this.state.script} transcript={this.state.transcript} results={this.state.results} comparison={this.scriptComparison} setdata={this.setData}/>} />
             <Route path="/analytics" render={() => <Analytics script={this.state.script} transcript={this.state.transcript} results={this.state.parsedResults}/>} />
             <Redirect to="/"/>
           </Switch>
