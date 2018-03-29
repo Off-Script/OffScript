@@ -2,10 +2,45 @@ import React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import PersonalLibrary from './PersonalLibrary';
+import axios from 'axios';
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      user: {}
+    };
+  }
+
+ componentDidMount() {
+    this.checkSession();
+  }
+
+  checkSession() {
+    axios.get('/session')
+      .then((response) => {
+        this.login();
+      })
+      .catch((err) => {
+        this.setState({
+          isLoggedIn: false,
+          user: {}
+        })
+      });
+  }
+
+  login() {
+    axios.get('/user')
+      .then((user) => {
+        console.log('current user is:', user);
+        this.setState({
+          isLoggedIn: true,
+          user: user.data
+        });
+      })
+      .catch((err) => {
+        console.log('sign in failed, try again');
+      });
   }
 
   render() {
@@ -29,7 +64,7 @@ class Profile extends React.Component {
               <div className="card blue-grey darken-1">
                 <div className="card-content white-text">
                   <img src="media/speaker.png" width="64" height="64" />
-                  <p>{this.props.location.user.username}</p>
+                  <p>{this.state.user.username}</p>
                 </div>
                 <div className="card-action">
                   <a href="#">Contact Me</a>

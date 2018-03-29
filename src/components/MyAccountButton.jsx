@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 class MyAccountButton extends React.Component {
@@ -9,13 +9,8 @@ class MyAccountButton extends React.Component {
     this.state = {
       loggedOut: false
     };
-    this.clickAccount = this.clickAccount.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
-  }
-
-  clickAccount() {
-    console.log('inside clickAccount function');
   }
 
   handleLogout() {
@@ -27,6 +22,7 @@ class MyAccountButton extends React.Component {
       this.setState({
         loggedOut: true
       })
+      this.renderRedirect();
     })
     .catch((err) => {
        console.log('error logging out', err);
@@ -37,16 +33,15 @@ class MyAccountButton extends React.Component {
   renderRedirect() {
     if (this.state.loggedOut) {
       this.props.setUserInSession();
-      return <Link to={{pathname: "/"}} />
+      window.location = '/';
     }
   }
 
   render() {
     return (
       <div id="myAccount">
-        {this.renderRedirect()}
         <div className="modal-footer transparent">
-          <a className="btn waves-effect black" onClick={this.clickAccount}>My Account</a>
+          <Link to="/profile" className="btn waves-effect black">My Account</Link>
           <a className="btn waves-effect black" onClick={this.handleLogout}>Logout</a>
         </div>
       </div>

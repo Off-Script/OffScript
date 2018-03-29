@@ -9,7 +9,8 @@ import Results from './Results';
 import Analytics from './Analytics';
 import Footer from './Footer';
 import Editor from "./Editor";
-import ScriptComparison from '../lib/ScriptComparison'
+import ScriptComparison from '../lib/ScriptComparison';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -28,6 +29,37 @@ class App extends React.Component {
     this.setResults = this.setResults.bind(this);
     this.scriptComparison = this.scriptComparison.bind(this);
     this.setData = this.setData.bind(this);
+  }
+
+  componentDidMount() {
+    this.checkSession();
+  }
+
+  checkSession() {
+    axios.get('/session')
+      .then((response) => {
+        this.login();
+      })
+      .catch((err) => {
+        this.setState({
+          isLoggedIn: false,
+          user: {}
+        })
+      });
+  }
+
+  login() {
+    axios.get('/user')
+      .then((user) => {
+        console.log('current user is:', user);
+        this.setState({
+          isLoggedIn: true,
+          user: user.data
+        });
+      })
+      .catch((err) => {
+        console.log('sign in failed, try again');
+      });
   }
 
   setScript(script) {
@@ -80,13 +112,13 @@ class App extends React.Component {
   render () {
     return (
       <div className="app">
-        <Header userLoggedIn={this.state.isLoggedIn} setUser={this.setUser.bind(this)}/>
+        <Header userLoggedIn={this.state.isLoggedIn} user={this.state.user} setUser={this.setUser.bind(this)}/>
         <Editor setscript={this.setScript} comparison={this.state.comparison}/>
         <div className="main">
           <Switch>
             <Route exact path="/" component={ Landing } />
-            <Route path="/upload" userLoggedIn={this.state.isLoggedIn} render={() => <Upload setscript={this.setScript} />} />
-            <Route path='/profile' userLoggedIn={this.state.isLoggedIn} component={ ProfileWithRouter } />
+            <Route path="/upload" user={this.state.user}userLoggedIn={this.state.isLoggedIn} render={() => <Upload setscript={this.setScript} />} />
+            <Route path='/profile' user={this.state.user}userLoggedIn={this.state.isLoggedIn} component={ ProfileWithRouter } />
             <Route path="/speech" render={() => <Speech script={this.state.script} settranscript={this.setTranscript} setresults={this.setResults}/>} />
             <Route path="/results" userLoggedIn={this.state.isLoggedIn} render={() => <Results script={this.state.script} transcript={this.state.transcript} results={this.state.results} comparison={this.scriptComparison} setdata={this.setData}/>} />
             <Route path="/analytics" render={() => <Analytics script={this.state.script} transcript={this.state.transcript} results={this.state.parsedResults}/>} />
