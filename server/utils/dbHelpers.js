@@ -5,6 +5,7 @@ let axios = require('axios');
 
 module.exports = {
   parseData: (data, callback) => {
+    console.log('parsing data');
     let scriptData = {
       script_text: data.script,
       script_data: data.data.scriptData,

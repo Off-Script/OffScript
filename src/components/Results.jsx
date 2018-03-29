@@ -14,7 +14,7 @@ class Results extends React.Component {
       transData: [],
       comparison: scriptComparison(this.props.script, this.props.transcript),
       data: {}
-    };
+    }
     this.makeCharts = this.makeCharts.bind(this);
   }
 
@@ -45,11 +45,6 @@ class Results extends React.Component {
         transLang.push(this.props.results[1].document_tone.tone_categories[1].tones[i].score);
       }
     }
-    this.setState({
-      scriptData: scriptData,
-      transData: transData,
-      scoreData: scoreData
-    });
     data = {
       scriptData: scriptData,
       transData: transData,
@@ -59,6 +54,12 @@ class Results extends React.Component {
       scriptLang: scriptLang,
       transLang: transLang
     };
+    this.setState({
+      scriptData: scriptData,
+      transData: transData,
+      scoreData: scoreData,
+      data: data
+    });
     this.props.setdata(data);
   }
 
@@ -100,7 +101,7 @@ class Results extends React.Component {
     return (
       <div className="container">
         <h3>Your Results</h3>
-        <SaveScriptAnalysis scriptData={this.state.scriptData} transData={this.state.transData} comparison={this.state.comparison} />
+        <SaveScriptAnalysis script={this.props.script} transcript={this.props.transcript} scriptData={this.state.scriptData} transData={this.state.transData} comparison={this.state.comparison} data={this.state.data}/>
         <div className="flex-container">
           <div className="script-card">
             <div className="card-panel results">
