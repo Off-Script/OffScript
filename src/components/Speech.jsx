@@ -185,9 +185,9 @@ class Speech extends React.Component {
             </div>
           </div>
         </div>
-        <a 
+        <a
           className="waves-effect btn cyan accent-4 hoverable"
-          disabled={this.state.disable} 
+          disabled={this.state.disable}
           onClick={this.reset} >
           <i className="material-icons left">clear</i>Clear Transcript
         </a>

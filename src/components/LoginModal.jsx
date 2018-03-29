@@ -35,9 +35,9 @@ class LoginModal extends React.Component{
       this.props.setUserInSession(res.data.user);
     })
     .catch((err) => {
-       console.log('error handling login submit', err.response.data.errors);
+       console.log('error handling login submit', err.response);
       this.setState({
-        errors: err.response.data.errors,
+        errors: err.response,
         isLoggedIn: false,
         redirectToProfile: false
       });

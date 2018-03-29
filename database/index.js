@@ -22,8 +22,44 @@ client.connect((err, db, done) => {
 });
 
 module.exports = {
+  saveAnalysis: (data, callback) => {
+    let scriptData = data.scriptData;
+    let transcriptData = data.transcriptData;
+    client.query('INSERT INTO scripts (script_text, script_data, script_emotion, script_lang) VALUES ($1, $2, $3, $4) RETURNING id', [scriptData.script_text, scriptData.script_data, scriptData.script_emotion, scriptData.script_lang], (err, result) => {
+      if (err) {
+        console.log('error saving script to database');
+        callback(err, null);
+      } else {
+        console.log('script saved to database');
+        let scriptId = result.rows[0].id;
+        client.query('INSERT INTO transcripts (transcript_text, transcript_data, transcript_emotion, transcript_lang, score_data, comparison, script_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id', [transcriptData.transcript_text, transcriptData.transcript_data, transcriptData.transcript_emotion, transcriptData.transcript_lang, transcriptData.score_data, transcriptData.comparison, scriptId], (err, result) => {
+          if (err) {
+            console.log('error saving transcript to database');
+            callback(err, null);
+          } else {
+            console.log('transcript saved to database');
+            let transcriptId = result.rows[0].id;
+            console.log('here is the transcriptId', transcriptId);
+            let queryString = `UPDATE scripts SET transcript_id = transcript_id || ${transcriptId}) WHERE id IN(SELECT max(id) FROM scripts)`;
+            client.query(queryString), (err, result) => {
+                if (err) {
+                  console.log('error saving foreign keys to database');
+                  callback(err, null);
+                } else {
+                  // callback(null, result);
+                  console.log('insert transcript_id executed', result);
+                }
+            }
+            console.log('insert script_id executed');
+            // callback(null, result);
+          }
+        });
+        callback(null, result);
+      }
+    });
+  },
   saveScript: (data, callback) => {
-    client.query('INSERT INTO scripts (script_text, script_tones, script_usage) VALUES ($1, $2, $3) RETURNING *', [data.script_text, data.script_tones, data.script_usage], (err, result) => {
+    client.query('INSERT INTO scripts (script_text, script_data, script_emotion, script_lang) VALUES ($1, $2, $3, $4) RETURNING *', [data.script_text, data.script_data, data.script_emotion, data.script_lang], (err, result) => {
       if (err) {
         console.log('error saving script to database');
         callback(err, null);
@@ -34,7 +70,7 @@ module.exports = {
     });
   },
   saveTranscript: (data, callback) => {
-    client.query('INSERT INTO transcripts (transcript_text, transcript_tones, transcript_usage) VALUES ($1, $2, $3) RETURNING *', [data.transcript_text, data.transcript_tones, data.transcript_usage], (err, result) => {
+    client.query('INSERT INTO transcripts (transcript_text, transcript_data, transcript_emotion, transcript_lang, score_data, comparison) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [data.transcript_text, data.transcript_data, data.transcript_emotion, data.transcript_lang, data.score_data, data.comparison], (err, result) => {
       if (err) {
         console.log('error saving transcript to database');
         callback(err, null);
@@ -116,7 +152,7 @@ module.exports = {
         console.log('error getting user by id from database');
         callback(err, null);
       } else {
-        console.log('user retrieve by id from database');
+        console.log('user retrieved by id from database');
         callback(null, result);
       }
     });

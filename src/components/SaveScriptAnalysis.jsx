@@ -8,9 +8,7 @@ class SaveScriptAnalysis extends React.Component {
   }
 
   saveAnalysis(e) {
-    console.log('invoking saveAnalysis function');
     e.preventDefault();
-
     axios.post('/postanalysis', {
       script: this.props.script,
       transcript: this.props.transcript,

@@ -16,7 +16,6 @@ class MyAccountButton extends React.Component {
 
   clickAccount() {
     console.log('inside clickAccount function');
-    return <Redirect to={{pathname: "/profile"}} />
   }
 
   handleLogout() {
@@ -38,7 +37,7 @@ class MyAccountButton extends React.Component {
   renderRedirect() {
     if (this.state.loggedOut) {
       this.props.setUserInSession();
-      return <Redirect to={{pathname: "/"}} />
+      return <Link to={{pathname: "/"}} />
     }
   }
 

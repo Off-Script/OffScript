@@ -186,7 +186,7 @@ app.post('/api/script', (req, res) => {
     })
   ])
   .then((results) => {
-    console.log('Watson results', results);
+    console.log('Watson results', JSON.stringify(results));
     res.status(200).end(JSON.stringify(results));
   })
   .catch((error) => {
@@ -196,23 +196,29 @@ app.post('/api/script', (req, res) => {
 });
 
 app.post('/postanalysis', sessionChecker, (req, res) => {
-    console.log('user:', req.user);
     let data = {
       script: req.body.script,
       transcript: req.body.transcript,
       data: req.body.data,
       comparison: req.body.comparison
     };
+    console.log('data is:', data);
     dbHelpers.parseData(data, (err, result) => {
       if (err) { console.log('error parsing data with dbHelpers', err); }
       else {
         console.log('parsed data', result);
-        db.saveScript(result.scriptData, (err, result) => {
-          if (err) { console.log('error saving script to db', err); }
+        db.saveAnalysis(result, (err, result) => {
+          if (err) { console.log('error saving analysis to db', err); }
           else {
-            console.log('script saved to database', result);
+            console.log('analysis saved to database', result);
           }
         });
+        // db.saveScript(result.scriptData, (err, result) => {
+        //   if (err) { console.log('error saving script to db', err); }
+        //   else {
+        //     console.log('script saved to database', result);
+        //   }
+        // });
         // db.saveTranscript(result.transcriptData, (err, result) => {
         //   if (err) { console.log('error saving transcript to db', err); }
         //   else {
