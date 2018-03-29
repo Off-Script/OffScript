@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, withRouter, Redirect, Switch } from 'react-router-dom';
-import Header from './Header.jsx';
-import Landing from './Landing.jsx';
-import ProfileWithRouter from './Profile.jsx';
-import Upload from './Upload.jsx';
-import Speech from './Speech.jsx';
-import Results from './Results.jsx';
-import Analytics from './Analytics.jsx';
-import Footer from './Footer.jsx';
-import Editor from "./Editor.jsx";
-import ScriptComparison from '../lib/ScriptComparison.js'
+import Header from './Header';
+import Landing from './Landing';
+import ProfileWithRouter from './Profile';
+import Upload from './Upload';
+import Speech from './Speech';
+import Results from './Results';
+import Analytics from './Analytics';
+import Footer from './Footer';
+import Editor from "./Editor";
+import ScriptComparison from '../lib/ScriptComparison'
 
 class App extends React.Component {
   constructor(props) {
