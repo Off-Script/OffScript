@@ -1,5 +1,5 @@
 import React from 'react';
-import VoiceRecognition from '../lib/VoiceRecognition.js';
+import VoiceRecognition from '../lib/VoiceRecognition';
 import axios from 'axios';
 
 class Speech extends React.Component {

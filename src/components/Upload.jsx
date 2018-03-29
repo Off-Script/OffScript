@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Route } from "react-router-dom";
-import FileUpload from "./FileUpload.jsx";
+import FileUpload from "./FileUpload";
 
 class Upload extends React.Component {
   constructor(props) {

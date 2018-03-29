@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Interweave from 'interweave';
-import scriptComparison from '../lib/ScriptComparison.js';
-import Chart from './Chart.jsx';
-import Editor from './Editor.jsx';
-import SaveScriptAnalysis from './SaveScriptAnalysis.jsx';
+import scriptComparison from '../lib/ScriptComparison';
+import Chart from './Chart';
+import Editor from './Editor';
+import SaveScriptAnalysis from './SaveScriptAnalysis';
 
 class Results extends React.Component {
   constructor(props) {

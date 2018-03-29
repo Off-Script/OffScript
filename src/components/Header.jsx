@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginModal from './LoginModal.jsx';
-import MyAccountButton from './MyAccountButton.jsx';
+import LoginModal from './LoginModal';
+import MyAccountButton from './MyAccountButton';
 
 class Header extends React.Component {
   constructor(props) {

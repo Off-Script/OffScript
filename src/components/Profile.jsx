@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import PersonalLibrary from './PersonalLibrary';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -20,29 +21,7 @@ class Profile extends React.Component {
 
             <div className="col s12 m4 l4">
               <Link to="/upload" className="btn waves-effect black">Upload New Script</Link>
-              <h6>my scripts</h6>
-              <ul className="collapsible">
-                <li className="active">
-                  <div className="collapsible-header"><i className="mdi-av-web"></i>Hamlet</div>
-                  <div className="collapsible-body"><p>transcript</p></div>
-                  <div className="collapsible-body"><p>recording</p></div>
-                </li>
-                <li>
-                  <div className="collapsible-header"><i className="mdi-editor-format-align-justify"></i>King John</div>
-                  <div className="collapsible-body"><p>transcript</p></div>
-                  <div className="collapsible-body"><p>recording</p></div>
-                </li>
-                <li>
-                  <div className="collapsible-header"><i className="mdi-av-play-shopping-bag"></i>Arcadia</div>
-                  <div className="collapsible-body"><p>transcript</p></div>
-                  <div className="collapsible-body"><p>recording</p></div>
-                </li>
-                <li>
-                  <div className="collapsible-header"><i className="mdi-editor-insert-comment"></i>Betrayal</div>
-                  <div className="collapsible-body"><p>transcript</p></div>
-                  <div className="collapsible-body"><p>recording</p></div>
-                </li>
-              </ul>
+              <PersonalLibrary />
             </div>
 
             <div className="col s12 m4 l4">
