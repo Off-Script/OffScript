@@ -6,11 +6,17 @@ class Upload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      script: ""
+      script: "",
+      username: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.clear = this.clear.bind(this);
+  }
+
+  componentWillMount() {
+    let user = this.props.user;
+    console.log('user in Upload:', user);
   }
 
   handleChange(e) {

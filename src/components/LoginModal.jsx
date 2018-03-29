@@ -6,7 +6,7 @@ class LoginModal extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      errors: {},
+      errors: '',
       username: '',
       password: '',
       isLoggedIn: false,
@@ -36,9 +36,9 @@ class LoginModal extends React.Component{
       this.props.setUserInSession(res.data.user);
     })
     .catch((err) => {
-       console.log('error handling login submit', err.response);
+       console.log('error handling login submit', err);
       this.setState({
-        errors: err.response,
+        errors: error.response.data.errors,
         isLoggedIn: false,
         redirectToProfile: false
       });
@@ -60,11 +60,17 @@ class LoginModal extends React.Component{
     })
     .catch((err) => {
        console.log('error handling registration submission', err.response.data);
-       let message = err.response.data.error;
+       let message;
+       if (err.response.data.error) {
+        message = err.response.data.error;
+       } else {
+        message = err.response.data.errors.password || err.response.data.errors.username;
+       }
        this.setState({
         errors: {
           error: message
-        }
+        },
+        redirectToProfile: false
        });
      })
   }
@@ -86,7 +92,7 @@ class LoginModal extends React.Component{
     } else if (this.state.errors.username) {
       errorMessage = 'Username incorrect, try again';
     } else {
-      errorMessage = this.state.errors.error
+      errorMessage = 'Incorrect password or username, please try again';
     }
     const redirectToProfile = this.state.redirectToProfile;
     if (redirectToProfile) {

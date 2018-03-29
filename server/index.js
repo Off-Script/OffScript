@@ -13,6 +13,9 @@ const app = express();
 
 let PORT = process.env.PORT || 3000;
 
+// Serves static files to client
+app.use(express.static(path.join(__dirname, '../dist')));
+
 // Authentication packages
 const session = require('express-session');
 const passport = require('passport');
@@ -32,8 +35,6 @@ app.use(bodyParser.urlencoded({extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
-// Serves static files to client
-app.use(express.static(path.join(__dirname, '../dist')));
 
 // Passport init
 app.use(passport.initialize());
@@ -45,7 +46,7 @@ passport.use(new LocalStrategy((username, password, done) => {
     username,
     password
   };
-  console.log('local strategy invoked', userCredentials);
+  console.log('local strategy invoked');
   db.getUser(userCredentials, (err, user) => {
     if (err) {
       console.log('error in passport local strategy get user', err);
@@ -63,6 +64,7 @@ app.use((req, res, next) => {
   if (req.cookies.user_sid && !req.session.user) {
       res.clearCookie('user_sid');
   }
+  console.log('handling request for: ' + req.url);
   next();
 });
 
@@ -88,7 +90,7 @@ app.post('/signup', sessionChecker, (req, res) => {
         else {
           console.log('saved user data to the db:', result);
           db.getUser(req.body, (err, result) => {
-            if (err) { res.send(err); }
+            if (err) { res.send(err.errors); }
             else {
               console.log('result db.getUser', result);
 
@@ -115,14 +117,14 @@ app.post('/login', sessionChecker, (req, res, next) => {
   auth.validateLoginForm(req.body, (result) => {
     if (result.success) {
       passport.authenticate('local', (err, user, info) => {
-        if (err) { return next(err); }
+        if (err) { return res.status(401).json({errors: err}); }
         if (!user) { return res.status(401).json({err: info}); }
         const credentials = req.body;
         console.log('credentials validated, retrieving profile');
         db.getUser(credentials, (err, user) => {
           if (err) {
             console.log('error in passport local strategy get user', err);
-            res.status(400).send(err);
+            res.status(401).json({ message: err });
           } else if (!user) {
             return done(null, false, { message: 'Unknown user' });
           } else if (user) {
@@ -153,6 +155,26 @@ app.post('/login', sessionChecker, (req, res, next) => {
 app.get('/checkauth', auth.isAuthenticated, function(req, res){
   res.status(200).json({
       status: 'Login successful!'
+  });
+});
+
+app.get('/user', (req, res) => {
+  res.send(req.user);
+});
+
+app.get('/session', (req, res) => {
+  let credentials = req.session.user;
+  console.log('/session credentials are', credentials);
+  db.getUser(credentials, (err, user) => {
+    if (err) {
+      console.log('error retrieving user in session', err);
+      res.status(401).send({ message: err });
+    } else if (!user) {
+      res.status(401).send({ message: 'Unknown user' });
+    } else if (user) {
+      console.log('user is in session:', user);
+      res.send({isLoggedIn: true, user: user});
+    }
   });
 });
 
