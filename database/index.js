@@ -75,27 +75,27 @@ module.exports = {
     let jsonData = JSON.stringify(data);
 
   },
-  findScript: (data, callback) => {
+  findScripts: (data, callback) => {
     let jsonData = JSON.stringify(data);
-    client.query(`SELECT * FROM scripts WHERE script_text LIKE "%${jsonData}%"`, (err, result) => {
+    client.query(`SELECT * FROM scripts WHERE user_id = ${data.userId}`, (err, result) => {
       if (err) {
-        console.log('error saving script to database');
+        console.log('error retrieving user scripts from database');
         callback(err, null);
       } else {
-        console.log('script saved to database');
-        callback(null, result);
+        console.log('user scripts retrieved from database');
+        callback(null, result.rows);
       }
     });
   },
-  findTranscript: (data, callback) => {
+  findTranscripts: (data, callback) => {
     let jsonData = JSON.stringify(data);
-    client.query(`SELECT * FROM transcripts WHERE transcript_text LIKE "%${jsonData}%"`, (err, result) => {
+    client.query(`SELECT * FROM transcripts WHERE user_id = ${data.userId}`, (err, result) => {
       if (err) {
-        console.log('error saving script to database');
+        console.log('error retrieving user transcripts from database');
         callback(err, null);
       } else {
-        console.log('script saved to database');
-        callback(null, result);
+        console.log('user transcripts retrieved from database');
+        callback(null, result.rows);
       }
     });
   },

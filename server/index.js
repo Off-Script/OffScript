@@ -162,6 +162,7 @@ app.get('/user', (req, res) => {
   res.send(req.user);
 });
 
+// Retrieves session credentials
 app.get('/session', (req, res) => {
   let credentials = req.session.user.id;
   console.log('/session credentials are', credentials);
@@ -244,6 +245,7 @@ app.post('/api/script', (req, res) => {
     })
 });
 
+// Saves script, transcript and links to user id in the database
 app.post('/postanalysis', (req, res) => {
   console.log('/postanalysis function invoked', req.body);
   let data = {
@@ -253,7 +255,9 @@ app.post('/postanalysis', (req, res) => {
     comparison: req.body.comparison,
     currentUserId: req.body.currentUserId
   };
-  console.log('userId is:', data.currentUserId);
+  console.log('req.body', req.body);
+  console.log('data', data);
+  // console.log('userId is:', data.currentUserId);
   dbHelpers.parseData(data, (err, result) => {
     if (err) { console.log('error parsing data with dbHelpers', err); }
     else {
@@ -270,10 +274,31 @@ app.post('/postanalysis', (req, res) => {
   });
 });
 
-app.get('/api/personalscripts', (req, res) => {
+app.post('/api/personalscripts', (req, res) => {
+  console.log('req.body', req.body);
+  let data = {
+    userId: req.body.userId,
+    username: req.body.username
+  };
+  let returnData = {};
+  console.log('api/personalscripts', data);
+  db.findScripts(data, (err, result1) => {
+    if (err) { console.log('error finding user scripts in db', err); }
+    else {
+      returnData.userId = req.body.userId;
+      returnData.scripts = result1;
+      db.findTranscripts(data, (err, result2) => {
+        if (err) { console.log('error finding user transcripts in db', err); }
+        else {
+          returnData.transcripts = result2;
+          console.log('returnData for api/personalscripts', returnData);
+          res.status(200).send(returnData);
+        }
+      });
+    }
+  });
 
 });
-
 
 // Creates Passport session for user by serialized ID
 passport.serializeUser((user, done) => {

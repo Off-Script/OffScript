@@ -74,7 +74,7 @@ class Results extends React.Component {
     return (
       <div className="container">
         <h3>Your Results</h3>
-        <SaveScriptAnalysis userId={this.props.user.id} script={this.props.script} transcript={this.props.transcript} scriptData={this.state.scriptData} transData={this.state.transData} comparison={this.state.comparison} data={this.state.data}/>
+        <SaveScriptAnalysis userId={this.props.user.id} script={this.props.script} transcript={this.props.transcript} scriptData={this.state.scriptData} transData={this.state.transData} comparison={this.state.comparison} data={this.state.scoreData}/>
         <div className="flex-container">
           <div className="script-card">
             <div className="card-panel results">

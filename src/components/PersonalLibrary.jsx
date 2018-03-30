@@ -1,63 +1,51 @@
 import React from 'react';
-
+import axios from 'axios';
+import LibraryItem from './LibraryItem';
 
 class PersonalLibrary extends React.Component{
   constructor(props) {
     super(props);
+    this.state = {
+      scripts: [],
+      transcripts: []
+    }
+    this.fetchScripts = this.fetchScripts.bind(this);
   }
 
+  componentDidMount() {
+    this.fetchScripts();
+  }
 
-  fetchScripts(e) {
-    console.log('fetching user library now');
-    e.preventDefault();
-    axios.post('/login', {
-      username: this.state.username,
-      password: this.state.password
+  fetchScripts() {
+    console.log('fetching user library now', this.props);
+    axios.post('/api/personalscripts', {
+      username: 'buddy',
+      userId: 2
     })
     .then((res) => {
-      console.log('handling login submit', res);
+      console.log('user library retrieved', res.data);
       this.setState({
-        isLoggedIn: true,
-        redirectToProfile: true,
-        user: res.data.user
+        scripts: res.data.scripts,
+        transcripts: res.data.transcripts
       });
-      this.props.setUserInSession(res.data.user);
+
     })
     .catch((err) => {
-       console.log('error handling login submit', err);
-      this.setState({
-        errors: error.response.data.errors,
-        isLoggedIn: false,
-        redirectToProfile: false
-      });
+       console.log('error retrieving user library', err);
      })
   }
 
   render() {
+    let scripts = this.state.scripts || [];
+    let transcripts = this.state.transcripts || [];
+
     return (
       <div>
         <h6>my scripts</h6>
         <ul className="collapsible">
-          <li className="active">
-            <div className="collapsible-header"><i className="mdi-av-web"></i>Hamlet</div>
-            <div className="collapsible-body"><p>transcript</p></div>
-            <div className="collapsible-body"><p>recording</p></div>
-          </li>
-          <li>
-            <div className="collapsible-header"><i className="mdi-editor-format-align-justify"></i>King John</div>
-            <div className="collapsible-body"><p>transcript</p></div>
-            <div className="collapsible-body"><p>recording</p></div>
-          </li>
-          <li>
-            <div className="collapsible-header"><i className="mdi-av-play-shopping-bag"></i>Arcadia</div>
-            <div className="collapsible-body"><p>transcript</p></div>
-            <div className="collapsible-body"><p>recording</p></div>
-          </li>
-          <li>
-            <div className="collapsible-header"><i className="mdi-editor-insert-comment"></i>Betrayal</div>
-            <div className="collapsible-body"><p>transcript</p></div>
-            <div className="collapsible-body"><p>recording</p></div>
-          </li>
+          {scripts.map((script, index)=> {
+            return <LibraryItem key={index} script={script} />
+          })}
         </ul>
       </div>
     )
