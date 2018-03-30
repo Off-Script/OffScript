@@ -102,6 +102,14 @@ span.missing {
 
 .speech-card {
   min-height: 107px;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.script-text {
+  max-height: 600px;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .upload-card {

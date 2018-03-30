@@ -1,10 +1,10 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const bodyParser = require('body-parser'); 
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const auth = require('./utils/auth');
-let pg = require('pg'); 
+let pg = require('pg');
 let db = require('../database/index.js');
 let dbHelpers = require('./utils/dbHelpers.js');
 let helpers = require('./utils/helpers.js');
@@ -62,7 +62,7 @@ passport.use(new LocalStrategy((username, password, done) => {
 // Check if user's cookie is still saved in browser and user is not set, then automatically logs the user out.
 app.use((req, res, next) => {
   if (req.cookies.user_sid && !req.session.user) {
-      res.clearCookie('user_sid');
+    res.clearCookie('user_sid');
   }
   console.log('handling request for: ' + req.url);
   next();
@@ -70,11 +70,11 @@ app.use((req, res, next) => {
 
 // Checks for logged-in users
 let sessionChecker = (req, res, next) => {
-    if (req.session.user && req.cookies.user_sid) {
-        res.redirect('/profile');
-    } else {
-        next();
-    }
+  if (req.session.user && req.cookies.user_sid) {
+    res.redirect('/profile');
+  } else {
+    next();
+  }
 };
 
 // Validates new user signup and saves user to database
@@ -208,47 +208,72 @@ app.post('/api/script', (req, res) => {
     })
   ])
   .then((results) => {
-    console.log('Watson results', JSON.stringify(results));
-    res.status(200).end(JSON.stringify(results));
-  })
-  .catch((error) => {
-    console.log(error, 'error');
-    res.end(error.error)
-  })
+      console.log("Watson results", JSON.stringify(results));
+      var parsedResults = {};
+      var scriptData = [];
+      var transData = [];
+      var scriptEmotion = [];
+      var transEmotion = [];
+      var scriptLang = [];
+      var transLang = [];
+      for (let i = 0; i < 5; i++) {
+        scriptData.push(results[0].document_tone.tone_categories[2].tones[i].score);
+        transData.push(results[1].document_tone.tone_categories[2].tones[i].score);
+        scriptEmotion.push(results[0].document_tone.tone_categories[0].tones[i].score);
+        transEmotion.push(results[1].document_tone.tone_categories[0].tones[i].score);
+        if (i < 3) {
+          scriptLang.push(results[0].document_tone.tone_categories[1].tones[i].score);
+          transLang.push(results[1].document_tone.tone_categories[1].tones[i].score);
+        }
+      }
+      parsedResults = {
+        scriptData: scriptData,
+        transData: transData,
+        scriptEmotion: scriptEmotion,
+        transEmotion: transEmotion,
+        scriptLang: scriptLang,
+        transLang: transLang
+      };
+      res.status(200).end(JSON.stringify(parsedResults));
+    })
+    .catch((error) => {
+      console.log(error, "error");
+      res.end(error.error);
+    })
 });
 
 app.post('/postanalysis', sessionChecker, (req, res) => {
-    let data = {
-      script: req.body.script,
-      transcript: req.body.transcript,
-      data: req.body.data,
-      comparison: req.body.comparison
-    };
-    console.log('data is:', data);
-    dbHelpers.parseData(data, (err, result) => {
-      if (err) { console.log('error parsing data with dbHelpers', err); }
-      else {
-        console.log('parsed data', result);
-        db.saveAnalysis(result, (err, result) => {
-          if (err) { console.log('error saving analysis to db', err); }
-          else {
-            console.log('analysis saved to database', result);
-          }
-        });
-        // db.saveScript(result.scriptData, (err, result) => {
-        //   if (err) { console.log('error saving script to db', err); }
-        //   else {
-        //     console.log('script saved to database', result);
-        //   }
-        // });
-        // db.saveTranscript(result.transcriptData, (err, result) => {
-        //   if (err) { console.log('error saving transcript to db', err); }
-        //   else {
-        //     console.log('transcript saved to database', result);
-        //   }
-        // });
-      }
-    });
+  let data = {
+    script: req.body.script,
+    transcript: req.body.transcript,
+    data: req.body.data,
+    comparison: req.body.comparison
+  };
+  console.log('data is:', data);
+  dbHelpers.parseData(data, (err, result) => {
+    if (err) { console.log('error parsing data with dbHelpers', err); }
+    else {
+      console.log('parsed data', result);
+      db.saveAnalysis(result, (err, result) => {
+        if (err) { console.log('error saving analysis to db', err); }
+        else {
+          console.log('analysis saved to database', result);
+        }
+      });
+      // db.saveScript(result.scriptData, (err, result) => {
+      //   if (err) { console.log('error saving script to db', err); }
+      //   else {
+      //     console.log('script saved to database', result);
+      //   }
+      // });
+      // db.saveTranscript(result.transcriptData, (err, result) => {
+      //   if (err) { console.log('error saving transcript to db', err); }
+      //   else {
+      //     console.log('transcript saved to database', result);
+      //   }
+      // });
+    }
+  });
 });
 
 // Creates Passport session for user by serialized ID

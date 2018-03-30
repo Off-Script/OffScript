@@ -19,8 +19,8 @@ class App extends React.Component {
       script: '',
       transcript: '',
       results: {},
+      score: [],
       comparison: '',
-      parsedResults: {},
       isLoggedIn: false,
       user: {}
     }
@@ -28,7 +28,7 @@ class App extends React.Component {
     this.setTranscript = this.setTranscript.bind(this);
     this.setResults = this.setResults.bind(this);
     this.scriptComparison = this.scriptComparison.bind(this);
-    this.setData = this.setData.bind(this);
+    this.setScore = this.setScore.bind(this);
   }
 
   componentDidMount() {
@@ -76,12 +76,6 @@ class App extends React.Component {
     });
   }
 
-  setData(data) {
-    this.setState({
-      parsedResults: data
-    });
-  }
-
   setResults(results) {
     this.setState({
       results: results
@@ -89,12 +83,18 @@ class App extends React.Component {
     this.props.history.push('/results')
   }
 
+  setScore(score) {
+    this.setState({
+      score: score
+    });
+  }
+
   setUser(user) {
     if (user) {
-    this.setState({
-      isLoggedIn: true,
-      user
-    });
+      this.setState({
+        isLoggedIn: true,
+        user
+      });
     } else if (!user) {
       this.setState({
         isLoggedIn: false,
@@ -120,8 +120,23 @@ class App extends React.Component {
             <Route path="/upload" user={this.state.user}userLoggedIn={this.state.isLoggedIn} render={() => <Upload setscript={this.setScript} />} />
             <Route path='/profile' user={this.state.user}userLoggedIn={this.state.isLoggedIn} component={ ProfileWithRouter } />
             <Route path="/speech" render={() => <Speech script={this.state.script} settranscript={this.setTranscript} setresults={this.setResults}/>} />
-            <Route path="/results" userLoggedIn={this.state.isLoggedIn} render={() => <Results script={this.state.script} transcript={this.state.transcript} results={this.state.results} comparison={this.scriptComparison} setdata={this.setData}/>} />
-            <Route path="/analytics" render={() => <Analytics script={this.state.script} transcript={this.state.transcript} results={this.state.parsedResults}/>} />
+            <Route path="/results" userLoggedIn={this.state.isLoggedIn} 
+              render={() => <Results 
+                script={this.state.script} 
+                transcript={this.state.transcript} 
+                results={this.state.results} 
+                comparison={this.scriptComparison}
+                setscore={this.setScore}
+              />} 
+            />
+            <Route path="/analytics" 
+              render={() => <Analytics 
+                script={this.state.script} 
+                transcript={this.state.transcript} 
+                results={this.state.results}
+                score={this.state.score}
+              />} 
+            />
             <Redirect to="/"/>
           </Switch>
         </div>
