@@ -141,7 +141,7 @@ class Speech extends React.Component {
             <a
               className="btn waves-effect cyan accent-4 hoverable"
               onClick={this.handleShow}
-            >Show Script</a>
+            >Toggle Script</a>
             <div className="card grey lighten-4 speech-card">
               {script}
             </div>

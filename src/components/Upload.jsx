@@ -1,4 +1,5 @@
 import React from "react";
+import ReactQuill from 'react-quill';
 import { Link, Route } from "react-router-dom";
 import FileUpload from "./FileUpload";
 
@@ -9,7 +10,7 @@ class Upload extends React.Component {
       script: "",
       username: ""
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.reactQuillRef = null;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.clear = this.clear.bind(this);
   }
@@ -19,18 +20,15 @@ class Upload extends React.Component {
     console.log('user in Upload:', user);
   }
 
-  handleChange(e) {
-    this.setState({
-      script: e.target.value
-    });
-  }
-
   handleSubmit(e) {
     e.preventDefault();
     // this.readFile();
-    if (this.state.script.length > 50) {
-      this.props.setscript(this.state.script);
-      this.clear();
+    let editor = this.reactQuillRef.getEditor()
+    if(editor.getText().length > 50) {
+    let script = editor.getText();
+    this.setState({script});
+    this.props.setscript(script);
+    this.clear();
     } else {
       alert("For best results, script must be 50 characters or more");
     }
@@ -60,14 +58,24 @@ class Upload extends React.Component {
         <div className="card upload-card">
           <div className="card-tabs">
             <ul className="tabs tabs-fixed-width grey lighten-3">
-              <li className="tab"><a className="cyan-text" href="#type">Type a script</a></li>
-              <li className="tab"><a className="cyan-text" href="#upload">Upload a script</a></li>
+              <li className="tab">
+                <a className="cyan-text" href="#type">
+                  Type a script
+                </a>
+              </li>
+              <li className="tab">
+                <a className="cyan-text" href="#upload">
+                  Upload a script
+                </a>
+              </li>
             </ul>
           </div>
           <div id="type" className="input-field upload">
-            <i className="material-icons prefix">mode_edit</i>
-            <textarea autoFocus id="icon_prefix2" className="materialize-textarea" data-length="1000" value={this.state.script} onChange={this.handleChange}></textarea>
-            <label htmlFor="icon_prefix2">Script</label>
+            <ReactQuill 
+              ref={(el) => { this.reactQuillRef = el }}
+              theme="snow"
+              value={this.state.script} 
+              />
           </div>
           <div id="upload" className="upload">
             <FileUpload onChange={this.readFile.bind(this)}/>

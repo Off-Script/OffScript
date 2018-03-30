@@ -71,7 +71,7 @@ class Editor extends React.Component {
                         <h4>Edit Your Script</h4>
                         <ReactQuill
                           ref={(el) => { this.reactQuillRef = el }}
-                          theme="bubble"
+                          theme="snow"
                           value={this.state.text}/>
                 {this.state.script ? <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.useTranscript}>Go OffScript</button> : <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.useScript}>Back</button> }
                 <button onClick={this.submit} className="modal-action modal-close waves-effect btn cyan accent-4 hoverable">Submit</button>
