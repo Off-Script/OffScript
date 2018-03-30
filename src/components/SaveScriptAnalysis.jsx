@@ -9,11 +9,13 @@ class SaveScriptAnalysis extends React.Component {
 
   saveAnalysis(e) {
     e.preventDefault();
+    console.log('this.props', this.props.userId);
     axios.post('/postanalysis', {
       script: this.props.script,
       transcript: this.props.transcript,
       data: this.props.data,
-      comparison: this.props.comparison
+      comparison: this.props.comparison,
+      currentUserId: this.props.userId
     })
     .then((res) => {
       console.log('analysis saved to db', res);

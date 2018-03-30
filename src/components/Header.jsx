@@ -13,13 +13,11 @@ class Header extends React.Component {
 
   componentDidUpdate() {
     let loggedin = localStorage.getItem('loggedIn');
-    console.log('is it logged in?', loggedin);
     if (loggedin) {
       this.setState({
         isLoggedIn: true
       });
     }
-    console.log('new state in Header', this.state.isLoggedIn);
   }
 
   render() {

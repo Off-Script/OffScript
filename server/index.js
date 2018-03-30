@@ -163,19 +163,21 @@ app.get('/user', (req, res) => {
 });
 
 app.get('/session', (req, res) => {
-  let credentials = req.session.user;
+  let credentials = req.session.user.id;
   console.log('/session credentials are', credentials);
-  db.getUser(credentials, (err, user) => {
-    if (err) {
-      console.log('error retrieving user in session', err);
-      res.status(401).send({ message: err });
-    } else if (!user) {
-      res.status(401).send({ message: 'Unknown user' });
-    } else if (user) {
-      console.log('user is in session:', user);
-      res.send({isLoggedIn: true, user: user});
-    }
-  });
+  if (credentials) {
+    db.getUserById(credentials, (err, user) => {
+      if (err) {
+        console.log('error retrieving user in session', err);
+        res.status(401).send({ message: err });
+      } else if (!user) {
+        res.status(401).send({ message: 'Unknown user' });
+      } else if (user) {
+        console.log('user is in session:', user.rows[0]);
+        res.send({isLoggedIn: true, user: user});
+      }
+    });
+  }
 });
 
 // Destroys session and logs user out
@@ -208,7 +210,7 @@ app.post('/api/script', (req, res) => {
     })
   ])
   .then((results) => {
-      console.log("Watson results", JSON.stringify(results));
+      console.log("Watson results received");
       var parsedResults = {};
       var scriptData = [];
       var transData = [];
@@ -242,39 +244,36 @@ app.post('/api/script', (req, res) => {
     })
 });
 
-app.post('/postanalysis', sessionChecker, (req, res) => {
+app.post('/postanalysis', (req, res) => {
+  console.log('/postanalysis function invoked', req.body);
   let data = {
     script: req.body.script,
     transcript: req.body.transcript,
     data: req.body.data,
-    comparison: req.body.comparison
+    comparison: req.body.comparison,
+    currentUserId: req.body.currentUserId
   };
-  console.log('data is:', data);
+  console.log('userId is:', data.currentUserId);
   dbHelpers.parseData(data, (err, result) => {
     if (err) { console.log('error parsing data with dbHelpers', err); }
     else {
-      console.log('parsed data', result);
+      result.userId = req.body.currentUserId;
       db.saveAnalysis(result, (err, result) => {
         if (err) { console.log('error saving analysis to db', err); }
         else {
-          console.log('analysis saved to database', result);
+          result.userId = req.body.currentUserId;
+          console.log('new result', result);
+          res.status(200).send(result);
         }
       });
-      // db.saveScript(result.scriptData, (err, result) => {
-      //   if (err) { console.log('error saving script to db', err); }
-      //   else {
-      //     console.log('script saved to database', result);
-      //   }
-      // });
-      // db.saveTranscript(result.transcriptData, (err, result) => {
-      //   if (err) { console.log('error saving transcript to db', err); }
-      //   else {
-      //     console.log('transcript saved to database', result);
-      //   }
-      // });
     }
   });
 });
+
+app.get('/api/personalscripts', (req, res) => {
+
+});
+
 
 // Creates Passport session for user by serialized ID
 passport.serializeUser((user, done) => {

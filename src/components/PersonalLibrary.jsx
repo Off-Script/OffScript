@@ -6,6 +6,33 @@ class PersonalLibrary extends React.Component{
     super(props);
   }
 
+
+  fetchScripts(e) {
+    console.log('fetching user library now');
+    e.preventDefault();
+    axios.post('/login', {
+      username: this.state.username,
+      password: this.state.password
+    })
+    .then((res) => {
+      console.log('handling login submit', res);
+      this.setState({
+        isLoggedIn: true,
+        redirectToProfile: true,
+        user: res.data.user
+      });
+      this.props.setUserInSession(res.data.user);
+    })
+    .catch((err) => {
+       console.log('error handling login submit', err);
+      this.setState({
+        errors: error.response.data.errors,
+        isLoggedIn: false,
+        redirectToProfile: false
+      });
+     })
+  }
+
   render() {
     return (
       <div>

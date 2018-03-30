@@ -25,36 +25,27 @@ module.exports = {
   saveAnalysis: (data, callback) => {
     let scriptData = data.scriptData;
     let transcriptData = data.transcriptData;
-    client.query('INSERT INTO scripts (script_text, script_data, script_emotion, script_lang) VALUES ($1, $2, $3, $4) RETURNING id', [scriptData.script_text, scriptData.script_data, scriptData.script_emotion, scriptData.script_lang], (err, result) => {
+    let transcriptId;
+    let scriptId;
+    client.query('INSERT INTO scripts (script_text, script_data, script_emotion, script_lang, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING id', [scriptData.script_text, scriptData.script_data, scriptData.script_emotion, scriptData.script_lang, data.userId], (err, result) => {
       if (err) {
         console.log('error saving script to database');
         callback(err, null);
       } else {
         console.log('script saved to database');
-        let scriptId = result.rows[0].id;
-        client.query('INSERT INTO transcripts (transcript_text, transcript_data, transcript_emotion, transcript_lang, score_data, comparison, script_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id', [transcriptData.transcript_text, transcriptData.transcript_data, transcriptData.transcript_emotion, transcriptData.transcript_lang, transcriptData.score_data, transcriptData.comparison, scriptId], (err, result) => {
+        scriptId = result.rows[0].id;
+        client.query('INSERT INTO transcripts (transcript_text, transcript_data, transcript_emotion, transcript_lang, score_data, comparison, script_id, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id', [transcriptData.transcript_text, transcriptData.transcript_data, transcriptData.transcript_emotion, transcriptData.transcript_lang, transcriptData.score_data, transcriptData.comparison, scriptId, data.userId], (err, result) => {
           if (err) {
             console.log('error saving transcript to database');
             callback(err, null);
           } else {
             console.log('transcript saved to database');
-            let transcriptId = result.rows[0].id;
-            console.log('here is the transcriptId', transcriptId);
-            let queryString = `UPDATE scripts SET transcript_id = transcript_id || ${transcriptId}) WHERE id IN(SELECT max(id) FROM scripts)`;
-            client.query(queryString), (err, result) => {
-                if (err) {
-                  console.log('error saving foreign keys to database');
-                  callback(err, null);
-                } else {
-                  // callback(null, result);
-                  console.log('insert transcript_id executed', result);
-                }
-            }
-            console.log('insert script_id executed');
-            // callback(null, result);
+            transcriptId = result.rows[0].id;
+            let sharedData = { scriptId, transcriptId };
+            callback(null, sharedData);
           }
         });
-        callback(null, result);
+
       }
     });
   },
@@ -80,9 +71,13 @@ module.exports = {
       }
     });
   },
+  getScripts: (data, callback) => {
+    let jsonData = JSON.stringify(data);
+
+  },
   findScript: (data, callback) => {
     let jsonData = JSON.stringify(data);
-    client.query(`SELECT * FROM script WHERE script_text LIKE "%${jsonData}%"`, (err, result) => {
+    client.query(`SELECT * FROM scripts WHERE script_text LIKE "%${jsonData}%"`, (err, result) => {
       if (err) {
         console.log('error saving script to database');
         callback(err, null);
@@ -94,7 +89,7 @@ module.exports = {
   },
   findTranscript: (data, callback) => {
     let jsonData = JSON.stringify(data);
-    client.query(`SELECT * FROM script WHERE transcript_text LIKE "%${jsonData}%"`, (err, result) => {
+    client.query(`SELECT * FROM transcripts WHERE transcript_text LIKE "%${jsonData}%"`, (err, result) => {
       if (err) {
         console.log('error saving script to database');
         callback(err, null);
@@ -119,6 +114,54 @@ module.exports = {
         }
       });
     });
+  },
+  linkUserScripts: (data, callback) => {
+    let scriptId = data.scriptId;
+    let transcriptId = data.transcriptId;
+    let userId = data.currentUserId;
+    console.log('linkUserScript data', data);
+    let queryScript = `UPDATE scripts SET transcript_id = transcript_id || ${transcriptId} WHERE id IN(SELECT max(id) FROM scripts) RETURNING id`;
+    console.log('queryScript', queryScript);
+    client.query(queryScript), (err, result) => {
+      console.log('inside the first query');
+      if (err) {
+        console.log('error saving foreign keys to database');
+        callback(err, null);
+      } else {
+        console.log('insert transcript_id executed', result);
+        let queryTranscript = `UPDATE transcripts SET script_id = script_id || ${scriptId} WHERE id IN(SELECT max(id) FROM transcripts)`;
+        client.query(queryTranscript), scriptId, (err, result) => {
+          if (err) {
+            console.log('error saving transcript id to scripts table');
+            callback(err, null);
+          } else {
+            console.log('inserted transcriptId to scripts table', result);
+            // callback(null, result);
+            let queryUserScript = `UPDATE users SET script_ids = script_ids || ${scriptId} WHERE id = ${userId}`;
+            let queryUserTranscript = `UPDATE users SET transcript_ids = transcript_ids || ${transcriptId} WHERE id = ${userId}`;
+            console.log(queryUserScript);
+            console.log(queryUserTranscript);
+            client.query(queryUserScript, [scriptId, userId], (err, result) => {
+              if (err) {
+                console.log('error saving transcript id to scripts table');
+                callback(err, null);
+              } else {
+                console.log('linked user script to user', result);
+              }
+            });
+            // client.query(queryUserTranscript, [transcriptId, userId], (err, result) => {
+            //   if (err) {
+            //     console.log('error saving transcript id to scripts table');
+            //     callback(err, null);
+            //   } else {
+            //     console.log('linked user transcript to user', result);
+            //     callback(null, result);
+            //   }
+            // });
+          }
+        }
+      }
+    }
   },
   getUser: (data, callback) => {
     let attemptedPassword = data.password;
