@@ -12,55 +12,28 @@ class Results extends React.Component {
     this.state = {
       scriptData: [],
       transData: [],
-      comparison: scriptComparison(this.props.script, this.props.transcript),
-      data: {}
-    }
+      scoreData: [],
+      comparison: scriptComparison(this.props.script, this.props.transcript)
+    };
     this.makeCharts = this.makeCharts.bind(this);
   }
 
   componentWillMount() {
-    if (this.props.results[0]) {
+    if (this.props.results.scriptData) {
       this.makeCharts();
     }
     this.props.comparison(this.props.script, this.props.transcript);
   }
 
   makeCharts() {
-    var scriptData = [];
-    var transData = [];
-    var scriptEmotion = [];
-    var transEmotion = [];
-    var scriptLang = [];
-    var transLang = [];
     var score = this.state.comparison.similarity;
     var scoreData = [score, 100-score];
-    var data = {};
-    for (let i = 0; i < 5; i++) {
-      scriptData.push(this.props.results[0].document_tone.tone_categories[2].tones[i].score);
-      transData.push(this.props.results[1].document_tone.tone_categories[2].tones[i].score);
-      scriptEmotion.push(this.props.results[0].document_tone.tone_categories[0].tones[i].score);
-      transEmotion.push(this.props.results[1].document_tone.tone_categories[0].tones[i].score);
-      if (i < 3) {
-        scriptLang.push(this.props.results[0].document_tone.tone_categories[1].tones[i].score);
-        transLang.push(this.props.results[1].document_tone.tone_categories[1].tones[i].score);
-      }
-    }
-    data = {
-      scriptData: scriptData,
-      transData: transData,
-      scoreData: scoreData,
-      scriptEmotion: scriptEmotion,
-      transEmotion: transEmotion,
-      scriptLang: scriptLang,
-      transLang: transLang
-    };
     this.setState({
-      scriptData: scriptData,
-      transData: transData,
-      scoreData: scoreData,
-      data: data
+      scriptData: this.props.results.scriptData,
+      transData: this.props.results.transData,
+      scoreData: scoreData
     });
-    this.props.setdata(data);
+    this.props.setscore(scoreData);
   }
 
   perfectScore() {
@@ -72,7 +45,7 @@ class Results extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
   greatScore() {
     return(
@@ -83,7 +56,7 @@ class Results extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   offScript() {
@@ -95,7 +68,7 @@ class Results extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
   render() {
     return (
@@ -122,23 +95,23 @@ class Results extends React.Component {
           </div>
         </div>
         <div className="row">
-         { this.state.comparison.similarity === 100 ? this.perfectScore() : this.state.comparison.similarity > 80 ? this.greatScore() : this.offScript() }
+          { this.state.comparison.similarity === 100 ? this.perfectScore() : this.state.comparison.similarity > 80 ? this.greatScore() : this.offScript() }
         </div>
         <h4>Speech Analysis</h4>
         <div className="row">
-            <div className="col s6"><h5>Your Accuracy Score %</h5>
-              <Chart
-                data={this.state.scoreData}
-                charttype={"doughnut"}
-              />
-            </div>
-            <div className="col s6"><h5>Text Analysis</h5>
-              <Chart
-                scriptdata={this.state.scriptData}
-                transdata={this.state.transData}
-                charttype={"radar"}
-              />
-            </div>
+          <div className="col s6"><h5>Your Accuracy Score %</h5>
+            <Chart
+              data={this.state.scoreData}
+              charttype={"doughnut"}
+            />
+          </div>
+          <div className="col s6"><h5>Text Analysis</h5>
+            <Chart
+              scriptdata={this.state.scriptData}
+              transdata={this.state.transData}
+              charttype={"radar"}
+            />
+          </div>
         </div>
         <div>
           <Link to="/analytics">
@@ -146,7 +119,7 @@ class Results extends React.Component {
           </Link>
         </div>
       </div>
-    )
+    );
   }
 }
 

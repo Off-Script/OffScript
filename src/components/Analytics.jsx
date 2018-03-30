@@ -13,16 +13,16 @@ class Analytics extends React.Component {
   render() {
     return (
       <div className="container">
-          <Link to="/results">
-            <button className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">chevron_left</i>Back to Results</button>
-          </Link>
+        <Link to="/results">
+          <button className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">chevron_left</i>Back to Results</button>
+        </Link>
         <a href="/upload" className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">refresh</i>One more time</a>
         <h4 className="analytics-title">Detailed Analysis</h4>
         <div className="analytics-wrapper">
           <div className="card-panel analytics">
             <h5>Score</h5>
             <Chart
-              data={this.props.results.scoreData}
+              data={this.props.score}
               charttype={"doughnut"}
             />
           </div>

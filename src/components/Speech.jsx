@@ -1,6 +1,6 @@
-import React from 'react';
-import VoiceRecognition from '../lib/VoiceRecognition';
-import axios from 'axios';
+import React from "react";
+import VoiceRecognition from "../lib/VoiceRecognition";
+import axios from "axios";
 
 class Speech extends React.Component {
   constructor(props) {
@@ -93,7 +93,7 @@ class Speech extends React.Component {
 
     if (this.state.show) {
 
-      script =
+      script = (
         <div>
           <div className="card-content">
             <h5>Script</h5>
@@ -101,20 +101,22 @@ class Speech extends React.Component {
           <div className="progress">
             <div className="determinate"></div>
           </div>
-          <div>
+          <div className="card-content script-text">
             <p className="flow-text">{this.props.script}</p>
           </div>
         </div>
+      );
     } else {
-      script =
-      <div>
-        <div className="card-content">
-          <h5 className="grey-text">Script Hidden</h5>
-        </div>
+      script = (
+        <div>
+          <div className="card-content">
+            <h5 className="grey-text">Script Hidden</h5>
+          </div>
           <div className="progress">
             <div className="determinate"></div>
           </div>
-      </div>
+        </div>
+      );
     }
 
 
@@ -160,11 +162,11 @@ class Speech extends React.Component {
               disabled={this.state.disable}
               onClick={() => {
                 this.setState({ disable: true });
-                Materialize.toast('Loading Transcription . . .', 2000),
+                Materialize.toast("Loading Transcription . . .", 2000),
                 window.setTimeout(function() {
                   this.setState({ start: false, disable: false }); }.bind(this), 2000);
-                }}>
-                <i className="material-icons">stop</i>
+              }}>
+              <i className="material-icons">stop</i>
             </a>
             {this.state.start && (
               <VoiceRecognition
@@ -195,7 +197,7 @@ class Speech extends React.Component {
           className="btn waves-effect cyan accent-4 hoverable"
           disabled={this.state.disable}
           onClick={this.handleSubmit} >
-         <i className="material-icons left">send</i> Submit Transcript
+          <i className="material-icons left">send</i> Submit Transcript
         </a>
       </div>
     );

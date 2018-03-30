@@ -12,7 +12,7 @@ class Profile extends React.Component {
     };
   }
 
- componentDidMount() {
+  componentDidMount() {
     this.checkSession();
   }
 
@@ -25,7 +25,7 @@ class Profile extends React.Component {
         this.setState({
           isLoggedIn: false,
           user: {}
-        })
+        });
       });
   }
 
@@ -75,7 +75,7 @@ class Profile extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
