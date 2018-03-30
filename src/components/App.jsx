@@ -38,9 +38,10 @@ class App extends React.Component {
   checkSession() {
     axios.get('/session')
       .then((response) => {
-        this.login();
+        return this.checkLogin();
       })
       .catch((err) => {
+        console.log('no user in session');
         this.setState({
           isLoggedIn: false,
           user: {}
@@ -48,13 +49,13 @@ class App extends React.Component {
       });
   }
 
-  login() {
-    axios.get('/user')
+  checkLogin() {
+    return axios.get('/user')
       .then((user) => {
-        console.log('current user is:', user);
+        console.log('current user is:', user.data.rows[0]);
         this.setState({
           isLoggedIn: true,
-          user: user.data
+          user: user.data.rows[0]
         });
       })
       .catch((err) => {
@@ -117,25 +118,26 @@ class App extends React.Component {
         <div className="main">
           <Switch>
             <Route exact path="/" component={ Landing } />
-            <Route path="/upload" user={this.state.user}userLoggedIn={this.state.isLoggedIn} render={() => <Upload setscript={this.setScript} />} />
-            <Route path='/profile' user={this.state.user}userLoggedIn={this.state.isLoggedIn} component={ ProfileWithRouter } />
+            <Route path="/upload" user={this.state.user} userLoggedIn={this.state.isLoggedIn} render={() => <Upload setscript={this.setScript} />} />
+            <Route path='/profile' user={this.state.user} userLoggedIn={this.state.isLoggedIn} component={ ProfileWithRouter } />
             <Route path="/speech" render={() => <Speech script={this.state.script} settranscript={this.setTranscript} setresults={this.setResults}/>} />
-            <Route path="/results" userLoggedIn={this.state.isLoggedIn} 
-              render={() => <Results 
-                script={this.state.script} 
-                transcript={this.state.transcript} 
-                results={this.state.results} 
+            <Route path="/results" userLoggedIn={this.state.isLoggedIn}
+              render={() => <Results
+                user={this.state.user}
+                script={this.state.script}
+                transcript={this.state.transcript}
+                results={this.state.results}
                 comparison={this.scriptComparison}
                 setscore={this.setScore}
-              />} 
+              />}
             />
-            <Route path="/analytics" 
-              render={() => <Analytics 
-                script={this.state.script} 
-                transcript={this.state.transcript} 
+            <Route path="/analytics"
+              render={() => <Analytics
+                script={this.state.script}
+                transcript={this.state.transcript}
                 results={this.state.results}
                 score={this.state.score}
-              />} 
+              />}
             />
             <Redirect to="/"/>
           </Switch>

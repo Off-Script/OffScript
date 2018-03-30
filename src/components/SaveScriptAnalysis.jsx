@@ -1,22 +1,31 @@
 import React from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 class SaveScriptAnalysis extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      redirectToProfile: false
+    }
     this.saveAnalysis = this.saveAnalysis.bind(this);
   }
 
   saveAnalysis(e) {
     e.preventDefault();
+    console.log('this.props', this.props.userId);
     axios.post('/postanalysis', {
       script: this.props.script,
       transcript: this.props.transcript,
       data: this.props.data,
-      comparison: this.props.comparison
+      comparison: this.props.comparison,
+      currentUserId: this.props.userId
     })
     .then((res) => {
       console.log('analysis saved to db', res);
+      this.setState({
+        redirectToProfile: true
+      });
     })
     .catch((err) => {
        console.log('error saving analysis to db', err);
@@ -24,6 +33,10 @@ class SaveScriptAnalysis extends React.Component {
   }
 
   render() {
+    const redirectToProfile = this.state.redirectToProfile;
+    if (redirectToProfile) {
+      return(<Redirect to={{ pathname: '/profile'}}/>)
+    }
     return (
       <div id="myAccount">
         <div className="modal-footer transparent">

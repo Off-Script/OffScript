@@ -162,20 +162,23 @@ app.get('/user', (req, res) => {
   res.send(req.user);
 });
 
+// Retrieves session credentials
 app.get('/session', (req, res) => {
-  let credentials = req.session.user;
+  let credentials = req.session.user.id;
   console.log('/session credentials are', credentials);
-  db.getUser(credentials, (err, user) => {
-    if (err) {
-      console.log('error retrieving user in session', err);
-      res.status(401).send({ message: err });
-    } else if (!user) {
-      res.status(401).send({ message: 'Unknown user' });
-    } else if (user) {
-      console.log('user is in session:', user);
-      res.send({isLoggedIn: true, user: user});
-    }
-  });
+  if (credentials) {
+    db.getUserById(credentials, (err, user) => {
+      if (err) {
+        console.log('error retrieving user in session', err);
+        res.status(401).send({ message: err });
+      } else if (!user) {
+        res.status(401).send({ message: 'Unknown user' });
+      } else if (user) {
+        console.log('user is in session:', user.rows[0]);
+        res.send({isLoggedIn: true, user: user});
+      }
+    });
+  }
 });
 
 // Destroys session and logs user out
@@ -208,7 +211,7 @@ app.post('/api/script', (req, res) => {
     })
   ])
   .then((results) => {
-      console.log("Watson results", JSON.stringify(results));
+      console.log("Watson results received");
       var parsedResults = {};
       var scriptData = [];
       var transData = [];
@@ -242,38 +245,59 @@ app.post('/api/script', (req, res) => {
     })
 });
 
-app.post('/postanalysis', sessionChecker, (req, res) => {
+// Saves script, transcript and links to user id in the database
+app.post('/postanalysis', (req, res) => {
+  console.log('/postanalysis function invoked', req.body);
   let data = {
     script: req.body.script,
     transcript: req.body.transcript,
     data: req.body.data,
-    comparison: req.body.comparison
+    comparison: req.body.comparison,
+    currentUserId: req.body.currentUserId
   };
-  console.log('data is:', data);
+  console.log('req.body', req.body);
+  console.log('data', data);
+  // console.log('userId is:', data.currentUserId);
   dbHelpers.parseData(data, (err, result) => {
     if (err) { console.log('error parsing data with dbHelpers', err); }
     else {
-      console.log('parsed data', result);
+      result.userId = req.body.currentUserId;
       db.saveAnalysis(result, (err, result) => {
         if (err) { console.log('error saving analysis to db', err); }
         else {
-          console.log('analysis saved to database', result);
+          result.userId = req.body.currentUserId;
+          console.log('new result', result);
+          res.status(200).send(result);
         }
       });
-      // db.saveScript(result.scriptData, (err, result) => {
-      //   if (err) { console.log('error saving script to db', err); }
-      //   else {
-      //     console.log('script saved to database', result);
-      //   }
-      // });
-      // db.saveTranscript(result.transcriptData, (err, result) => {
-      //   if (err) { console.log('error saving transcript to db', err); }
-      //   else {
-      //     console.log('transcript saved to database', result);
-      //   }
-      // });
     }
   });
+});
+
+app.post('/api/personalscripts', (req, res) => {
+  console.log('req.body', req.body);
+  let data = {
+    userId: req.body.userId,
+    username: req.body.username
+  };
+  let returnData = {};
+  console.log('api/personalscripts', data);
+  db.findScripts(data, (err, result1) => {
+    if (err) { console.log('error finding user scripts in db', err); }
+    else {
+      returnData.userId = req.body.userId;
+      returnData.scripts = result1;
+      db.findTranscripts(data, (err, result2) => {
+        if (err) { console.log('error finding user transcripts in db', err); }
+        else {
+          returnData.transcripts = result2;
+          console.log('returnData for api/personalscripts', returnData);
+          res.status(200).send(returnData);
+        }
+      });
+    }
+  });
+
 });
 
 // Creates Passport session for user by serialized ID

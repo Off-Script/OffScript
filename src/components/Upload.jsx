@@ -18,6 +18,11 @@ class Upload extends React.Component {
   componentWillMount() {
     let user = this.props.user;
     console.log('user in Upload:', user);
+    if (user) {
+      this.setState({
+        username: user.username
+      });
+    }
   }
 
   handleSubmit(e) {

@@ -13,9 +13,9 @@ class MyAccountButton extends React.Component {
     this.renderRedirect = this.renderRedirect.bind(this);
   }
 
-  handleLogout() {
+  handleLogout(e) {
     console.log('handling logout now');
-    // e.preventDefault();
+    e.preventDefault();
     axios.post('/logout')
     .then((res) => {
       console.log('successfully logged out', res);

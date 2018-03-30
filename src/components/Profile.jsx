@@ -50,13 +50,13 @@ class Profile extends React.Component {
           <h5>dashboard</h5>
           <div className="row">
             <div className="col s12 m4 l4">
-              <h6>last script uploaded</h6>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <h6>Henry V</h6>
+              <p>The sin upon my head dread Sovereign for in the Book of Numbers is it writ when the man dies Let The Inheritance descend unto the daughter Gracious Lord stand for your own unwind your bloody flag look back into your Mighty ancestors</p>
             </div>
 
             <div className="col s12 m4 l4">
               <Link to="/upload" className="btn waves-effect black">Upload New Script</Link>
-              <PersonalLibrary />
+              <PersonalLibrary user={this.state.user} />
             </div>
 
             <div className="col s12 m4 l4">
