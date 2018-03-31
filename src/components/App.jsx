@@ -9,6 +9,7 @@ import Results from './Results';
 import Analytics from './Analytics';
 import Footer from './Footer';
 import Editor from "./Editor";
+import LineReader from "./LineReader";
 import ScriptComparison from '../lib/ScriptComparison';
 import axios from 'axios';
 
@@ -26,6 +27,7 @@ class App extends React.Component {
     }
     this.setScript = this.setScript.bind(this);
     this.setTranscript = this.setTranscript.bind(this);
+    this.setLines = this.setLines.bind(this);
     this.setResults = this.setResults.bind(this);
     this.scriptComparison = this.scriptComparison.bind(this);
     this.setScore = this.setScore.bind(this);
@@ -68,6 +70,15 @@ class App extends React.Component {
       script: script,
       transcript: ''
     });
+    this.props.history.push('/speech');
+  }
+
+  setLines(script) {
+    this.setState({
+      script: script,
+      transcript: ''
+    })
+    this.props.history.push('/linereader');
   }
 
   setTranscript(transcript) {
@@ -117,9 +128,21 @@ class App extends React.Component {
         <div className="main">
           <Switch>
             <Route exact path="/" component={ Landing } />
-            <Route path="/upload" user={this.state.user} userLoggedIn={this.state.isLoggedIn} render={() => <Upload setscript={this.setScript} />} />
-            <Route path='/profile' user={this.state.user} userLoggedIn={this.state.isLoggedIn} component={ ProfileWithRouter } />
-            <Route path="/speech" render={() => <Speech currentScript={this.props.location.state.script} script={this.state.script} settranscript={this.setTranscript} setresults={this.setResults}/>} />
+            <Route path="/upload" user={this.state.user} userLoggedIn={this.state.isLoggedIn} 
+              render={() => <Upload 
+                setscript={this.setScript}
+                setlines={this.setLines} />} />
+            <Route path='/profile' user={this.state.user} userLoggedIn={this.state.isLoggedIn} 
+              render={() => <ProfileWithRouter 
+                setscript={this.setScript}/>} />
+            <Route path='/linereader' user={this.state.user} userLoggedIn={this.state.isLoggedIn} 
+              render= {() => <LineReader 
+                script={this.state.script} />} />
+            <Route path="/speech" 
+              render={() => <Speech 
+                script={this.state.script} 
+                settranscript={this.setTranscript} 
+                setresults={this.setResults}/>} />
             <Route path="/results" userLoggedIn={this.state.isLoggedIn}
               render={() => <Results
                 user={this.state.user}

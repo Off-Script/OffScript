@@ -75,12 +75,12 @@ class Profile extends React.Component {
 
             <div className="col s12 m4 l4">
               <Link to="/upload" className="btn waves-effect black">Upload New Script</Link>
-              <PersonalLibrary user={this.state.user} />
+              <PersonalLibrary setscript={this.props.setscript} user={this.state.user} />
             </div>
 
             <div className="col s12 m4 l4">
               <h6>public library</h6>
-              <PublicLibrary user={this.state.user} />
+              <PublicLibrary setscript={this.props.setscript} user={this.state.user} />
             </div>
 
           </div>

@@ -6,7 +6,6 @@ class Speech extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentScript: this.props.currentScript.script_text,
       start: false,
       stop: false,
       transcript: "",
@@ -103,7 +102,7 @@ class Speech extends React.Component {
             <div className="determinate"></div>
           </div>
           <div className="card-content script-text">
-            <p className="flow-text">{this.state.currentScript || this.props.script}</p>
+            <p className="flow-text">{this.props.script}</p>
           </div>
         </div>
       );
@@ -165,7 +164,7 @@ class Speech extends React.Component {
                 this.setState({ disable: true });
                 Materialize.toast("Loading Transcription . . .", 2000),
                 window.setTimeout(function() {
-                  this.setState({ start: false, disable: false }); }.bind(this), 2000);
+                  this.setState({ start: false, disable: false }); }.bind(this), 3000);
               }}>
               <i className="material-icons">stop</i>
             </a>
