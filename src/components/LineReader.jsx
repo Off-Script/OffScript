@@ -5,8 +5,8 @@ class LineReader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            script: ['This is a default line. How did you get here?', 'This is a second default line. Hello.', 'Testing is fun with the mox man', 'This is the final default line.'],
-            line: 'This is a default line. How did you get here?',
+            script: ['Ha, ha, are you honest?', 'My lord?', 'Are you fair?', 'What means your lordship?', 'That if you be honest and fair, your honesty should admit no discourse to your beauty.', 'Could beauty, my lord, have better commerce than with honesty?', 'Ay, truly, for the power of beauty will sooner transform honesty from what it is to a bawd than the force of honesty can translate beauty into his likeness. This was sometime a paradox, but now the time gives it proof. I did love you once.'],
+            line: 'Ha, ha, are you honest?',
             index: 0,
             show: true,
             first: true,
@@ -75,31 +75,11 @@ class LineReader extends React.Component {
     render() {
         let script = null;
         let lineArray = this.state.script.map((line, index) => <p key={index}> {index%2 + 1}: <Speech 
-                            styles={textstyle}
                             text={line}
                             textAsButton={true}
                             displayText={line}
                             voice="Google UK English Female" /></p>
         )
-        let textstyle = {
-            play: {
-                hover: {
-                backgroundColor: 'white',
-                color:'cyan'
-                },
-                button: {
-                padding:'4',
-                fontFamily: 'Helvetica',
-                fontSize: '1.0em',
-                cursor: 'pointer',
-                pointerEvents: 'none',
-                outline: 'none',
-                backgroundColor: 'cyan',
-                color: 'white',
-                border: 'none'
-                },
-            }
-        }
 
         if (this.state.show) {
             script = (
@@ -147,12 +127,6 @@ class LineReader extends React.Component {
                         <button className="waves-effect btn cyan accent-4 hoverable" disabled={this.state.first} onClick={this.previousLine}>
                             <i className="material-icons left">chevron_left</i>Previous Line
                         </button>
-                        <Speech 
-                            styles={textstyle}
-                            text={this.state.line}
-                            textAsButton={true}
-                            displayText="Play"
-                            voice="Google UK English Female" />
                         <button className="waves-effect btn cyan accent-4 hoverable" disabled={this.state.last} onClick={this.advanceLine}>
                             <i className="material-icons left">chevron_right</i>Next Line
                         </button>
@@ -163,6 +137,11 @@ class LineReader extends React.Component {
                             <div className="progress">
                                 <div className="determinate"></div>
                             </div>
+                            <Speech 
+                            text={this.state.line}
+                            textAsButton={true}
+                            displayText="Play"
+                            voice="Google UK English Female" />
                             {this.state.script[this.state.index]}
                         </div>
                     </div>
