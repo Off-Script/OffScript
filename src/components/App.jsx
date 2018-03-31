@@ -27,6 +27,7 @@ class App extends React.Component {
     }
     this.setScript = this.setScript.bind(this);
     this.setTranscript = this.setTranscript.bind(this);
+    this.setLines = this.setLines.bind(this);
     this.setResults = this.setResults.bind(this);
     this.scriptComparison = this.scriptComparison.bind(this);
     this.setScore = this.setScore.bind(this);
@@ -69,6 +70,15 @@ class App extends React.Component {
       script: script,
       transcript: ''
     });
+    this.props.history.push('/speech');
+  }
+
+  setLines(script) {
+    this.setState({
+      script: script,
+      transcript: ''
+    })
+    this.props.history.push('/linereader');
   }
 
   setTranscript(transcript) {
@@ -118,7 +128,7 @@ class App extends React.Component {
         <div className="main">
           <Switch>
             <Route exact path="/" component={ Landing } />
-            <Route path="/upload" user={this.state.user}userLoggedIn={this.state.isLoggedIn} render={() => <Upload setscript={this.setScript} />} />
+            <Route path="/upload" user={this.state.user}userLoggedIn={this.state.isLoggedIn} render={() => <Upload setscript={this.setScript} setlines={this.setLines} />} />
             <Route path='/profile' user={this.state.user}userLoggedIn={this.state.isLoggedIn} component={ ProfileWithRouter } />
             <Route path='/linereader' user={this.state.user} userLoggedIn={this.state.isLoggedIn} 
               render= {() => <LineReader script={this.state.script} />} />

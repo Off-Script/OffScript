@@ -13,6 +13,7 @@ class Upload extends React.Component {
     this.reactQuillRef = null;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.clear = this.clear.bind(this);
+    this.lineReader = this.lineReader.bind(this);
   }
 
   componentWillMount() {
@@ -42,17 +43,20 @@ class Upload extends React.Component {
     }
   }
 
-  handleLineRead(e) {
-     e.preventDefault();
-    // this.readFile();
-    let editor = this.reactQuillRef.getEditor()
-    if(editor.getText().length > 50) {
-    let script = editor.getText();
-    this.setState({script});
-    this.props.setscript(script);
-    this.clear();
+  lineReader(e) {
+    e.preventDefault();
+    if(this.state.fileLoaded && this.state.script.length > 50) {
+      this.props.setlines(this.state.script);
     } else {
-      alert("For best results, script must be 50 characters or more");
+      let editor = this.reactQuillRef.getEditor()
+      if(editor.getText().length > 50) {
+        let script = editor.getText();
+        this.setState({script});
+        this.props.setlines(script);
+        this.clear();
+      } else {
+        alert("For best results, script must be 50 characters or more");
+      }
     }
   }
 
@@ -104,14 +108,12 @@ class Upload extends React.Component {
             <FileUpload onChange={this.readFile.bind(this)}/>
           </div>
         </div>
-        <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.handleSubmit}><i className="material-icons left">file_upload</i>Upload</button>
-        <a
-            href="/linereader"
-            className="btn-large tooltipped waves-effect cyan accent-4 hoverable"
-            data-position="bottom"
-            data-delay="50"
-            data-tooltip="Read Lines"
-          >Line Reader</a>
+        <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.handleSubmit}>
+          <i className="material-icons left">file_upload</i>Upload
+        </button>
+       <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.lineReader}>
+          <i className="material-icons left">tag_faces</i>Read Lines
+        </button>
       </div>
     );
   }
