@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class PersonalLibrary extends React.Component{
   constructor(props) {
@@ -8,11 +9,9 @@ class PersonalLibrary extends React.Component{
 
   render() {
     return (
-      <li className="active">
-        <div className="collapsible-header"><i className="mdi-av-web"></i>{this.props.script.script_text.slice(5)}</div>
-        <div className="collapsible-body"><p>transcript</p></div>
-        <div className="collapsible-body"><p>recording</p></div>
-      </li>
+      <Link to={{ pathname: "/speech" }}>
+        {this.props.script.script_text}
+      </Link>
     )
   }
 }

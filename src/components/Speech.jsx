@@ -21,6 +21,10 @@ class Speech extends React.Component {
     this.reset = this.reset.bind(this);
   }
 
+  componentWillReceiveProps() {
+    console.log('this.props.location.state', this.props.location.state);
+  }
+
   handleSubmit(e) {
     this.onEnd();
     e.preventDefault();

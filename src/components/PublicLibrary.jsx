@@ -50,24 +50,21 @@ class PersonalLibrary extends React.Component{
     let transcripts = this.state.transcripts || [];
 
     return (
-      <div>
-        <h6>my scripts</h6>
-        <div className="collection">
-          { scripts.map((script, index) =>
-            <div className="card">
-              <div className="card-image waves-effect waves-block waves-light">
-                <img className="activator" src="media/script.png"/>
-              </div>
-              <div className="card-title activator">
-                {script.script_name}
-              </div>
-              <div className="card-reveal">
-              <span className="card-title grey-text text-darken-4">Script Text<i className="material-icons right">close</i></span>
-              <span className="card-content grey-text text-darken-4"><Link to={{ pathname: "/speech", state:{ script: script}}} key={index} script={script}>{script.script_text}</Link></span>
-              </div>
+      <div className="collection">
+        { scripts.map((script, index) =>
+          <div className="card">
+            <div className="card-image waves-effect waves-block waves-light">
+              <img className="activator" src="media/theater.png"/>
             </div>
-            )}
-        </div>
+            <div className="card-title activator">
+              {script.script_name}
+            </div>
+            <div className="card-reveal">
+            <span className="card-title grey-text text-darken-4">Script Text<i className="material-icons right">close</i></span>
+            <span className="card-content grey-text text-darken-4"><Link to={{ pathname: "/speech", state:{ script: script}}} key={index} script={script}>{script.script_text}</Link></span>
+            </div>
+          </div>
+          )}
       </div>
     )
   }

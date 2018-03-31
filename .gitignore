@@ -2,4 +2,4 @@ node_modules
 /dist/bundle.js
 .env
 config/
-.DS_Store
+dist/.DS_Store
