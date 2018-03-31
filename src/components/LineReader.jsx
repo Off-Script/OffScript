@@ -10,7 +10,9 @@ class LineReader extends React.Component {
     render() {
         return(
             <div>
-                <Speech text="test speech. hello world!" />
+                <Speech 
+                    text={this.props.script}
+                    voice="Google UK English Female" />
             </div>
         )
     }

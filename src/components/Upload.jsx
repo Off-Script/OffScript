@@ -27,6 +27,23 @@ class Upload extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    if(this.state.fileLoaded && this.state.script.length > 50) {
+      this.props.setscript(this.state.script);
+    } else {
+      let editor = this.reactQuillRef.getEditor()
+      if(editor.getText().length > 50) {
+        let script = editor.getText();
+        this.setState({script});
+        this.props.setscript(script);
+        this.clear();
+      } else {
+        alert("For best results, script must be 50 characters or more");
+      }
+    }
+  }
+
+  handleLineRead(e) {
+     e.preventDefault();
     // this.readFile();
     let editor = this.reactQuillRef.getEditor()
     if(editor.getText().length > 50) {
@@ -45,7 +62,8 @@ class Upload extends React.Component {
     fileReader.onload = (fileToLoad) => {
       let textFromFileLoaded = fileToLoad.target.result;
       this.setState({
-        script: textFromFileLoaded
+        script: textFromFileLoaded,
+        fileLoaded: true
       });
     };
     fileReader.readAsText(fileToLoad, "UTF-8");
