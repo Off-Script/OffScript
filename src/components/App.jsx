@@ -64,6 +64,7 @@ class App extends React.Component {
   }
 
   setScript(script) {
+    console.log('currentScript in location state', this.props.location.state.script.script_text);
     this.setState({
       script: script,
       transcript: ''
