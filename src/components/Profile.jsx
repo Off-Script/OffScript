@@ -63,10 +63,10 @@ class Profile extends React.Component {
                 </div>
               </div>
               <div className="card">
-                <div class="card-image">
-                  <img src="media/HenryV.jpg" width="64" />
-                  <div class="card-content">Last script uploaded:</div>
-                  <div class="card-action">
+                <div className="card-image">
+                  <img src="media/HenryV.png" width="64" />
+                  <div className="card-content">Last script uploaded:</div>
+                  <div className="card-action">
                     <Link to={{ pathname: "/speech"}}>Henry V</Link>
                   </div>
                 </div>

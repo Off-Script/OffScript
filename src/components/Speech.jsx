@@ -6,6 +6,7 @@ class Speech extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentScript: this.props.currentScript.script_text,
       start: false,
       stop: false,
       transcript: "",
@@ -19,10 +20,6 @@ class Speech extends React.Component {
     this.onEnd = this.onEnd.bind(this);
     this.onResult = this.onResult.bind(this);
     this.reset = this.reset.bind(this);
-  }
-
-  componentWillReceiveProps() {
-    console.log('this.props.location.state', this.props.location.state);
   }
 
   handleSubmit(e) {
@@ -106,7 +103,7 @@ class Speech extends React.Component {
             <div className="determinate"></div>
           </div>
           <div className="card-content script-text">
-            <p className="flow-text">{this.props.script}</p>
+            <p className="flow-text">{this.state.currentScript || this.props.script}</p>
           </div>
         </div>
       );

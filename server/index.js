@@ -124,7 +124,7 @@ app.post('/login', sessionChecker, (req, res, next) => {
         db.getUser(credentials, (err, user) => {
           if (err) {
             console.log('error in passport local strategy get user', err);
-            res.status(401).json({ message: err });
+            res.send(401, err);
           } else if (!user) {
             return done(null, false, { message: 'Unknown user' });
           } else if (user) {
