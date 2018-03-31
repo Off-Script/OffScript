@@ -13,7 +13,7 @@ class PersonalLibrary extends React.Component{
       redirectToSpeechPage: false
     }
     this.fetchScripts = this.fetchScripts.bind(this);
-    this.editScript = this.editScript.bind(this);
+    this.useScript = this.useScript.bind(this);
   }
 
   componentWillMount() {
@@ -39,11 +39,11 @@ class PersonalLibrary extends React.Component{
      })
   }
 
-  editScript(e) {
-    // e.preventDefault();
-    // let script = e.target;
-    // console.log(script);
+  useScript(e) {
+    let index = e.target.value;
+    this.props.setscript(this.state.scripts[index].script_text);
   }
+
 
   render() {
     let scripts = this.state.scripts || [];
@@ -60,8 +60,11 @@ class PersonalLibrary extends React.Component{
               {script.script_name}
             </div>
             <div className="card-reveal">
-            <span className="card-title grey-text text-darken-4">Script Text<i className="material-icons right">close</i></span>
-            <span className="card-content grey-text text-darken-4"><Link to={{ pathname: "/speech", state:{ script: script}}} key={index} script={script}>{script.script_text}</Link></span>
+              <span className="card-title grey-text text-darken-4">Script Text<i className="material-icons right">close</i></span>
+              {script.script_text}
+              <span className="card-content grey-text text-darken-4">
+                <button value={index} onClick={this.useScript}>Use Script</button>
+              </span>
             </div>
           </div>
           )}

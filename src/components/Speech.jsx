@@ -6,7 +6,6 @@ class Speech extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentScript: this.props.currentScript.script_text,
       start: false,
       stop: false,
       transcript: "",
@@ -103,7 +102,7 @@ class Speech extends React.Component {
             <div className="determinate"></div>
           </div>
           <div className="card-content script-text">
-            <p className="flow-text">{this.state.currentScript || this.props.script}</p>
+            <p className="flow-text">{this.props.script}</p>
           </div>
         </div>
       );

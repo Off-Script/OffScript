@@ -13,7 +13,6 @@ class PersonalLibrary extends React.Component{
       redirectToSpeechPage: false
     }
     this.fetchScripts = this.fetchScripts.bind(this);
-    this.editScript = this.editScript.bind(this);
     this.useScript = this.useScript.bind(this);
   }
 
@@ -40,8 +39,9 @@ class PersonalLibrary extends React.Component{
      })
   }
 
-  useScript() {
-    this.props.setscript(this.state.selectedscript);
+  useScript(e) {
+    let index = e.target.value;
+    this.props.setscript(this.state.scripts[index].script_text);
   }
 
   render() {
@@ -62,8 +62,9 @@ class PersonalLibrary extends React.Component{
               </div>
               <div className="card-reveal">
               <span className="card-title grey-text text-darken-4">Script Text<i className="material-icons right">close</i></span>
+                {script.script_text}
               <span className="card-content grey-text text-darken-4">
-                <button onClick={this.useScript}>Use Script</button>
+                <button value={index} onClick={this.useScript}>Use Script</button>
               </span>
               </div>
             </div>

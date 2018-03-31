@@ -133,7 +133,7 @@ class App extends React.Component {
                 setscript={this.setScript}
                 setlines={this.setLines} />} />
             <Route path='/profile' user={this.state.user} userLoggedIn={this.state.isLoggedIn} 
-              renter={() => <ProfileWithRouter 
+              render={() => <ProfileWithRouter 
                 setscript={this.setScript}/>} />
             <Route path='/linereader' user={this.state.user} userLoggedIn={this.state.isLoggedIn} 
               render= {() => <LineReader 
