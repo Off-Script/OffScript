@@ -11,7 +11,8 @@ class LoginModal extends React.Component{
       password: '',
       isLoggedIn: false,
       redirectToProfile: false,
-      user: {}
+      user: {},
+      login: {}
     }
     this.onChange = this.onChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -27,7 +28,7 @@ class LoginModal extends React.Component{
       password: this.state.password
     })
     .then((res) => {
-      console.log('handling login submit', res);
+      console.log('handling login submit', res.response);
       this.setState({
         isLoggedIn: true,
         redirectToProfile: true,
@@ -36,9 +37,10 @@ class LoginModal extends React.Component{
       this.props.setUserInSession(res.data.user);
     })
     .catch((err) => {
-       console.log('error handling login submit', err);
       this.setState({
-        errors: error.response.data.errors,
+        login: {
+          error: 'Username or password incorrect, please try again'
+        },
         isLoggedIn: false,
         redirectToProfile: false
       });
@@ -70,6 +72,7 @@ class LoginModal extends React.Component{
         errors: {
           error: message
         },
+        isLoggedIn: false,
         redirectToProfile: false
        });
      })
@@ -85,15 +88,16 @@ class LoginModal extends React.Component{
 
   render() {
     let show = Object.keys(this.state.errors).length ? { display: 'block' } : { display: 'none' };
-
-    let errorMessage = '';
-    if (this.state.errors.password) {
-      errorMessage = 'Password incorrect, try again';
-    } else if (this.state.errors.username) {
-      errorMessage = 'Username incorrect, try again';
-    } else {
-      errorMessage = 'Incorrect password or username, please try again';
-    }
+    let showLoginFailure = Object.keys(this.state.login).length ? { display: 'block' } : { display: 'none' };
+    let errorMessage = this.state.errors.error;
+    let loginError = this.state.login.error;
+    // if (this.state.errors.password) {
+    //   errorMessage = 'Password incorrect, try again';
+    // } else if (this.state.errors.username) {
+    //   errorMessage = 'Username incorrect, try again';
+    // } else {
+    //   errorMessage = this.state.errors.error;
+    // }
     const redirectToProfile = this.state.redirectToProfile;
     if (redirectToProfile) {
       return(<Redirect to={{ pathname: '/profile', user: this.state.user }}/>)
@@ -106,6 +110,9 @@ class LoginModal extends React.Component{
     };
     return (
       <div id="login">
+        <div id="alert-error" style={showLoginFailure}>
+          <p>{loginError}</p>
+        </div>
         <a className="btn waves-effect black modal-trigger" href="#modal-login">Login / Signup</a>
         <div id="modal-login" className="modal">
           <div id="alert-error" style={show}>
