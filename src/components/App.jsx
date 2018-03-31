@@ -128,11 +128,21 @@ class App extends React.Component {
         <div className="main">
           <Switch>
             <Route exact path="/" component={ Landing } />
-            <Route path="/upload" user={this.state.user}userLoggedIn={this.state.isLoggedIn} render={() => <Upload setscript={this.setScript} setlines={this.setLines} />} />
-            <Route path='/profile' user={this.state.user}userLoggedIn={this.state.isLoggedIn} component={ ProfileWithRouter } />
+            <Route path="/upload" user={this.state.user} userLoggedIn={this.state.isLoggedIn} 
+              render={() => <Upload 
+                setscript={this.setScript}
+                setlines={this.setLines} />} />
+            <Route path='/profile' user={this.state.user} userLoggedIn={this.state.isLoggedIn} 
+              renter={() => <ProfileWithRouter 
+                setscript={this.setScript}/>} />
             <Route path='/linereader' user={this.state.user} userLoggedIn={this.state.isLoggedIn} 
-              render= {() => <LineReader script={this.state.script} />} />
-            <Route path="/speech" render={() => <Speech script={this.state.script} settranscript={this.setTranscript} setresults={this.setResults}/>} />
+              render= {() => <LineReader 
+                script={this.state.script} />} />
+            <Route path="/speech" 
+              render={() => <Speech 
+                script={this.state.script} 
+                settranscript={this.setTranscript} 
+                setresults={this.setResults}/>} />
             <Route path="/results" userLoggedIn={this.state.isLoggedIn}
               render={() => <Results
                 user={this.state.user}

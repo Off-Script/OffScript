@@ -165,7 +165,7 @@ class Speech extends React.Component {
                 this.setState({ disable: true });
                 Materialize.toast("Loading Transcription . . .", 2000),
                 window.setTimeout(function() {
-                  this.setState({ start: false, disable: false }); }.bind(this), 2000);
+                  this.setState({ start: false, disable: false }); }.bind(this), 3000);
               }}>
               <i className="material-icons">stop</i>
             </a>
