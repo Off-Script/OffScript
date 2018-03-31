@@ -87,6 +87,13 @@ class Upload extends React.Component {
           </div>
         </div>
         <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.handleSubmit}><i className="material-icons left">file_upload</i>Upload</button>
+        <a
+            href="/linereader"
+            className="btn-large tooltipped waves-effect cyan accent-4 hoverable"
+            data-position="bottom"
+            data-delay="50"
+            data-tooltip="Read Lines"
+          >Line Reader</a>
       </div>
     );
   }
