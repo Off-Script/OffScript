@@ -20,6 +20,11 @@ span.missing {
   font-size: 23px;
 }
 
+.landing-text {
+  font-weight: 100;
+  text-shadow: 1px 1px 2px grey;
+}
+
 .thin-text {
   font-weight: 300;
   font-size: 0.9em;
