@@ -115,7 +115,7 @@ class Results extends React.Component {
         </div>
         <div>
           <Link to="/analytics">
-            <button className="waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">graphic_eq</i>Detailed Analysis</button>
+            <button id="analytics-button" className="animated infinite pulse waves-effect btn cyan accent-4 hoverable"><i className="material-icons left">graphic_eq</i>Detailed Analysis</button>
           </Link>
         </div>
       </div>
