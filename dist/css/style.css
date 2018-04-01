@@ -171,6 +171,12 @@ span.missing {
   min-width: 100%;
 }
 
+.table-of-contents {
+  text-align: left;
+}
+
+
+
 @media only screen and (max-width : 768px), (max-device-width: 421px) {
   body {
     font-size: 26px;

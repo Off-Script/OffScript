@@ -50,7 +50,7 @@ class PersonalLibrary extends React.Component{
 
     return (
       <div>
-        <h6>my scripts</h6>
+        <h6>My Scripts</h6>
         <div className="collection">
           { scripts.map((script, index) =>
             <div className="card" key={index}>

@@ -102,7 +102,7 @@ class Upload extends React.Component {
               ref={(el) => { this.reactQuillRef = el }}
               theme="snow"
               value={this.state.script} 
-              />
+            />
           </div>
           <div id="upload" className="upload">
             <FileUpload onChange={this.readFile.bind(this)}/>
@@ -111,7 +111,7 @@ class Upload extends React.Component {
         <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.handleSubmit}>
           <i className="material-icons left">file_upload</i>Upload
         </button>
-       <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.lineReader}>
+        <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.lineReader}>
           <i className="material-icons left">tag_faces</i>Read Lines
         </button>
       </div>
