@@ -274,7 +274,6 @@ app.post('/postanalysis', (req, res) => {
 
 app.get('/getanalysis', (req, res) => {
   let data = req.body;
-
   db.getAnalysis(data, (err, result) => {
     if (err) { console.log('error saving analysis to db', err); }
     else {
