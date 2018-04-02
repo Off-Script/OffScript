@@ -6,27 +6,14 @@ let axios = require('axios');
 module.exports = {
   parseData: (data, callback) => {
     console.log('parsing data');
-    let scriptData = {
-      script_text: data.script,
-      script_data: data.data.scriptData,
-      script_emotion: data.data.scriptEmotion,
-      script_lang: data.data.scriptLang
-    };
-
-    let transcriptData = {
-      transcript_text: data.transcript,
-      transcript_data: data.data.transData,
-      transcript_emotion: data.data.transEmotion,
-      transcript_lang: data.data.transLang,
-      score_data: data.data.scoreData,
-      comparison: data.comparison
-    };
 
     let parsedData = {
-      scriptData,
-      transcriptData
+      scriptData: data.script,
+      transcriptData: data.transcript,
+      scoreData: data.scoreData,
+      comparison: data.comparison,
+      currentUserId: data.currentUserId
     };
-
     callback(null, parsedData);
   },
   createSession: (req, res, newUser) => {

@@ -247,21 +247,19 @@ app.post('/api/script', (req, res) => {
 
 // Saves script, transcript and links to user id in the database
 app.post('/postanalysis', (req, res) => {
-  console.log('/postanalysis function invoked', req.body);
   let data = {
     script: req.body.script,
     transcript: req.body.transcript,
-    data: req.body.data,
+    scoreData: req.body.scoreData,
     comparison: req.body.comparison,
     currentUserId: req.body.currentUserId
   };
-  console.log('req.body', req.body);
-  console.log('data', data);
-  // console.log('userId is:', data.currentUserId);
+
   dbHelpers.parseData(data, (err, result) => {
     if (err) { console.log('error parsing data with dbHelpers', err); }
     else {
       result.userId = req.body.currentUserId;
+      console.log('result going to database', result);
       db.saveAnalysis(result, (err, result) => {
         if (err) { console.log('error saving analysis to db', err); }
         else {
@@ -274,8 +272,20 @@ app.post('/postanalysis', (req, res) => {
   });
 });
 
+app.get('/getanalysis', (req, res) => {
+  let data = req.body;
+  db.getAnalysis(data, (err, result) => {
+    if (err) { console.log('error saving analysis to db', err); }
+    else {
+      result.userId = req.body.currentUserId;
+      console.log('new result', result);
+      res.status(200).send(result);
+    }
+  });
+});
+
 app.post('/api/personalscripts', (req, res) => {
-  console.log('req.body', req.body);
+  // console.log('req.body', req.body);
   let data = {
     userId: req.body.userId,
     username: req.body.username
@@ -291,7 +301,7 @@ app.post('/api/personalscripts', (req, res) => {
         if (err) { console.log('error finding user transcripts in db', err); }
         else {
           returnData.transcripts = result2;
-          console.log('returnData for api/personalscripts', returnData);
+          console.log('returning data for api/personalscripts');
           res.status(200).send(returnData);
         }
       });
