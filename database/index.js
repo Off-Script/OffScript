@@ -27,9 +27,6 @@ module.exports = {
     let transcriptData = data.transcriptData;
     let transcriptId;
     let scriptId;
-    console.log('DATA GOING INTO DATABASE', data);
-    console.log('SCRIPT DATA:', scriptData);
-    console.log('TRANSCRIPT DATA', transcriptData);
     client.query('INSERT INTO scripts (script_text, script_data, script_emotion, script_lang, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING id', [scriptData.script_text, scriptData.script_data, scriptData.script_emotion, scriptData.script_lang, data.userId], (err, result) => {
       if (err) {
         console.log('error saving script to database');
