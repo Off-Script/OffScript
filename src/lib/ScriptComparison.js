@@ -6,8 +6,8 @@ function scriptComparison(script1, script2) {
   if (!script1.length || !script2.length) {
     return 'Script or Transcript is blank';
   }
-  let target = script1.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ")
-  let recording = script2.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ")
+  let target = script1.replace(/[.,\/#!?$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ")
+  let recording = script2.replace(/[.,\/#!?$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ")
   let differences = diff.diffWords(target, recording, {ignoreCase: true});
   let markedScript = ''
   let markedTranscript = ''
