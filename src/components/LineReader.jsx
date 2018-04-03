@@ -97,7 +97,7 @@ class LineReader extends React.Component {
       this.setState({
         perfectLine: true,
         transcript: this.state.script[this.state.index + 1]
-      })
+      });
     } else {
       this.setState({
         transcript: ts.markedTranscript
@@ -143,7 +143,11 @@ class LineReader extends React.Component {
   render() {
     let Loader = null;
     let script = null;
-    let lineArray = this.state.script.map((line, index) => <p key={0 + index}><span key={index} className={index === this.state.index + 1 ? "missing" : "normal"} > {index % 2 + 1}: {line}</span></p>);
+    let lineArray = this.state.script.map((line, index) => 
+      <p key={0 + index}>
+        <span key={index} className={index === this.state.index + 1 ? "missing" : "normal"} > {index % 2 + 1}: {line}</span>
+      </p>
+    );
     if (this.state.start) {
       Loader = (
         <div className="progress">
@@ -219,11 +223,10 @@ class LineReader extends React.Component {
                 text={this.state.line}
                 textAsButton={true}
                 displayText="Play"
-                voice="Google UK English Female" />
+                voice="Google UK English Female" 
+              />
               {this.state.script[this.state.index]}
             </div>
-          </div>
-          <div className="col s8">
             <a
               className="btn waves-effect cyan accent-4 hoverable"
               disabled={this.state.disable}
@@ -240,7 +243,7 @@ class LineReader extends React.Component {
                 Materialize.toast("Loading Transcription . . .", 2000),
                 window.setTimeout(function () {
                   this.setState({ start: false, disable: false });
-                }.bind(this), 3000);
+                }.bind(this), 2000);
               }}>
               <i className="material-icons">stop</i>
             </a>
@@ -262,7 +265,8 @@ class LineReader extends React.Component {
               {this.state.perfectLine ? <i className="material-icons green left">check</i> : null }
               <Interweave
                 tagName="p"
-                content={this.state.transcript} />
+                content={this.state.transcript} 
+              />
             </div>
             <a
               className="waves-effect btn cyan accent-4 hoverable"

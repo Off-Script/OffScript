@@ -1,5 +1,5 @@
-import React from 'react';
-import About from './About.jsx';
+import React from "react";
+import About from "./About.jsx";
 
 class Landing extends React.Component {
   constructor(props) {

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import LibraryItem from './LibraryItem';
+import React from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import LibraryItem from "./LibraryItem";
 
 class PersonalLibrary extends React.Component{
   constructor(props) {
@@ -9,9 +9,9 @@ class PersonalLibrary extends React.Component{
     this.state = {
       scripts: [],
       transcripts: [],
-      selectedScript: '',
+      selectedScript: "",
       redirectToSpeechPage: false
-    }
+    };
     this.fetchScripts = this.fetchScripts.bind(this);
     this.useScript = this.useScript.bind(this);
   }
@@ -21,13 +21,11 @@ class PersonalLibrary extends React.Component{
   }
 
   fetchScripts() {
-    console.log('fetching user library now', this.props);
-    axios.post('/api/personalscripts', {
-      username: 'buddy',
+    axios.post("/api/personalscripts", {
+      username: "buddy",
       userId: 2
     })
       .then((res) => {
-        console.log('user library retrieved', res.data);
         this.setState({
           scripts: res.data.scripts,
           transcripts: res.data.transcripts
@@ -35,7 +33,7 @@ class PersonalLibrary extends React.Component{
 
       })
       .catch((err) => {
-        console.log('error retrieving user library', err);
+        console.log("error retrieving user library", err);
       });
   }
 

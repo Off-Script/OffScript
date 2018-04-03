@@ -1,6 +1,6 @@
-import React from 'react';
-import LoginModal from './LoginModal';
-import MyAccountButton from './MyAccountButton';
+import React from "react";
+import LoginModal from "./LoginModal";
+import MyAccountButton from "./MyAccountButton";
 
 class Header extends React.Component {
   constructor(props) {
@@ -8,11 +8,11 @@ class Header extends React.Component {
     this.state = {
       isLoggedIn: false,
       isLoggedOut: false
-    }
+    };
   }
 
   componentDidUpdate() {
-    let loggedin = localStorage.getItem('loggedIn');
+    let loggedin = localStorage.getItem("loggedIn");
     if (loggedin) {
       this.setState({
         isLoggedIn: true
@@ -31,7 +31,7 @@ class Header extends React.Component {
           </ul>
         </div>
       </nav>
-    )
+    );
   }
 }
 

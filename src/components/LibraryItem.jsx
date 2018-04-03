@@ -1,6 +1,6 @@
-import React from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 class PersonalLibrary extends React.Component{
   constructor(props) {
@@ -12,7 +12,7 @@ class PersonalLibrary extends React.Component{
       <Link to={{ pathname: "/speech" }}>
         {this.props.script.script_text}
       </Link>
-    )
+    );
   }
 }
 
