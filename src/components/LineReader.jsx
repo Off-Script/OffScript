@@ -22,12 +22,13 @@ class LineReader extends React.Component {
     this.onEnd = this.onEnd.bind(this);
     this.advanceLine = this.advanceLine.bind(this);
     this.previousLine = this.previousLine.bind(this);
+    this.setLine = this.setLine.bind(this);
     this.handleShow = this.handleShow.bind(this);
-    this._handleSpacebar = this._handleSpacebar.bind(this);
+    this._handleKey = this._handleKey.bind(this);
   }
 
   componentDidMount() {
-    document.addEventListener("keydown", this._handleSpacebar, false);
+    document.addEventListener("keydown", this._handleKey, false);
     let script = null;
     if (this.props.script) {
       if (this.props.script.split((/(([A-Z])\w+:)/)).length > 1) {
@@ -59,12 +60,12 @@ class LineReader extends React.Component {
     if (this.props.script !== prevProps.script) {
       let script = this.props.script.split(":");
       this.setState({
-        script: script,
+        script,
         line: script[0],
         index: 0
       });
     }
-    if (!this.state.first && this.state.index === 0) {
+    if (!this.state.first && this.state.index <= 1) {
       this.setState({ first: true });
     }
     if (this.state.last === false && this.state.index >= this.state.script.length - 2) {
@@ -75,10 +76,13 @@ class LineReader extends React.Component {
     }
   }
 
-  _handleSpacebar(e) {
+  _handleKey(e) {
     e.preventDefault();
-    if (e.keyCode === 32) {
+    if (e.keyCode === 32 || e.keyCode === 39) {
       this.advanceLine();
+    }
+    if (e.keyCode === 37) {
+      this.previousLine();
     }
   }
 
@@ -117,11 +121,12 @@ class LineReader extends React.Component {
   }
 
   advanceLine() {
+    if(this.state.last) { return; }
     let index = this.state.index;
     index = index + 2;
     this.setState({
       line: this.state.script[index],
-      index: index,
+      index,
       first: false,
       transcript: "",
       perfectLine: false
@@ -129,12 +134,28 @@ class LineReader extends React.Component {
   }
 
   previousLine() {
+    if(this.state.first) { return; }
     let index = this.state.index;
     index = index - 2;
     this.setState({
       line: this.state.script[index],
-      index: index,
+      index,
       last: false,
+      transcript: "",
+      perfectLine: false
+    });
+  }
+
+  setLine(index) {
+    let last = index > this.state.script.length - 3 ? true : false;
+    let first = index < 2 ? true : false;
+    console.log("index: " + index);
+    console.log("line: " + this.state.script[index]);
+    this.setState({
+      line: this.state.script[index],
+      index,
+      first,
+      last,
       transcript: "",
       perfectLine: false
     });
@@ -145,7 +166,12 @@ class LineReader extends React.Component {
     let script = null;
     let lineArray = this.state.script.map((line, index) => 
       <p key={0 + index}>
-        <span key={index} className={index === this.state.index + 1 ? "missing" : "normal"} > {index % 2 + 1}: {line}</span>
+        <span 
+          onClick={() => this.setLine(index)}
+          index={index}
+          key={index} 
+          className={index === this.state.index ? "missing" : "normal"}
+        > {index % 2 + 1}: {line}</span>
       </p>
     );
     if (this.state.start) {
