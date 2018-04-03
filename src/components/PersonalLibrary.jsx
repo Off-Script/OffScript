@@ -26,17 +26,17 @@ class PersonalLibrary extends React.Component{
       username: 'buddy',
       userId: 2
     })
-    .then((res) => {
-      console.log('user library retrieved', res.data);
-      this.setState({
-        scripts: res.data.scripts,
-        transcripts: res.data.transcripts
-      });
+      .then((res) => {
+        console.log('user library retrieved', res.data);
+        this.setState({
+          scripts: res.data.scripts,
+          transcripts: res.data.transcripts
+        });
 
-    })
-    .catch((err) => {
-       console.log('error retrieving user library', err);
-     })
+      })
+      .catch((err) => {
+        console.log('error retrieving user library', err);
+      });
   }
 
   useScript(e) {
@@ -50,10 +50,11 @@ class PersonalLibrary extends React.Component{
 
     return (
       <div>
-        <h6>My Scripts</h6>
-        <div className="collection">
+        <h5>My Scripts</h5>
+        <hr/>
+        <div className="wrapper-lib">
           { scripts.map((script, index) =>
-            <div className="card" key={index}>
+            <div className="card personal-card" key={index}>
               <div className="card-image waves-effect waves-block waves-light">
                 <img className="activator" src="media/script.png"/>
               </div>
@@ -61,17 +62,17 @@ class PersonalLibrary extends React.Component{
                 {script.script_name}
               </div>
               <div className="card-reveal">
-              <span className="card-title grey-text text-darken-4">Script Text<i className="material-icons right">close</i></span>
+                <span className="card-title grey-text text-darken-4">Script Text<i className="material-icons right">close</i></span>
                 {script.script_text}
-              <span className="card-content grey-text text-darken-4">
-                <button value={index} onClick={this.useScript}>Use Script</button>
-              </span>
+                <span className="card-content grey-text text-darken-4">
+                  <button value={index} onClick={this.useScript}>Use Script</button>
+                </span>
               </div>
             </div>
-            )}
+          )}
         </div>
       </div>
-    )
+    );
   }
 }
 

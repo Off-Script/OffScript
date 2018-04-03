@@ -178,6 +178,31 @@ span.missing {
   text-align: left;
 }
 
+.wrapper-lib {
+  display: grid;
+  grid-gap: 0.2em;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.featured-img {
+  object-fit: cover;
+  height: 500px;
+  width: 20%;
+}
+
+.featured-card {
+  background-color: seashell;
+}
+
+.personal-card {
+  background-color: papayawhip;
+}
+
+.public-card {
+  background-color: cornsilk;
+}
+
+
 @media only screen and (max-width : 768px), (max-device-width: 421px) {
   body {
     font-size: 26px;
