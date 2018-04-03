@@ -56,7 +56,14 @@ class PersonalLibrary extends React.Component{
                 <img className="activator" src="media/theater.png" />
               </div>
               <div className="card-title activator">
-                {script.script_name}
+                <h4>{script.character_name}</h4>
+                <p>{script.script_name}</p>
+              </div>
+              <div>
+                <a href={script.external_analysis}>Additional Character Analysis</a>
+              </div>
+              <div>
+                <a href={script.video_reference}>Performance Video Reference</a>
               </div>
               <div className="card-reveal">
                 <span className="card-title grey-text text-darken-4">Script Text<i className="material-icons right">close</i></span>
