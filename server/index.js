@@ -71,7 +71,8 @@ app.use((req, res, next) => {
 // Checks for logged-in users
 let sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.user_sid) {
-    res.redirect('/profile');
+    console.log('user in session');
+    next();
   } else {
     next();
   }

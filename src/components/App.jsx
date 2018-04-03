@@ -33,36 +33,37 @@ class App extends React.Component {
     this.setScore = this.setScore.bind(this);
   }
 
-  componentDidMount() {
-    this.checkSession();
-  }
+  // componentDidMount() {
+  //   this.checkSession();
+  // }
 
   checkSession() {
-    axios.get('/session')
-      .then((response) => {
-        return this.checkLogin();
-      })
-      .catch((err) => {
-        console.log('no user in session');
-        this.setState({
-          isLoggedIn: false,
-          user: {}
-        })
-      });
+
+    // axios.get('/session')
+    //   .then((response) => {
+    //     return this.checkLogin();
+    //   })
+    //   .catch((err) => {
+    //     console.log('no user in session');
+    //     this.setState({
+    //       isLoggedIn: false,
+    //       user: {}
+    //     })
+    //   });
   }
 
   checkLogin() {
-    return axios.get('/user')
-      .then((user) => {
-        console.log('current user is:', user.data.rows[0]);
-        this.setState({
-          isLoggedIn: true,
-          user: user.data.rows[0]
-        });
-      })
-      .catch((err) => {
-        console.log('sign in failed, try again');
-      });
+    // return axios.get('/user')
+    //   .then((user) => {
+    //     console.log('current user is:', user.data.rows[0]);
+    //     this.setState({
+    //       isLoggedIn: true,
+    //       user: user.data.rows[0]
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     console.log('sign in failed, try again');
+    //   });
   }
 
   setScript(script) {
@@ -128,20 +129,20 @@ class App extends React.Component {
         <div className="main">
           <Switch>
             <Route exact path="/" component={ Landing } />
-            <Route path="/upload" user={this.state.user} userLoggedIn={this.state.isLoggedIn} 
-              render={() => <Upload 
+            <Route path="/upload" user={this.state.user} userLoggedIn={this.state.isLoggedIn}
+              render={() => <Upload
                 setscript={this.setScript}
                 setlines={this.setLines} />} />
-            <Route path='/profile' user={this.state.user} userLoggedIn={this.state.isLoggedIn} 
-              render={() => <ProfileWithRouter 
+            <Route path='/profile' user={this.state.user} userLoggedIn={this.state.isLoggedIn}
+              render={() => <ProfileWithRouter
                 setscript={this.setScript}/>} />
-            <Route path='/linereader' user={this.state.user} userLoggedIn={this.state.isLoggedIn} 
-              render= {() => <LineReader 
+            <Route path='/linereader' user={this.state.user} userLoggedIn={this.state.isLoggedIn}
+              render= {() => <LineReader
                 script={this.state.script} />} />
-            <Route path="/speech" 
-              render={() => <Speech 
-                script={this.state.script} 
-                settranscript={this.setTranscript} 
+            <Route path="/speech"
+              render={() => <Speech
+                script={this.state.script}
+                settranscript={this.setTranscript}
                 setresults={this.setResults}/>} />
             <Route path="/results" userLoggedIn={this.state.isLoggedIn}
               render={() => <Results

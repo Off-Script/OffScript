@@ -13,9 +13,9 @@ class Profile extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.checkSession();
-  }
+  // componentDidMount() {
+  //   this.checkSession();
+  // }
 
   checkSession() {
     axios.get('/session')
@@ -99,23 +99,23 @@ class Profile extends React.Component {
               <h5>External Resources</h5>
               <hr/>
               <div className="collection">
-                <a 
+                <a
                   href="https://www.backstage.com/monologues/classical/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="collection-item">Backstage Classical Monologues</a>
-                <a 
-                  href="http://www.theatrehistory.com/plays/oneact.html" 
+                <a
+                  href="http://www.theatrehistory.com/plays/oneact.html"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="collection-item">Theatre History One-Act Plays</a>
-                <a 
-                  href="https://www.genericradio.com/library.php" 
+                <a
+                  href="https://www.genericradio.com/library.php"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="collection-item">Generic Radio Vintage Scripts Library</a>
-                <a 
-                  href="https://www.toastmasters.org/" 
+                <a
+                  href="https://www.toastmasters.org/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="collection-item">Toastmasters International</a>
