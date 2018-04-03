@@ -1,19 +1,19 @@
-import React from 'react';
-import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import React from "react";
+import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 class SaveScriptAnalysis extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       redirectToProfile: false
-    }
+    };
     this.saveAnalysis = this.saveAnalysis.bind(this);
   }
 
   saveAnalysis(e) {
     e.preventDefault();
-    axios.post('/postanalysis', {
+    axios.post("/postanalysis", {
       script: {
         script_text: this.props.script,
         script_emotion: this.props.results.scriptEmotion,
@@ -30,21 +30,21 @@ class SaveScriptAnalysis extends React.Component {
       comparison: this.props.comparison,
       currentUserId: this.props.userId
     })
-    .then((res) => {
-      console.log('analysis saved to db', res);
-      this.setState({
-        redirectToProfile: true
+      .then((res) => {
+        console.log("analysis saved to db", res);
+        this.setState({
+          redirectToProfile: true
+        });
+      })
+      .catch((err) => {
+        console.log("error saving analysis to db", err);
       });
-    })
-    .catch((err) => {
-       console.log('error saving analysis to db', err);
-     })
   }
 
   render() {
     const redirectToProfile = this.state.redirectToProfile;
     if (redirectToProfile) {
-      return(<Redirect to={{ pathname: '/profile'}}/>)
+      return(<Redirect to={{ pathname: "/profile"}}/>);
     }
     return (
       <div id="myAccount">
@@ -52,7 +52,7 @@ class SaveScriptAnalysis extends React.Component {
           <a className="btn waves-effect black" onClick={this.saveAnalysis}>Save Analysis</a>
         </div>
       </div>
-    )
+    );
   }
 
 }

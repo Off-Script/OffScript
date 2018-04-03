@@ -1,19 +1,19 @@
-import React from 'react';
-import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
+import React from "react";
+import axios from "axios";
+import { Link, Redirect } from "react-router-dom";
 
 class LoginModal extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      errors: '',
-      username: '',
-      password: '',
+      errors: "",
+      username: "",
+      password: "",
       isLoggedIn: false,
       redirectToProfile: false,
       user: {},
       login: {}
-    }
+    };
     this.onChange = this.onChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleRegistration = this.handleRegistration.bind(this);
@@ -21,61 +21,59 @@ class LoginModal extends React.Component{
 
 
   handleLogin(e) {
-    console.log('handling login now');
     e.preventDefault();
-    axios.post('/login', {
+    axios.post("/login", {
       username: this.state.username,
       password: this.state.password
     })
-    .then((res) => {
-      console.log('handling login submit', res.response);
-      this.setState({
-        isLoggedIn: true,
-        redirectToProfile: true,
-        user: res.data.user
+      .then((res) => {
+        this.setState({
+          isLoggedIn: true,
+          redirectToProfile: true,
+          user: res.data.user
+        });
+        this.props.setUserInSession(res.data.user);
+      })
+      .catch((err) => {
+        this.setState({
+          login: {
+            error: "Username or password incorrect, please try again"
+          },
+          isLoggedIn: false,
+          redirectToProfile: false
+        });
       });
-      this.props.setUserInSession(res.data.user);
-    })
-    .catch((err) => {
-      this.setState({
-        login: {
-          error: 'Username or password incorrect, please try again'
-        },
-        isLoggedIn: false,
-        redirectToProfile: false
-      });
-     })
   }
 
   handleRegistration(e) {
-    console.log('handling registration now');
+    console.log("handling registration now");
     e.preventDefault();
-    axios.post('/signup', {
+    axios.post("/signup", {
       username: this.state.username,
       password: this.state.password
     })
-    .then((res) => {
-      console.log('handling registration submission', res);
-      this.setState({
-        redirectToProfile: true
+      .then((res) => {
+        console.log("handling registration submission", res);
+        this.setState({
+          redirectToProfile: true
+        });
+      })
+      .catch((err) => {
+        console.log("error handling registration submission", err.response.data);
+        let message;
+        if (err.response.data.error) {
+          message = err.response.data.error;
+        } else {
+          message = err.response.data.errors.password || err.response.data.errors.username;
+        }
+        this.setState({
+          errors: {
+            error: message
+          },
+          isLoggedIn: false,
+          redirectToProfile: false
+        });
       });
-    })
-    .catch((err) => {
-       console.log('error handling registration submission', err.response.data);
-       let message;
-       if (err.response.data.error) {
-        message = err.response.data.error;
-       } else {
-        message = err.response.data.errors.password || err.response.data.errors.username;
-       }
-       this.setState({
-        errors: {
-          error: message
-        },
-        isLoggedIn: false,
-        redirectToProfile: false
-       });
-     })
   }
 
   onChange(e) {
@@ -87,8 +85,8 @@ class LoginModal extends React.Component{
   }
 
   render() {
-    let show = Object.keys(this.state.errors).length ? { display: 'block' } : { display: 'none' };
-    let showLoginFailure = Object.keys(this.state.login).length ? { display: 'block' } : { display: 'none' };
+    let show = Object.keys(this.state.errors).length ? { display: "block" } : { display: "none" };
+    let showLoginFailure = Object.keys(this.state.login).length ? { display: "block" } : { display: "none" };
     let errorMessage = this.state.errors.error;
     let loginError = this.state.login.error;
     // if (this.state.errors.password) {
@@ -100,13 +98,13 @@ class LoginModal extends React.Component{
     // }
     const redirectToProfile = this.state.redirectToProfile;
     if (redirectToProfile) {
-      return(<Redirect to={{ pathname: '/profile', user: this.state.user }}/>)
+      return(<Redirect to={{ pathname: "/profile", user: this.state.user }}/>);
     }
     const display = {
-      display: 'block'
+      display: "block"
     };
     const hide = {
-      display: 'none'
+      display: "none"
     };
     return (
       <div id="login">
@@ -138,7 +136,7 @@ class LoginModal extends React.Component{
                 <a className="left black-text darken-4-text" onClick={this.handleRegistration}>Register Now</a>
               </div>
               <div className="col s6">
-                 <a className="black-text darken-4-text">Forgot Password?</a>
+                <a className="black-text darken-4-text">Forgot Password?</a>
               </div>
             </div>
           </div>

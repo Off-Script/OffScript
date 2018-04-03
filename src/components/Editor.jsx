@@ -1,84 +1,84 @@
-import React from 'react';
-import ReactQuill from 'react-quill';
+import React from "react";
+import ReactQuill from "react-quill";
 
 class Editor extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          script: true,
-          text: {}
-        }
-      this.useScript = this.useScript.bind(this);
-      this.useTranscript = this.useTranscript.bind(this);
-      this.submit = this.submit.bind(this);
-      this.reactQuillRef = null;
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      script: true,
+      text: {}
+    };
+    this.useScript = this.useScript.bind(this);
+    this.useTranscript = this.useTranscript.bind(this);
+    this.submit = this.submit.bind(this);
+    this.reactQuillRef = null;
+  }
 
 
-    componentDidUpdate(prevProps) {
-      if(this.props.comparison.differences && this.props.comparison !== prevProps.comparsion && Object.keys(this.state.text).length === 0) {
-        this.useScript();
-      }
+  componentDidUpdate(prevProps) {
+    if(this.props.comparison.differences && this.props.comparison !== prevProps.comparsion && Object.keys(this.state.text).length === 0) {
+      this.useScript();
     }
+  }
 
-    useTranscript() {
-      this.setState({
-        script: false
-      })
-      let delta = []
-      if(this.props.comparison.differences) {
-        this.props.comparison.differences.forEach((phrase) => {
-          if(!phrase.removed && !phrase.added) { delta.push({insert: phrase.value, attributes: {size: "large"}})};
-          if (phrase.added) { delta.push({ insert: phrase.value, attributes: { size: "large", color: "#e01d00"}})}
-        })
-      }
-      this.setState({
-        text: delta
-      })
+  useTranscript() {
+    this.setState({
+      script: false
+    });
+    let delta = [];
+    if(this.props.comparison.differences) {
+      this.props.comparison.differences.forEach((phrase) => {
+        if(!phrase.removed && !phrase.added) { delta.push({insert: phrase.value, attributes: {size: "large"}});}
+          if (phrase.added) { delta.push({ insert: phrase.value, attributes: { size: "large", color: "#e01d00"}});}
+      });
     }
+    this.setState({
+      text: delta
+    });
+  }
 
-    useScript() {
-      this.setState({
-        script: true
-      })
-      let delta = []
-      if(this.props.comparison.differences) {
-        this.props.comparison.differences.forEach((phrase) => {
-          if (!phrase.removed && !phrase.added) { delta.push({ insert: phrase.value , attributes: { size: "large"}}) }
-          if (phrase.removed) {
-            delta.push({
-              insert: phrase.value, attributes: { size: "large", color: "#60dfff" } }) }
-        })
-      }
-      this.setState({
-        text: delta
-      })
+  useScript() {
+    this.setState({
+      script: true
+    });
+    let delta = [];
+    if(this.props.comparison.differences) {
+      this.props.comparison.differences.forEach((phrase) => {
+        if (!phrase.removed && !phrase.added) { delta.push({ insert: phrase.value , attributes: { size: "large"}}); }
+        if (phrase.removed) {
+          delta.push({
+            insert: phrase.value, attributes: { size: "large", color: "#60dfff" } }); }
+      });
     }
+    this.setState({
+      text: delta
+    });
+  }
 
-    submit() {
-      this.setState({
-        script: true
-      })
-      let script = this.reactQuillRef.getEditor().getText();
-      this.props.setscript(script);
-    }
+  submit() {
+    this.setState({
+      script: true
+    });
+    let script = this.reactQuillRef.getEditor().getText();
+    this.props.setscript(script);
+  }
 
-    render()  {
-        return(
-            <div>
-                <div id="modal-editor" className="modal">
-                    <div className="modal-content">
-                        <h4>Edit Your Script</h4>
-                        <ReactQuill
-                          ref={(el) => { this.reactQuillRef = el }}
-                          theme="snow"
-                          value={this.state.text}/>
-                {this.state.script ? <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.useTranscript}>Go OffScript</button> : <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.useScript}>Back</button> }
-                <button onClick={this.submit} className="modal-action modal-close waves-effect btn cyan accent-4 hoverable">Submit</button>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+  render()  {
+    return(
+      <div>
+        <div id="modal-editor" className="modal">
+          <div className="modal-content">
+            <h4>Edit Your Script</h4>
+            <ReactQuill
+              ref={(el) => { this.reactQuillRef = el; }}
+              theme="snow"
+              value={this.state.text}/>
+            {this.state.script ? <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.useTranscript}>Go OffScript</button> : <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.useScript}>Back</button> }
+            <button onClick={this.submit} className="modal-action modal-close waves-effect btn cyan accent-4 hoverable">Submit</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 export default Editor;

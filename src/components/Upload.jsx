@@ -1,5 +1,5 @@
 import React from "react";
-import ReactQuill from 'react-quill';
+import ReactQuill from "react-quill";
 import { Link, Route } from "react-router-dom";
 import FileUpload from "./FileUpload";
 
@@ -18,7 +18,6 @@ class Upload extends React.Component {
 
   componentWillMount() {
     let user = this.props.user;
-    console.log('user in Upload:', user);
     if (user) {
       this.setState({
         username: user.username
@@ -31,14 +30,14 @@ class Upload extends React.Component {
     if(this.state.fileLoaded && this.state.script.length > 50) {
       this.props.setscript(this.state.script);
     } else {
-      let editor = this.reactQuillRef.getEditor()
+      let editor = this.reactQuillRef.getEditor();
       if(editor.getText().length > 50) {
         let script = editor.getText();
         this.setState({script});
         this.props.setscript(script);
         this.clear();
       } else {
-        alert("For best results, script must be 50 characters or more");
+        Materialize.toast("For best results, script must be 50 characters or more", 2000);
       }
     }
   }
@@ -48,14 +47,14 @@ class Upload extends React.Component {
     if(this.state.fileLoaded && this.state.script.length > 50) {
       this.props.setlines(this.state.script);
     } else {
-      let editor = this.reactQuillRef.getEditor()
+      let editor = this.reactQuillRef.getEditor();
       if(editor.getText().length > 50) {
         let script = editor.getText();
         this.setState({script});
         this.props.setlines(script);
         this.clear();
       } else {
-        alert("For best results, script must be 50 characters or more");
+        Materialize.toast("For best results, script must be 50 characters or more", 2000);
       }
     }
   }
@@ -99,7 +98,7 @@ class Upload extends React.Component {
           </div>
           <div id="type" className="input-field upload">
             <ReactQuill 
-              ref={(el) => { this.reactQuillRef = el }}
+              ref={(el) => { this.reactQuillRef = el; }}
               theme="snow"
               value={this.state.script} 
             />

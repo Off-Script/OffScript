@@ -1,9 +1,9 @@
-import React from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
-import PersonalLibrary from './PersonalLibrary';
-import PublicLibrary from './PublicLibrary';
-import axios from 'axios';
+import React from "react";
+import { Route, Switch, Link } from "react-router-dom";
+import { withRouter } from "react-router";
+import PersonalLibrary from "./PersonalLibrary";
+import PublicLibrary from "./PublicLibrary";
+import axios from "axios";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class Profile extends React.Component {
   // }
 
   checkSession() {
-    axios.get('/session')
+    axios.get("/session")
       .then((response) => {
         this.login();
       })
@@ -31,16 +31,16 @@ class Profile extends React.Component {
   }
 
   login() {
-    axios.get('/user')
+    axios.get("/user")
       .then((user) => {
-        console.log('current user is:', user);
+        console.log("current user is:", user);
         this.setState({
           isLoggedIn: true,
           user: user.data
         });
       })
       .catch((err) => {
-        console.log('sign in failed, try again');
+        console.log("sign in failed, try again");
       });
   }
 

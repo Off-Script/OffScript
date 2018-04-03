@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 class FileUpload extends React.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class FileUpload extends React.Component {
           </div>
         </form>
       </div>
-    )
+    );
   }
 }
 

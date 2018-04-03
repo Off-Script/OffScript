@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import axios from 'axios';
+import React from "react";
+import { Link, Redirect } from "react-router-dom";
+import axios from "axios";
 
 class MyAccountButton extends React.Component {
 
@@ -14,26 +14,24 @@ class MyAccountButton extends React.Component {
   }
 
   handleLogout(e) {
-    console.log('handling logout now');
     e.preventDefault();
-    axios.post('/logout')
-    .then((res) => {
-      console.log('successfully logged out', res);
-      this.setState({
-        loggedOut: true
+    axios.post("/logout")
+      .then((res) => {
+        this.setState({
+          loggedOut: true
+        });
+        this.renderRedirect();
       })
-      this.renderRedirect();
-    })
-    .catch((err) => {
-       console.log('error logging out', err);
-     })
+      .catch((err) => {
+        console.log("error logging out", err);
+      });
 
   }
 
   renderRedirect() {
     if (this.state.loggedOut) {
       this.props.setUserInSession();
-      window.location = '/';
+      window.location = "/";
     }
   }
 
@@ -45,7 +43,7 @@ class MyAccountButton extends React.Component {
           <a className="btn waves-effect black" onClick={this.handleLogout}>Logout</a>
         </div>
       </div>
-    )
+    );
   }
 
 }

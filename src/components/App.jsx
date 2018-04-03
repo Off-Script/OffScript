@@ -1,30 +1,30 @@
-import React from 'react';
-import { Route, withRouter, Redirect, Switch } from 'react-router-dom';
-import Header from './Header';
-import Landing from './Landing';
-import ProfileWithRouter from './Profile';
-import Upload from './Upload';
-import Speech from './Speech';
-import Results from './Results';
-import Analytics from './Analytics';
-import Footer from './Footer';
+import React from "react";
+import { Route, withRouter, Redirect, Switch } from "react-router-dom";
+import Header from "./Header";
+import Landing from "./Landing";
+import ProfileWithRouter from "./Profile";
+import Upload from "./Upload";
+import Speech from "./Speech";
+import Results from "./Results";
+import Analytics from "./Analytics";
+import Footer from "./Footer";
 import Editor from "./Editor";
 import LineReader from "./LineReader";
-import ScriptComparison from '../lib/ScriptComparison';
-import axios from 'axios';
+import ScriptComparison from "../lib/ScriptComparison";
+import axios from "axios";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      script: '',
-      transcript: '',
+      script: "",
+      transcript: "",
       results: {},
       score: [],
-      comparison: '',
+      comparison: "",
       isLoggedIn: false,
       user: {}
-    }
+    };
     this.setScript = this.setScript.bind(this);
     this.setTranscript = this.setTranscript.bind(this);
     this.setLines = this.setLines.bind(this);
@@ -69,17 +69,17 @@ class App extends React.Component {
   setScript(script) {
     this.setState({
       script: script,
-      transcript: ''
+      transcript: ""
     });
-    this.props.history.push('/speech');
+    this.props.history.push("/speech");
   }
 
   setLines(script) {
     this.setState({
       script: script,
-      transcript: ''
-    })
-    this.props.history.push('/linereader');
+      transcript: ""
+    });
+    this.props.history.push("/linereader");
   }
 
   setTranscript(transcript) {
@@ -92,7 +92,7 @@ class App extends React.Component {
     this.setState({
       results: results
     });
-    this.props.history.push('/results')
+    this.props.history.push("/results");
   }
 
   setScore(score) {
@@ -111,15 +111,15 @@ class App extends React.Component {
       this.setState({
         isLoggedIn: false,
         user: {}
-      })
+      });
     }
-    console.log('this.state', this.state);
+    console.log("this.state", this.state);
   }
 
   scriptComparison(one, two) {
     this.setState({
       comparison: ScriptComparison(one, two)
-    })
+    });
   }
   render () {
     return (
@@ -167,7 +167,7 @@ class App extends React.Component {
         </div>
         <Footer />
       </div>
-    )
+    );
   }
 }
 
