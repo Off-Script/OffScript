@@ -27,6 +27,7 @@ module.exports = {
     let transcriptData = data.transcriptData;
     let transcriptId;
     let scriptId;
+    console.log('saveAnalysis data', data);
     client.query('INSERT INTO scripts (script_text, script_data, script_emotion, script_lang, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING id', [scriptData.script_text, scriptData.script_data, scriptData.script_emotion, scriptData.script_lang, data.userId], (err, result) => {
       if (err) {
         console.log('error saving script to database');
@@ -42,36 +43,57 @@ module.exports = {
             console.log('transcript saved to database');
             transcriptId = result.rows[0].id;
             let sharedData = { scriptId, transcriptId };
-            callback(null, sharedData);
           }
         });
-
+      }
+    });
+    client.query(`UPDATE scripts SET (transcript_id) = (${transcriptId}) WHERE script_id = ${scriptId}`, (err, result) => {
+      if (err) {
+        console.log('error saving script to database');
+        callback(err, null);
+      } else {
+        console.log('script_id linked with transcript_id');
+        callback(null, sharedData);
       }
     });
   },
   getAnalysis: (data, callback) => {
     let responseData = {};
+    let userId = data.userId;
     let scriptId = data.scriptId;
     let transcriptId = data.transcriptId;
-    client.query(`SELECT * FROM scripts WHERE script_id = ${scriptId}`, (err, result) => {
+    let joinedAnalysis = [];
+
+    client.query(`SELECT * FROM scripts WHERE user_id = ${userId}`, (err, result) => {
       if (err) {
         console.log('error saving script to database');
         callback(err, null);
       } else {
         console.log('script saved to database');
-        responseData.scriptData = result;
+        for (let key in result.rows) {
+          let id = result.rows[key][id];
+          responseData.scriptData[id] = result.rows[key];
+        }
       }
     });
-    client.query(`SELECT * FROM transcripts WHERE transcript_id = ${transcriptId}`, (err, result) => {
+    client.query(`SELECT * FROM transcripts WHERE user_id = ${userId}`, (err, result) => {
       if (err) {
         console.log('error saving script to database');
         callback(err, null);
       } else {
         console.log('script saved to database');
-        responseData.transcriptData = result;
+        for (let key in result.rows) {
+          let id = result.rows[key][id];
+          responseData.transcriptData[id] = result.rows[key];
+        }
       }
     });
-    callback(null, responseData);
+
+    for (let key in responseData.transcriptData) {
+      let id = transcripts[key][id];
+      joinedAnalysis.push([responseData.scriptData[id], transcripts[key]]);
+    }
+    callback(null, joinedAnalysis);
   },
   saveScript: (data, callback) => {
     client.query('INSERT INTO scripts (script_text, script_data, script_emotion, script_lang) VALUES ($1, $2, $3, $4) RETURNING *', [data.script_text, data.script_data, data.script_emotion, data.script_lang], (err, result) => {
