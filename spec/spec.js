@@ -1,98 +1,98 @@
 var expect = require("chai").expect;
 var request = require("supertest");
 
-// var helpers = require("../server/utils/helpers.js");
+var helpers = require("../server/utils/helpers.js");
 var db = require("../database/index.js");
 
-// describe("server API call helpers", function() {
-//   describe("Watson Tone Analysis API", function() {
-//     it("Should should make an authenticated request to the service", function() {
-//       var response = false;
-//       helpers.toneAnalyzer.tone(
-//         {
-//           tone_input: "i am very happy because the world is a pleasant and exciting experience every day of my life.",
-//           content_type: "text/plain"
-//         },
-//         function(err, tone) {
-//           if (err) {
-//             console.log(err);
-//           } else {
-//             response = true;
-//             expect(response).to.equal(true);
-//           }
-//         }
-//       );
-//     });
-//     it("Should return an analysis with appropriate data", function() {
-//       var response = false;
-//       helpers.toneAnalyzer.tone(
-//         {
-//           tone_input: "i am very happy because the world is a pleasant and exciting experience every day of my life.",
-//           content_type: "text/plain"
-//         },
-//         function(err, tone) {
-//           if (err) {
-//             console.log(err);
-//           } else {
-//             response = tone;
-//             expect(response.document_tone.tone_categories[0].tones[3].score).above(.5);
-//           }
-//         }
-//       );
-//     });
-//   });
+describe("server API call helpers", function() {
+  describe("Watson Tone Analysis API", function() {
+    it("Should should make an authenticated request to the service", function() {
+      var response = false;
+      helpers.toneAnalyzer.tone(
+        {
+          tone_input: "i am very happy because the world is a pleasant and exciting experience every day of my life.",
+          content_type: "text/plain"
+        },
+        function(err, tone) {
+          if (err) {
+            console.log(err);
+          } else {
+            response = true;
+            expect(response).to.equal(true);
+          }
+        }
+      );
+    });
+    it("Should return an analysis with appropriate data", function() {
+      var response = false;
+      helpers.toneAnalyzer.tone(
+        {
+          tone_input: "i am very happy because the world is a pleasant and exciting experience every day of my life.",
+          content_type: "text/plain"
+        },
+        function(err, tone) {
+          if (err) {
+            console.log(err);
+          } else {
+            response = tone;
+            expect(response.document_tone.tone_categories[0].tones[3].score).above(.5);
+          }
+        }
+      );
+    });
+  });
 
-//   describe("Watson Natural Language API", function() {
-//     it("Should should make an authenticated request to the service", function() {
-//       var response = false;
-//       helpers.natLang.analyze(
-//         {
-//           html: "i am very happy because the world is a pleasant and exciting experience every day of my life.",
-//           features: {
-//             keywords: {sentiment: true, limit: 10}
-//           }
-//         },
-//         function(err, data) {
-//           if (err) {
-//             console.log(err);
-//           } else {
-//             response = true;
-//             expect(response).to.equal(true);
-//           }
-//         }
-//       );
-//     });
-//     it("Should return an analysis with keyword data", function() {
-//       helpers.toneAnalyzer.tone(
-//         {
-//           tone_input: "i am very happy because the world is a pleasant and exciting experience every day of my life.",
-//           content_type: "text/plain"
-//         },
-//         function(err, data) {
-//           if (err) {
-//             console.log(err);
-//           } else {
-//             expect(data.keywords).to.exist;
-//           }
-//         }
-//       );
-//     });
-//   });
+  describe("Watson Natural Language API", function() {
+    it("Should should make an authenticated request to the service", function() {
+      var response = false;
+      helpers.natLang.analyze(
+        {
+          html: "i am very happy because the world is a pleasant and exciting experience every day of my life.",
+          features: {
+            keywords: {sentiment: true, limit: 10}
+          }
+        },
+        function(err, data) {
+          if (err) {
+            console.log(err);
+          } else {
+            response = true;
+            expect(response).to.equal(true);
+          }
+        }
+      );
+    });
+    it("Should return an analysis with keyword data", function() {
+      helpers.toneAnalyzer.tone(
+        {
+          tone_input: "i am very happy because the world is a pleasant and exciting experience every day of my life.",
+          content_type: "text/plain"
+        },
+        function(err, data) {
+          if (err) {
+            console.log(err);
+          } else {
+            expect(data.keywords).to.exist;
+          }
+        }
+      );
+    });
+  });
 
-//   describe("Azure Facial Analysis API", function() {
-//     it("Should should make an authenticated request to the service", function() {
-//       var response = false;
-//       helpers.faceAnalyzer("https://pbs.twimg.com/profile_images/950848403100942337/WfCsrOjz_400x400.jpg", function(data) {
-//         expect(data).to.exist;
-//       });
-//     });
-//     it("Should return an analysis with accurate emotion data", function() {
-//       helpers.faceAnalyzer("https://pbs.twimg.com/profile_images/950848403100942337/WfCsrOjz_400x400.jpg", function(data) {
-//         expect(data.emotion.sadness).isAbove(.5);
-//       });
-//     });
-//   });
-// });
+  describe("Azure Facial Analysis API", function() {
+    it("Should should make an authenticated request to the service", function() {
+      var response = false;
+      helpers.faceAnalyzer("https://pbs.twimg.com/profile_images/950848403100942337/WfCsrOjz_400x400.jpg", function(data) {
+        expect(data).to.exist;
+      });
+    });
+    it("Should return an analysis with accurate emotion data", function() {
+      helpers.faceAnalyzer("https://pbs.twimg.com/profile_images/950848403100942337/WfCsrOjz_400x400.jpg", function(data) {
+        expect(data.emotion.sadness).isAbove(.5);
+      });
+    });
+  });
+});
 describe("server requests", function() {
   describe("get request", function() {
     var server;
