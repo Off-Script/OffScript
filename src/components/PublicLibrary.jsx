@@ -22,20 +22,16 @@ class PersonalLibrary extends React.Component{
 
   fetchScripts() {
     console.log('fetching user library now', this.props);
-    axios.post('/api/personalscripts', {
-      username: 'buddy',
-      userId: 2
-    })
-    .then((res) => {
-      console.log('user library retrieved', res.data);
+    axios.get('/api/publiclibrary')
+    .then((result) => {
+      console.log('public library retrieved', result.data);
       this.setState({
-        scripts: res.data.scripts,
-        transcripts: res.data.transcripts
+        scripts: result.data
       });
 
     })
     .catch((err) => {
-       console.log('error retrieving user library', err);
+       console.log('error retrieving public library', err.response);
      })
   }
 

@@ -284,6 +284,7 @@ app.get('/getanalysis', (req, res) => {
   });
 });
 
+// Retrieves scripts from personal library
 app.post('/api/personalscripts', (req, res) => {
   // console.log('req.body', req.body);
   let data = {
@@ -307,7 +308,18 @@ app.post('/api/personalscripts', (req, res) => {
       });
     }
   });
+});
 
+// Retrieves scripts from public library
+app.get('/api/publiclibrary', (req, res) => {
+  let data = req.body;
+  db.getScripts(data, (err, result) => {
+    if (err) { console.log('error retrieving scripts from public library', err); }
+    else {
+      console.log('scripts retrieved from the public library');
+      res.status(200).send(result);
+    }
+  });
 });
 
 // Creates Passport session for user by serialized ID

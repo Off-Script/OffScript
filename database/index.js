@@ -96,7 +96,15 @@ module.exports = {
     });
   },
   getScripts: (data, callback) => {
-    let jsonData = JSON.stringify(data);
+    client.query(`SELECT * FROM public_library`, (err, result) => {
+      if (err) {
+        console.log('error retrieving scripts from database public library');
+        callback(err, null);
+      } else {
+        console.log('scripts retrieved from database public library');
+        callback(null, result.rows);
+      }
+    });
 
   },
   findScripts: (data, callback) => {
