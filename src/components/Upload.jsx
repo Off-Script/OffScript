@@ -109,10 +109,10 @@ class Upload extends React.Component {
           </div>
         </div>
         <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.handleSubmit}>
-          <i className="material-icons left">file_upload</i>Upload
+          <i className="material-icons left">file_upload</i>Memorize Speech
         </button>
         <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.lineReader}>
-          <i className="material-icons left">tag_faces</i>Read Lines
+          <i className="material-icons left">tag_faces</i>Run Lines
         </button>
       </div>
     );

@@ -30,8 +30,8 @@ class LineReader extends React.Component {
     document.addEventListener("keydown", this._handleSpacebar, false);
     let script = null;
     if (this.props.script) {
-      if (this.props.script.split((/(([A - Z])\w +: )/)).length > 1) {
-        let script = this.props.script.split(/(([A - Z])\w +: )/);
+      if (this.props.script.split((/(([A-Z])\w+:)/)).length > 1) {
+        let script = this.props.script.split(/(([A-Z])\w+:)/);
         script.shift();
         this.setState({
           script: script,
@@ -40,7 +40,7 @@ class LineReader extends React.Component {
         });
       }
       else {
-        let script = this.props.script.split(/[A-Z]+[^a-z]/);
+        let script = this.props.script.split(/.[A-Z]{2,100}[^a-z]/);
         script.shift();
         this.setState({
           script: script,
@@ -67,10 +67,10 @@ class LineReader extends React.Component {
     if (!this.state.first && this.state.index === 0) {
       this.setState({ first: true });
     }
-    if (!this.state.last && this.state.index === this.state.script.length - 1 || this.state.index === this.state.script.length - 2) {
+    if (this.state.last === false && this.state.index >= this.state.script.length - 2) {
       this.setState({ last: true });
     }
-    if (this.state.index !== 0 && this.state.line !== prevState.line) {
+    if (this.state.index > 0 && this.state.line !== prevState.line) {
       this.speech.play();
     }
   }
@@ -143,7 +143,7 @@ class LineReader extends React.Component {
   render() {
     let Loader = null;
     let script = null;
-    let lineArray = this.state.script.map((line, index) => <p key={index}> {index % 2 + 1}: {line}</p>);
+    let lineArray = this.state.script.map((line, index) => <p key={0 + index}><span key={index} className={index === this.state.index + 1 ? "missing" : "normal"} > {index % 2 + 1}: {line}</span></p>);
     if (this.state.start) {
       Loader = (
         <div className="progress">
