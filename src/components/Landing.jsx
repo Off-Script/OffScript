@@ -27,7 +27,7 @@ class Landing extends React.Component {
         </div>
         <br></br>
         <div className="container wow fadeInLeftBig">
-          <div className="parallax-container highlight valign-wrapper">
+          <div className="parallax-container highlight valign-wrapper z-depth-4">
             <div className="container">
               <h3 className="valign landing-text cyan-text">Get OffScript</h3>
               <div className="landing-text cyan-text flow-text">
@@ -40,7 +40,7 @@ class Landing extends React.Component {
         </div>
         <br></br>
         <div className="container wow fadeInRightBig">
-          <div className="parallax-container highlight valign-wrapper">
+          <div className="parallax-container highlight valign-wrapper z-depth-4">
             <div className="container">
               <h3 className="valign landing-text white-text">Go OffScript</h3>
               <div className="landing-text white-text flow-text">
@@ -53,7 +53,7 @@ class Landing extends React.Component {
         </div>
         <br></br>
         <div className="container wow fadeInLeftBig">
-          <div className="parallax-container highlight valign-wrapper">
+          <div className="parallax-container highlight valign-wrapper z-depth-4">
             <div className="container">
               <h3 className="valign landing-text black-text">Stay OffScript</h3>
               <div className="landing-text black-text flow-text">
