@@ -18,8 +18,8 @@ class About extends React.Component {
             </div>
             <div className="card-tabs">
               <ul className="tabs grey lighten-3">
-                <li className="tab"><a href="#ryan" className="cyan-text">Ryan Morrow</a></li>
-                <li className="tab"><a href="#annah" className="active cyan-text">Annah Patterson</a></li>
+                <li className="tab"><a href="#annah" className="cyan-text">Annah Patterson</a></li>
+                <li className="tab"><a href="#ryan" className="active cyan-text">Ryan Morrow</a></li>
                 <li className="tab"><a href="#yufan" className="cyan-text">Yufan Wang</a></li>
               </ul>
             </div>
