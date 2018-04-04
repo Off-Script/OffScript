@@ -14,7 +14,7 @@ class Landing extends React.Component {
       <div className="landing">
         <div className="parallax-container valign-wrapper">
           <div className="container">
-            <h3 className="landing-tagline valign white-text animated bounceIn">Speak with confidence.</h3>
+            <h3 className="landing-tagline valign white-text animated zoomIn">Speak with confidence.</h3>
             <a
               href="/upload"
               className="animated fadeInUpBig btn-large tooltipped waves-effect cyan accent-4 hoverable"
@@ -26,7 +26,7 @@ class Landing extends React.Component {
           <div className="parallax"><img src="media/landing.jpg"/></div>
         </div>
         <br></br>
-        <div className="container wow fadeInLeftBig">
+        <div className="container wow flipInY">
           <div className="parallax-container highlight valign-wrapper z-depth-4">
             <div className="container">
               <h3 className="valign landing-text cyan-text">Get OffScript</h3>
@@ -39,7 +39,7 @@ class Landing extends React.Component {
           </div>
         </div>
         <br></br>
-        <div className="container wow fadeInRightBig">
+        <div className="container wow fadeInRight">
           <div className="parallax-container highlight valign-wrapper z-depth-4">
             <div className="container">
               <h3 className="valign landing-text white-text">Go OffScript</h3>
@@ -52,7 +52,7 @@ class Landing extends React.Component {
           </div>
         </div>
         <br></br>
-        <div className="container wow fadeInLeftBig">
+        <div className="container wow fadeInLeft">
           <div className="parallax-container highlight valign-wrapper z-depth-4">
             <div className="container">
               <h3 className="valign landing-text black-text">Stay OffScript</h3>
