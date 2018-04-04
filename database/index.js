@@ -8,11 +8,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 let connectionString = process.env.DATABASE_URL || dbconfig.DATABASE_URL;
 
-// create new database client
+// create new PostgreSQL database client
 let client = new pg.Client({
   connectionString: connectionString,
   ssl: true
 });
+
+// create new Redis client
+let redisClient = require('redis').createClient(process.env.REDIS_URL);
 
 client.connect((err, db, done) => {
   if (err) { console.log('error connecting to database', err); }
@@ -27,7 +30,6 @@ module.exports = {
     let transcriptData = data.transcriptData;
     let transcriptId;
     let scriptId;
-    console.log('saveAnalysis data', data);
     client.query('INSERT INTO scripts (script_text, script_data, script_emotion, script_lang, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING id', [scriptData.script_text, scriptData.script_data, scriptData.script_emotion, scriptData.script_lang, data.userId], (err, result) => {
       if (err) {
         console.log('error saving script to database');
@@ -43,17 +45,17 @@ module.exports = {
             console.log('transcript saved to database');
             transcriptId = result.rows[0].id;
             let sharedData = { scriptId, transcriptId };
+            client.query(`UPDATE scripts SET transcript_id = array_append(transcript_id, ${transcriptId}) WHERE id = ${scriptId}`, (err, result) => {
+              if (err) {
+                console.log('error updating script with transcript_id in database');
+                callback(err, null);
+              } else {
+                console.log('script_id linked with transcript_id');
+                callback(null, sharedData);
+              }
+            });
           }
         });
-      }
-    });
-    client.query(`UPDATE scripts SET (transcript_id) = (${transcriptId}) WHERE script_id = ${scriptId}`, (err, result) => {
-      if (err) {
-        console.log('error saving script to database');
-        callback(err, null);
-      } else {
-        console.log('script_id linked with transcript_id');
-        callback(null, sharedData);
       }
     });
   },

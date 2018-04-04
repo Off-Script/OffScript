@@ -248,7 +248,6 @@ app.post('/api/script', (req, res) => {
 
 // Saves script, transcript and links to user id in the database
 app.post('/postanalysis', (req, res) => {
-  console.log('/postanalysis req.body', req.body);
   let data = {
     script: req.body.script,
     transcript: req.body.transcript,
@@ -266,7 +265,6 @@ app.post('/postanalysis', (req, res) => {
         if (err) { console.log('error saving analysis to db', err); }
         else {
           result.userId = req.body.currentUserId;
-          console.log('new result', result);
           res.status(200).send(result);
         }
       });
