@@ -103,8 +103,6 @@ span.missing {
 
 .speech-card {
   min-height: 107px;
-  word-wrap: break-word;
-  word-break: break-all;
 }
 
 .script-text {
@@ -150,9 +148,10 @@ span.missing {
   margin-top: 10%;
 }
 
-.flex-container {
-  display: flex;
-  justify-content: space-between;
+.results-container {
+  display: grid;
+  grid-gap: 0.5em;
+  grid-template-columns: 1fr 1fr;
 }
 
 .card-panel.results {
@@ -160,6 +159,8 @@ span.missing {
   min-width: 100%;
   word-wrap: break-word;
   word-break: break-all;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .analytics-wrapper {
