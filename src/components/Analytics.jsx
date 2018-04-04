@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
-import Chart from './Chart.jsx';
+import React from "react";
+import { Link } from "react-router-dom";
+import Chart from "./Chart.jsx";
 
 class Analytics extends React.Component {
   constructor(props) {
@@ -64,7 +64,7 @@ class Analytics extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

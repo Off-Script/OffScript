@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Switch, Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import Chart from "./Chart.jsx";
 import PersonalLibrary from "./PersonalLibrary";
 import PublicLibrary from "./PublicLibrary";
 import axios from "axios";
@@ -61,6 +62,12 @@ class Profile extends React.Component {
                 <a href="/upload" className="btn waves-effect black">Upload New Script</a>
               </div>
               <div className="row">
+                <div className="card-panel analytics">
+                  <h5>Progress Over Time</h5>
+                  <Chart
+                    charttype={"line"}
+                  />
+                </div>
                 <div className="card featured-card z-depth-4">
                   <div className="card-image">
                     <div className="card-content"><h5>Featured Script</h5></div>
