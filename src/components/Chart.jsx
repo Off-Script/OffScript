@@ -40,6 +40,30 @@ class Chart extends React.Component {
   }
 
   componentDidMount() {
+    if (this.props.charttype === "line") {
+      var _this = this;
+      setInterval(function(){
+        var oldDataSet = _this.state.datasets[0];
+        var newData = [];
+
+        for(var x=0; x< _this.state.labels.length; x++){
+          newData.push(Math.floor(Math.random() * 100));
+        }
+
+        var newDataSet = {
+          ...oldDataSet
+        };
+
+        newDataSet.data = newData;
+
+        var newState = {
+          ..._this.state,
+          datasets: [newDataSet]
+        };
+
+        _this.setState(newState);
+      }, 3000);
+    }
   }
 
   render() {

@@ -61,20 +61,18 @@ class Profile extends React.Component {
               <div>
                 <a href="/upload" className="btn waves-effect black">Upload New Script</a>
               </div>
-              <div className="row">
-                <div className="card-panel analytics">
-                  <h5>Progress Over Time</h5>
-                  <Chart
-                    charttype={"line"}
-                  />
-                </div>
-                <div className="card featured-card z-depth-4">
-                  <div className="card-image">
-                    <div className="card-content"><h5>Featured Script</h5></div>
-                    <img className="featured-img" src="media/HenryV.png" width="64" />
-                    <div className="card-action">
-                      <Link to={{ pathname: "/speech"}}>Henry V</Link>
-                    </div>
+              <div className="card-panel analytics">
+                <h5>Progress Over Time</h5>
+                <Chart
+                  charttype={"line"}
+                />
+              </div>
+              <div className="card featured-card z-depth-4">
+                <div className="card-image">
+                  <div className="card-content"><h5>Featured Script</h5></div>
+                  <img className="featured-img" src="media/HenryV.png" width="64" />
+                  <div className="card-action">
+                    <Link to={{ pathname: "/speech"}}>Henry V</Link>
                   </div>
                 </div>
               </div>
