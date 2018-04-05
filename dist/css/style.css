@@ -30,7 +30,7 @@ span.missing {
 }
 
 .logo {
-  height: 1.8em;
+  height: 3em;
   padding: 0.1em;
 }
 
@@ -212,6 +212,10 @@ span.missing {
     min-height: 50%;
   }
 
+  .logo {
+    height: 2.3em;
+  }
+
   .parallax-container {
     height: 700px;
   }
@@ -249,6 +253,11 @@ span.missing {
   .analytics-wrapper {
     grid-template-columns: 1fr;
   }
+
+  .btn.black {
+    padding: 0.2em;
+  }
+
 }
 
 /* Animations */

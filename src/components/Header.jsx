@@ -26,7 +26,7 @@ class Header extends React.Component {
     return (
       <nav className="transparent">
         <div className="nav-wrapper">
-          <a href="/" className="brand-logo"><img className="logo" src="media/logo.png"/></a>
+          <a href="/"><img className="logo" src="media/logo.png"/></a>
           <ul id="nav-mobile" className="right hide-on-small-only">
             {button}
             <a className="btn waves-effect black" href="/upload">Upload</a>
