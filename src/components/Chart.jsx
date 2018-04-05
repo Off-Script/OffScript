@@ -62,7 +62,7 @@ class Chart extends React.Component {
         };
 
         _this.setState(newState);
-      }, 3000);
+      }, 4000);
     }
   }
 

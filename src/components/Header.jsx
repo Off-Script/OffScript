@@ -21,13 +21,15 @@ class Header extends React.Component {
   }
 
   render() {
-    const button = this.props.userLoggedIn ? (<li><MyAccountButton setUserInSession={this.props.setUser.bind(this)}/></li>) : (<li><LoginModal setUserInSession={this.props.setUser.bind(this)}/></li>);
+    const button = this.props.userLoggedIn ? 
+      (<li><MyAccountButton setUserInSession={this.props.setUser.bind(this)}/></li>) : (<li><LoginModal setUserInSession={this.props.setUser.bind(this)}/></li>);
     return (
       <nav className="transparent">
         <div className="nav-wrapper">
-          <a href="/" className="brand-logo center"><img className="logo" src="media/logo.png"/></a>
+          <a href="/" className="brand-logo"><img className="logo" src="media/logo.png"/></a>
           <ul id="nav-mobile" className="right hide-on-small-only">
             {button}
+            <a className="btn waves-effect black" href="/upload">Upload</a>
           </ul>
         </div>
       </nav>

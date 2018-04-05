@@ -10,13 +10,20 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {}
+      user: {},
+      script: "Hamlet"
     };
   }
 
-  // componentDidMount() {
-  //   this.checkSession();
-  // }
+  componentDidMount() {
+    var scripts = ["Romeo and Juliet", "Gettysburg Address", "I Have a Dream", "Henry V", "Alls Well That Ends Well"];
+    setInterval(() => {
+      let int = Math.floor(Math.random() * 4);
+      this.setState({
+        script: scripts[int]
+      });
+    }, 4000);
+  }
 
   checkSession() {
     axios.get("/session")
@@ -62,7 +69,7 @@ class Profile extends React.Component {
                 <a href="/upload" className="btn waves-effect black">Upload New Script</a>
               </div>
               <div className="card-panel analytics">
-                <h5>Progress Over Time</h5>
+                <h5>{this.state.script}</h5>
                 <Chart
                   charttype={"line"}
                 />
