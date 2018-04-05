@@ -31,9 +31,9 @@ class Landing extends React.Component {
             <div className="container">
               <h3 className="valign landing-text white-text">Get OffScript</h3>
               <div className="landing-text flow-text white-text">
-                Compose a script, upload one, or practice from our library of famous works. 
+                Compose a script, upload one, or choose from our library of famous works. 
                 Upload a scene and OffScript will be on book for you,
-                practice mologues and scenes alike
+                helping you practice monologues and scenes alike.
               </div>
             </div>
             <div className="parallax"><img src="media/book.jpg" /></div>
