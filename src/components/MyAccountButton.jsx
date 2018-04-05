@@ -39,7 +39,7 @@ class MyAccountButton extends React.Component {
     return (
       <div id="myAccount">
         <div className="modal-footer transparent">
-          <Link to="/profile" className="btn waves-effect black">My Account</Link>
+          <a href="/profile" className="btn waves-effect black">My Account</a>
           <a className="btn waves-effect black" onClick={this.handleLogout}>Logout</a>
         </div>
       </div>
