@@ -51,7 +51,7 @@ class PersonalLibrary extends React.Component{
           { scripts.map((script, index) =>
             <div className="card public-card" key={index}>
               <div className="card-image waves-effect waves-block waves-light">
-                <img className="activator" src="media/theater.png" />
+                <img className="activator" src="media/library.jpeg" />
               </div>
               <div className="card-title activator">
                 <h4>{script.character_name}</h4>
