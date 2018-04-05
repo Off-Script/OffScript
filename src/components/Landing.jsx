@@ -29,13 +29,14 @@ class Landing extends React.Component {
         <div className="container wow flipInY">
           <div className="parallax-container highlight valign-wrapper z-depth-4">
             <div className="container">
-              <h3 className="valign landing-text cyan-text">Get OffScript</h3>
-              <div className="landing-text cyan-text flow-text">
-                Write a speech, upload a document from your computer, or practice from our free and open Library of famous works. We'll listen to you, 
-                track your accuracy, and show you what sections to work on.
+              <h3 className="valign landing-text white-text">Get OffScript</h3>
+              <div className="landing-text flow-text white-text">
+                Compose a script, upload one, or practice from our library of famous works. 
+                Upload a scene and OffScript will be on book for you,
+                practice mologues and scenes alike
               </div>
             </div>
-            <div className="parallax"><img src="media/work.jpg" /></div>
+            <div className="parallax"><img src="media/book.jpg" /></div>
           </div>
         </div>
         <br></br>
@@ -55,14 +56,14 @@ class Landing extends React.Component {
         <div className="container wow fadeInLeft">
           <div className="parallax-container highlight valign-wrapper z-depth-4">
             <div className="container">
-              <h3 className="valign landing-text black-text">Stay OffScript</h3>
-              <div className="landing-text black-text flow-text">
+              <h3 className="valign landing-text white-text">Stay OffScript</h3>
+              <div className="landing-text flow-text white-text">
                 Practice makes perfect. With a free OffScript account, 
-                you'll be ready to edit and save your scripts practice again and again.
+                you'll be ready to edit and save your scripts to practice again and again.
               </div>
               <a className="btn waves-effect cyan hoverable modal-trigger" href="#modal-login">Login / Signup</a>
             </div>
-            <div className="parallax"><img src="media/leaves.jpg" /></div>
+            <div className="parallax"><img src="media/books.jpg" /></div>
           </div>
         </div>
         <br/>

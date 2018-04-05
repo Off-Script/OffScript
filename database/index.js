@@ -15,7 +15,7 @@ let client = new pg.Client({
 });
 
 // create new Redis client
-let redisClient = require('redis').createClient(process.env.REDIS_URL);
+// let redisClient = require('redis').createClient(process.env.REDIS_URL);
 
 client.connect((err, db, done) => {
   if (err) { console.log('error connecting to database', err); }

@@ -12,7 +12,7 @@ class About extends React.Component {
     return (
       <div className="about wow fadeInUp">
         <div className="container">
-          <div className="card medium about-card grey lighten-4">
+          <div className="card medium about-card grey lighten-4 z-depth-4">
             <div className="card-content">
               <h5>About Us</h5>
             </div>
