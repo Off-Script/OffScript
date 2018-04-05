@@ -73,7 +73,7 @@ class Results extends React.Component {
   render() {
     return (
       <div className="container">
-        <h3>Your Results</h3>
+        <h1>Results</h1>
         <SaveScriptAnalysis userId={this.props.user.id} script={this.props.script} transcript={this.props.transcript} comparison={this.state.comparison} results={this.props.results} scoreData={this.state.scoreData}/>
         <div className="results-container">
           <div className="script-card">
