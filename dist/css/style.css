@@ -21,6 +21,10 @@ span.missing {
   text-align: left;
 }
 
+.scroll-wrapper {
+  height: 153px;
+}
+
 .landing-text {
   text-shadow: 2px 1px 2px rgb(169, 172, 172);
 }
