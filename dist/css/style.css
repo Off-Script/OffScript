@@ -26,6 +26,8 @@ span.missing {
 }
 
 .landing-text {
+  font-weight: 500;
+  -webkit-text-stroke: 0.7px #000;
   text-shadow: 
     -0.8px -0.8px 0 #000,  
     0.8px -0.8px 0 #000,
@@ -33,9 +35,8 @@ span.missing {
     0.8px 0.8px 0 #000;
 }
 
-.thin-text {
-  font-weight: 300;
-  font-size: 0.9em;
+.landing-tagline {
+  text-shadow: 0 0 0.2em black;
 }
 
 .logo {
