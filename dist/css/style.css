@@ -26,7 +26,11 @@ span.missing {
 }
 
 .landing-text {
-  text-shadow: 2px 1px 2px rgb(169, 172, 172);
+  text-shadow: 
+    -0.8px -0.8px 0 #000,  
+    0.8px -0.8px 0 #000,
+    -0.8px 0.8px 0 #000,
+    0.8px 0.8px 0 #000;
 }
 
 .thin-text {
@@ -76,10 +80,6 @@ span.missing {
 
 .main {
   flex: 1 0 auto;
-}
-
-.landing-tagline {
-  text-shadow: 0 0 0.2em black;
 }
 
 .parallax img {

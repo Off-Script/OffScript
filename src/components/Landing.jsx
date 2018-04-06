@@ -14,7 +14,7 @@ class Landing extends React.Component {
       <div className="landing">
         <div className="parallax-container valign-wrapper">
           <div className="container">
-            <h3 className="landing-tagline valign white-text animated zoomIn">Speak with confidence.</h3>
+            <h3 className="landing-text valign white-text animated zoomIn">Speak with confidence.</h3>
             <a
               href="/upload"
               className="animated fadeInUpBig btn-large tooltipped waves-effect cyan accent-4 hoverable"
@@ -26,7 +26,7 @@ class Landing extends React.Component {
           <div className="parallax"><img src="media/landing.jpg"/></div>
         </div>
         <br></br>
-        <div className="container animated flipInY">
+        <div className="container wow fadeInUp">
           <div className="parallax-container highlight valign-wrapper z-depth-4">
             <div className="container">
               <h3 className="valign landing-text white-text">Get OffScript</h3>
@@ -36,7 +36,7 @@ class Landing extends React.Component {
                 helping you practice monologues and scenes alike.
               </div>
             </div>
-            <div className="parallax"><img src="media/book.jpg" /></div>
+            <div className="parallax"><img src="media/work.jpg" /></div>
           </div>
         </div>
         <br></br>
