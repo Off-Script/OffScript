@@ -89,7 +89,6 @@ class Profile extends React.Component {
               <ul className="section table-of-contents">
                 <li><a href="#scripts">My Scripts</a></li>
                 <li><a href="#library">Public Library</a></li>
-                <li><a href="#links">External Resources</a></li>
               </ul>
             </div>
           </div>
