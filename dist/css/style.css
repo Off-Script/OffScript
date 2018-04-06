@@ -1,6 +1,7 @@
 body {
   font-size: 20px;
   min-height: 100%;
+  text-align: center;
   background-color: rgba(238, 234, 223, 0.527);
 }
 
@@ -16,8 +17,8 @@ span.missing {
   color: teal;
 }
 
-.main {
-  text-align: center;
+.nav-wrapper {
+  text-align: left;
 }
 
 .landing-text {
