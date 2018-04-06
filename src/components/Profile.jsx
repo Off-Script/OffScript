@@ -58,7 +58,7 @@ class Profile extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col s12 m10">
-              <div className="card blue-grey">
+              <div id="dashboard" className="card blue-grey section scrollspy">
                 <div className="card-content white-text">
                   <h4>Dashboard</h4>
                   <img src="media/speaker.png" width="32" height="32" />
@@ -66,7 +66,7 @@ class Profile extends React.Component {
                 </div>
               </div>
               <div>
-                <a href="/upload" className="btn waves-effect black">Upload New Script</a>
+                <a href="/upload" className="btn waves-effect black hoverable">Upload New Script</a>
               </div>
               <div className="card-panel analytics">
                 <h5>{this.state.script}</h5>
@@ -87,10 +87,12 @@ class Profile extends React.Component {
 
             <div className="col hide-on-small-only m2 scroll-wrapper">
               <ul className="section table-of-contents pushpin">
+                <li><a href="#dashboard">Dashboard</a></li>
                 <li><a href="#scripts">My Scripts</a></li>
                 <li><a href="#library">Public Library</a></li>
               </ul>
             </div>
+            
           </div>
 
           <div className="row">
