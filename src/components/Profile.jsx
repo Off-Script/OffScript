@@ -85,7 +85,7 @@ class Profile extends React.Component {
               </div>
             </div>
 
-            <div className="col hide-on-small-only m2">
+            <div className="col hide-on-small-only m2 scroll-wrapper">
               <ul className="section table-of-contents">
                 <li><a href="#scripts">My Scripts</a></li>
                 <li><a href="#library">Public Library</a></li>
