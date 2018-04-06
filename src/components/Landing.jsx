@@ -14,7 +14,7 @@ class Landing extends React.Component {
       <div className="landing">
         <div className="parallax-container valign-wrapper">
           <div className="container">
-            <h3 className="landing-text valign white-text animated zoomIn">Speak with confidence.</h3>
+            <h3 className="landing-tagline valign white-text animated zoomIn">Speak with confidence.</h3>
             <a
               href="/upload"
               className="animated fadeInUpBig btn-large tooltipped waves-effect cyan accent-4 hoverable"
