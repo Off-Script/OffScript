@@ -1,6 +1,7 @@
 import React from "react";
 import ReactQuill from "react-quill";
 import { Link, Route } from "react-router-dom";
+import { Tabs, Tab } from "react-materialize";
 import FileUpload from "./FileUpload";
 
 class Upload extends React.Component {
@@ -87,26 +88,18 @@ class Upload extends React.Component {
       </div>
       <div className="card upload-card">
         <div className="card-tabs">
-          <ul className="tabs tabs-fixed-width grey lighten-3">
-            <li className="tab">
-              <a className="cyan-text" href="#type">
-                  Type a script
-              </a>
-            </li>
-            <li className="tab">
-              <a className="cyan-text" href="#upload">
-                  Upload a script
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="type" className="input-field upload">
-          <ReactQuill ref={el => {
-            this.reactQuillRef = el;
-          }} theme="snow" value={this.state.script} />
-        </div>
-        <div id="upload" className="upload">
-          <FileUpload onChange={this.readFile.bind(this)} />
+          <Tabs className='tab tabs-fixed-width transparent'>
+            <Tab title="Type a Script" active>
+              <br/>
+              <ReactQuill ref={el => {
+                this.reactQuillRef = el;
+              }} theme="snow" value={this.state.script} />
+            </Tab>
+            <Tab title=" Upload a Script">
+              <br/>
+              <FileUpload onChange={this.readFile.bind(this)} />
+            </Tab>
+          </Tabs>
         </div>
       </div>
       <button className="waves-effect btn cyan accent-4 hoverable" onClick={this.handleSubmit}>
