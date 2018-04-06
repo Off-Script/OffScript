@@ -26,7 +26,7 @@ class Landing extends React.Component {
           <div className="parallax"><img src="media/landing.jpg"/></div>
         </div>
         <br></br>
-        <div className="container wow flipInY">
+        <div className="container animated flipInY">
           <div className="parallax-container highlight valign-wrapper z-depth-4">
             <div className="container">
               <h3 className="valign landing-text white-text">Get OffScript</h3>
