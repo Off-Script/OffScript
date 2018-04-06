@@ -211,10 +211,13 @@ span.missing {
 }
 
 
-@media only screen and (max-width : 768px), (max-device-width: 421px) {
+@media only screen and (max-width : 768px) {
   body {
     font-size: 26px;
-    min-height: 50%;
+  }
+
+  .main {
+    width: 100%;
   }
 
   .logo {
@@ -222,7 +225,7 @@ span.missing {
   }
 
   .parallax-container {
-    height: 700px;
+    height: 600px;
   }
 
   .parallax img {
@@ -233,8 +236,8 @@ span.missing {
     margin: 1em;
   }
 
-  .about-content {
-    overflow-y: hidden;
+  .upload-card {
+    margin: 0;
   }
 
   .info-card {
