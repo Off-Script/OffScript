@@ -86,7 +86,7 @@ class Profile extends React.Component {
             </div>
 
             <div className="col hide-on-small-only m2 scroll-wrapper">
-              <ul className="section table-of-contents">
+              <ul className="section table-of-contents pushpin">
                 <li><a href="#scripts">My Scripts</a></li>
                 <li><a href="#library">Public Library</a></li>
               </ul>
@@ -148,6 +148,7 @@ class Profile extends React.Component {
     );
   }
 }
+
 
 const ProfileWithRouter = withRouter(Profile);
 export default ProfileWithRouter;

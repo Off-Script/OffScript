@@ -98,7 +98,7 @@ class LoginModal extends React.Component{
     // }
     const redirectToProfile = this.state.redirectToProfile;
     if (redirectToProfile) {
-      return(<Redirect to={{ pathname: "/profile", user: this.state.user }}/>);
+      return(window.location="/profile");
     }
     const display = {
       display: "block"
@@ -108,15 +108,15 @@ class LoginModal extends React.Component{
     };
     return (
       <div id="login">
-        <div id="alert-error" style={showLoginFailure}>
-          <p>{loginError}</p>
-        </div>
         <a className="btn waves-effect black modal-trigger" href="#modal-login">Login / Signup</a>
         <div id="modal-login" className="modal">
-          <div id="alert-error" style={show}>
-            <p>{errorMessage}</p>
-          </div>
           <div className="modal-content">
+            <div id="alert-error" style={showLoginFailure}>
+              <p>{loginError}</p>
+            </div>
+            <div id="alert-error" style={show}>
+              <p>{errorMessage}</p>
+            </div>
             <div className="input-field col s8">
               <i className="material-icons prefix black-text">account_circle</i>
               <input id="username" type="text" className="validate black-text" name="username" value={this.state.username} onChange={this.onChange} errortext={this.state.errors.username}/>
