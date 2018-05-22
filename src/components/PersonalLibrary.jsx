@@ -16,7 +16,7 @@ class PersonalLibrary extends React.Component{
     this.useScript = this.useScript.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchScripts();
   }
 
