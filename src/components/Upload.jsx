@@ -17,7 +17,7 @@ class Upload extends React.Component {
     this.lineReader = this.lineReader.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let user = this.props.user;
     if (user) {
       this.setState({

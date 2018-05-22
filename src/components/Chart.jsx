@@ -8,7 +8,7 @@ class Chart extends React.Component {
     super(props);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.charttype === "line") {
       this.setState({
         labels: ["January", "February", "March", "April", "May", "June", "July"],

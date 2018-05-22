@@ -18,7 +18,7 @@ class Results extends React.Component {
     this.makeCharts = this.makeCharts.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.results.scriptData) {
       this.makeCharts();
     }
